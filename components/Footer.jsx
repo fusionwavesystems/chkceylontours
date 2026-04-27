@@ -27,7 +27,7 @@ const Footer = () => {
                 <div className="divider" style={{ width: '100%', height: '1px', background: 'rgba(255,255,255,0.1)', marginBottom: '30px' }}></div>
 
                 <div className="bottom-links" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '20px', opacity: 0.6, fontSize: '0.9rem' }}>
-                    <p>© 2026 CHK Ceylon Tours. All Rights Reserved.</p>
+                    <p>© Software Solutions by Fusion Wave Systems (Pvt) Ltd | +94 71 8 530 500</p>
                     <div style={{ display: 'flex', gap: '30px' }}>
                         <a href="/admin/login" style={{ color: 'white' }} title="Admin Login"><i className="fas fa-lock"></i></a>
                         <a href="/about-us" style={{ color: 'white' }}>About Us</a>
