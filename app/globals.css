@@ -15,6 +15,8 @@
     --neon-glow-red: 0 0 5px var(--neon-red), 0 0 20px var(--neon-red);
     --neon-glow-blue: 0 0 5px var(--neon-blue), 0 0 20px var(--neon-blue);
     --font-main: 'Outfit', sans-serif;
+    --font-accent: 'Plus Jakarta Sans', sans-serif;
+    --font-display: 'Syne', sans-serif;
 
     --font-heading: 'Playfair Display', serif;
     --gradient-vibrant: linear-gradient(90deg, var(--neon-yellow), var(--neon-green));

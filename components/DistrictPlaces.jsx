@@ -12,7 +12,7 @@ const DistrictPlaces = ({ districtData, onBack }) => {
             <div style={{ textAlign: 'center', marginBottom: '60px' }}>
                 <button 
                     onClick={onBack}
-                    className="btn btn-primary"
+                    className="btn btn-primary desktop-back-btn"
                     style={{ fontSize: '1rem', padding: '10px 30px' }}
                 >
                     <i className="fas fa-arrow-left" style={{ marginRight: '10px' }}></i> Back to Districts
@@ -61,6 +61,17 @@ const DistrictPlaces = ({ districtData, onBack }) => {
                 ))}
             </div>
 
+            {/* Mobile Back Button rendered below the grid */}
+            <div className="mobile-back-btn-container" style={{ textAlign: 'center', marginTop: '40px' }}>
+                <button 
+                    onClick={onBack}
+                    className="btn btn-primary mobile-back-btn"
+                    style={{ fontSize: '1rem', padding: '12px 30px', width: '100%', maxWidth: '280px' }}
+                >
+                    <i className="fas fa-arrow-left" style={{ marginRight: '10px' }}></i> Back to Districts
+                </button>
+            </div>
+
             {/* Popup Modal */}
             {selectedPlace && (
                 <div style={{ 
@@ -77,7 +88,7 @@ const DistrictPlaces = ({ districtData, onBack }) => {
                         overflow: 'hidden', animation: 'scaleUp 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
                         boxShadow: '0 0 50px rgba(255, 240, 31, 0.2)',
                         display: 'flex',
-                        flexDirection: window.innerWidth < 768 ? 'column' : 'row',
+                        flexDirection: typeof window !== 'undefined' && window.innerWidth < 768 ? 'column' : 'row',
                         position: 'relative'
                     }}
                     onClick={(e) => e.stopPropagation()}
@@ -90,15 +101,15 @@ const DistrictPlaces = ({ districtData, onBack }) => {
                         </button>
 
                         <div style={{ 
-                            width: window.innerWidth < 768 ? '100%' : '45%', 
-                            height: window.innerWidth < 768 ? '250px' : '500px',
+                            width: typeof window !== 'undefined' && window.innerWidth < 768 ? '100%' : '45%', 
+                            height: typeof window !== 'undefined' && window.innerWidth < 768 ? '250px' : '500px',
                             minHeight: '100%'
                         }}>
                             <img src={selectedPlace.image} alt={selectedPlace.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                         </div>
                         
                         <div style={{ 
-                            width: window.innerWidth < 768 ? '100%' : '55%', 
+                            width: typeof window !== 'undefined' && window.innerWidth < 768 ? '100%' : '55%', 
                             padding: '40px',
                             display: 'flex',
                             flexDirection: 'column',
@@ -126,6 +137,22 @@ const DistrictPlaces = ({ districtData, onBack }) => {
                 @keyframes scaleUp {
                     from { transform: scale(0.8); opacity: 0; }
                     to { transform: scale(1); opacity: 1; }
+                }
+                @media (max-width: 768px) {
+                    .desktop-back-btn {
+                        display: none !important;
+                    }
+                    .mobile-back-btn-container {
+                        display: block !important;
+                    }
+                }
+                @media (min-width: 769px) {
+                    .desktop-back-btn {
+                        display: inline-block !important;
+                    }
+                    .mobile-back-btn-container {
+                        display: none !important;
+                    }
                 }
             `}</style>
         </div>

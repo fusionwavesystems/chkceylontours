@@ -60,21 +60,56 @@ export default function Destinations() {
       
       {/* Hero Section */}
       <section className="hero" style={{ 
-        height: '60vh', 
-        minHeight: '400px', 
+        height: 'auto', 
+        minHeight: 'auto', 
         backgroundImage: "url('/dest_hero_bg_new.png')",
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
-        justifyContent: 'center', 
-        alignItems: 'center', 
-        padding: '0' 
+        padding: '130px 20px 35px 20px', // Premium top padding, tight bottom padding to reduce space below text
+        position: 'relative',
+        display: 'block'
       }}>
-        <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', background: 'linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.7) 100%)', zIndex: 1 }}></div>
-        <div className="hero-content" style={{ zIndex: 10, padding: '0 20px', textAlign: 'center', maxWidth: '100%', position: 'relative' }}>
-            <h1 className="reveal active" style={{ fontSize: 'clamp(2.5rem, 8vw, 5rem)', textShadow: '2px 2px 15px rgba(0, 0, 0, 0.9), var(--neon-glow)' }}>
+        <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', background: 'linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.85) 100%)', zIndex: 1 }}></div>
+        <div className="hero-content" style={{ zIndex: 10, padding: '0 20px', textAlign: 'center', maxWidth: '850px', margin: '0 auto', position: 'relative' }}>
+            <h1 className="reveal active" style={{ 
+                fontSize: 'clamp(2.5rem, 6vw, 4.5rem)', 
+                textTransform: 'uppercase',
+                fontWeight: '900',
+                letterSpacing: '1px',
+                color: '#fff',
+                margin: '0 0 35px 0',
+                textShadow: '2px 2px 15px rgba(0, 0, 0, 0.9), var(--neon-glow)' 
+            }}>
               {districtData ? districtData.name : (selectedProvince ? selectedProvince.name : 'Explore Destination')}
             </h1>
+
+            {/* Render the Why Choose CHK Ceylon Tours section ONLY on the main destinations index page */}
+            {!selectedProvince && !selectedDistrictId && (
+                <div style={{ marginTop: '90px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}> {/* Generous spacing before Why Choose */}
+                    <h2 style={{ 
+                        fontSize: 'clamp(1.5rem, 3.5vw, 2.4rem)', 
+                        color: '#fff', 
+                        fontWeight: '300',
+                        margin: '0 0 15px 0',
+                        textShadow: '1px 1px 8px rgba(0,0,0,0.8)'
+                    }}>
+                        <strong style={{ fontWeight: '800' }}>Why</strong> Choose CHK Ceylon Tours
+                    </h2>
+                    <p style={{ 
+                        color: 'rgba(255, 255, 255, 0.9)', 
+                        fontSize: 'clamp(0.95rem, 1.8vw, 1.25rem)', 
+                        maxWidth: '750px', 
+                        margin: '0 auto',
+                        lineHeight: '1.6',
+                        fontWeight: '500',
+                        fontFamily: 'var(--font-primary)',
+                        textShadow: '1px 1px 8px rgba(0,0,0,0.9)'
+                    }}>
+                        If you are planning to visit the beautiful island Sri Lanka , we will prepare your safe journey under the guidance of experienced chauffeur guides in nine provinces and 25 districts full of diverse beauty to choose from.(Please watch carefullly)
+                    </p>
+                </div>
+            )}
         </div>
       </section>
 
@@ -84,7 +119,7 @@ export default function Destinations() {
 
       <Navbar />
 
-      <div style={{ padding: '60px 20px 100px 20px', position: 'relative', zIndex: 10 }} id="destinations-grid" className="container">
+      <div style={{ padding: '10px 20px 80px 20px', position: 'relative', zIndex: 10 }} id="destinations-grid" className="container">
         
         {districtData ? (
           <DistrictPlaces 
@@ -94,7 +129,7 @@ export default function Destinations() {
         ) : (
           <>
             {selectedProvince && (
-              <div style={{ textAlign: 'center', marginBottom: '60px' }}>
+              <div className="desktop-back-btn" style={{ textAlign: 'center', marginBottom: '60px' }}>
                 <button 
                   onClick={handleProvinceBack}
                   className="btn btn-primary"
@@ -165,9 +200,42 @@ export default function Destinations() {
                 ))
               )}
             </div>
+
+            {/* Mobile Back Button rendered below the grid */}
+            {selectedProvince && (
+              <div className="mobile-back-btn-container" style={{ textAlign: 'center', marginTop: '40px' }}>
+                <button 
+                  onClick={handleProvinceBack}
+                  className="btn btn-primary mobile-back-btn"
+                  style={{ fontSize: '1rem', padding: '12px 30px', width: '100%', maxWidth: '280px' }}
+                >
+                  <i className="fas fa-arrow-left" style={{ marginRight: '10px' }}></i> Back to Provinces
+                </button>
+              </div>
+            )}
           </>
         )}
       </div>
+
+      {/* Responsive styles for back buttons */}
+      <style>{`
+        @media (max-width: 768px) {
+            .desktop-back-btn {
+                display: none !important;
+            }
+            .mobile-back-btn-container {
+                display: block !important;
+            }
+        }
+        @media (min-width: 769px) {
+            .desktop-back-btn {
+                display: block !important;
+            }
+            .mobile-back-btn-container {
+                display: none !important;
+            }
+        }
+      `}</style>
       <Footer />
     </div>
   );

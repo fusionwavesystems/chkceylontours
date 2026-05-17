@@ -62,12 +62,12 @@ const Hotels = () => {
     }, []);
 
     return (
-        <section id="hotels" style={{ padding: '120px 0', background: '#000', position: 'relative', overflow: 'hidden' }}>
+        <section id="hotels" style={{ padding: '120px 0', background: '#ffffff', position: 'relative', overflow: 'hidden' }}>
             <div className="container">
                 <div className="section-header reveal" style={{ textAlign: 'center', marginBottom: '80px' }}>
-                    <span className="subtitle" style={{ color: 'var(--neon-green)', textShadow: 'var(--neon-glow-green)' }}>Premium Stays</span>
-                    <h2 style={{ color: '#fff', fontSize: 'clamp(2.5rem, 6vw, 4rem)' }}>Handpicked Hotels</h2>
-                    <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: '1.2rem', maxWidth: '700px', margin: '0 auto' }}>
+                    <span className="subtitle" style={{ color: '#0d4a25', textShadow: 'none', fontWeight: '800', letterSpacing: '1px' }}>Premium Stays</span>
+                    <h2 style={{ color: '#000000', fontSize: 'clamp(2.5rem, 6vw, 4rem)', fontWeight: '900' }}>Handpicked Hotels</h2>
+                    <p style={{ color: '#222222', fontSize: '1.2rem', maxWidth: '700px', margin: '0 auto', fontWeight: '500', lineHeight: '1.6' }}>
                         We've curated the most luxurious and authentic stays across the island to ensure your comfort is never compromised.
                     </p>
                 </div>
