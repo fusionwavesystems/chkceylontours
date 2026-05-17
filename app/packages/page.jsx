@@ -169,6 +169,20 @@ export default function TourPackages() {
                         fontFamily: 'var(--font-accent)',
                         textShadow: '0 2px 10px rgba(0,0,0,0.9)'
                     }}>Discover the Magic of Sri Lanka with CHK Ceylon Tours</p>
+                    <p style={{ 
+                        color: 'rgba(255, 255, 255, 0.7)', 
+                        fontSize: '0.95rem', 
+                        fontWeight: '500', 
+                        marginTop: '12px',
+                        maxWidth: '700px',
+                        marginLeft: 'auto',
+                        marginRight: 'auto',
+                        fontFamily: 'var(--font-main)',
+                        textShadow: '0 2px 8px rgba(0,0,0,0.9)',
+                        lineHeight: '1.6'
+                    }}>
+                        Prices in these packages may change due to fluctuations in the dollar and fuel prices around the world. <span style={{ color: 'var(--neon-green)', fontWeight: '700', textShadow: '0 0 10px rgba(57,255,20,0.3)' }}>There are no hidden fees.</span>
+                    </p>
                 </div>
             </section>
 
@@ -202,100 +216,149 @@ export default function TourPackages() {
                 </div>
 
                 <div className="packages-grid">
-                    {packagesData.map((pkg) => (
-                        <div key={pkg.id} className="custom-pkg-card reveal active" style={{
-                            border: `2px solid ${pkg.color}`
-                        }}>
-                            {/* Modern Top Header for Package Title */}
-                            <div style={{ 
-                                padding: '22px 28px', 
-                                borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
-                                background: 'rgba(255, 255, 255, 0.02)',
-                                display: 'flex',
-                                justifyContent: 'space-between',
-                                alignItems: 'flex-start',
-                                gap: '15px'
-                            }}>
-                                <div style={{ flexGrow: 1, minWidth: 0 }}>
-                                    <h3 style={{ 
-                                        fontSize: '1.4rem', 
-                                        color: '#fff', 
-                                        margin: '0 0 8px 0',
-                                        fontWeight: '800',
-                                        fontFamily: 'var(--font-accent)',
-                                        lineHeight: '1.25'
-                                    }}>{pkg.name}</h3>
-                                    <span style={{
-                                        background: `${pkg.color}15`,
-                                        border: `1px solid ${pkg.color}44`,
-                                        color: pkg.color,
-                                        padding: '2px 8px',
-                                        borderRadius: '4px',
-                                        fontSize: '0.68rem',
-                                        fontWeight: '800',
-                                        textTransform: 'uppercase',
-                                        letterSpacing: '0.5px',
-                                        display: 'inline-block'
-                                    }}>
-                                        {pkg.tag || 'Sri Lanka'}
-                                    </span>
-                                </div>
-                                {/* Glowing Badge for Duration on the Top-Right Corner - Solid & Readable */}
-                                <div style={{
-                                    background: pkg.color,
-                                    borderRadius: '12px',
-                                    padding: '6px 14px',
-                                    color: '#000',
-                                    fontSize: '0.75rem',
-                                    fontWeight: '900',
-                                    fontFamily: 'var(--font-accent)',
-                                    whiteSpace: 'nowrap',
-                                    boxShadow: `0 4px 15px ${pkg.color}44`,
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    gap: '6px',
-                                    textTransform: 'uppercase',
-                                    letterSpacing: '0.5px'
-                                }}>
-                                    <i className="fa-regular fa-clock" style={{ color: '#000' }}></i>
-                                    {pkg.duration}
-                                </div>
-                            </div>
+                    {packagesData.map((pkg, index) => {
+                        const discounts = [10, 15, 15, 20, 25, 30];
+                        const discountPercent = discounts[index % discounts.length];
+                        const originalPrice = parseFloat(pkg.price);
+                        const discountedPrice = Math.round(originalPrice * (1 - discountPercent / 100));
 
-                            <div style={{ position: 'relative', height: '220px', overflow: 'hidden' }}>
-                                <img src={pkg.image} alt={pkg.name} className="custom-pkg-img" />
+                        return (
+                            <div key={pkg.id} className="custom-pkg-card reveal active" style={{
+                                border: `2px solid ${pkg.color}`,
+                                position: 'relative'
+                            }}>
+                                {/* Floating Discount Badge at the top of the box */}
                                 <div style={{
                                     position: 'absolute',
-                                    bottom: 0,
-                                    left: 0,
-                                    width: '100%',
-                                    height: '60%',
-                                    background: 'linear-gradient(to top, rgba(12, 12, 12, 1) 0%, transparent 100%)',
-                                    zIndex: 1
-                                }}></div>
-                            </div>
+                                    top: '-14px',
+                                    left: '20px',
+                                    background: 'rgba(220, 38, 38, 0.95)',
+                                    color: '#fff',
+                                    padding: '4px 12px',
+                                    borderRadius: '8px',
+                                    fontSize: '0.78rem',
+                                    fontWeight: '900',
+                                    fontFamily: 'var(--font-accent)',
+                                    boxShadow: '0 0 12px rgba(220, 38, 38, 0.5)',
+                                    zIndex: 10,
+                                    letterSpacing: '0.5px',
+                                    textTransform: 'uppercase'
+                                }}>
+                                    {discountPercent}% OFF SPECIAL
+                                </div>
 
-                            <div style={{ padding: '25px 30px 30px 30px', flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
-                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '22px', gap: '15px' }}>
-                                    <p style={{ 
-                                        color: pkg.color === 'var(--neon-yellow)' ? '#ffcc00' : pkg.color, 
-                                        fontWeight: '700', 
-                                        margin: 0, 
-                                        display: 'flex', 
-                                        alignItems: 'center', 
-                                        gap: '8px',
-                                        fontSize: '0.88rem',
+                                {/* Modern Top Header for Package Title */}
+                                <div style={{ 
+                                    padding: '22px 28px', 
+                                    borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
+                                    background: 'rgba(255, 255, 255, 0.02)',
+                                    display: 'flex',
+                                    justifyContent: 'space-between',
+                                    alignItems: 'flex-start',
+                                    gap: '15px',
+                                    borderTopLeftRadius: '22px',
+                                    borderTopRightRadius: '22px'
+                                }}>
+                                    <div style={{ flexGrow: 1, minWidth: 0 }}>
+                                        <h3 style={{ 
+                                            fontSize: '1.4rem', 
+                                            color: '#fff', 
+                                            margin: '0 0 8px 0',
+                                            fontWeight: '800',
+                                            fontFamily: 'var(--font-accent)',
+                                            lineHeight: '1.25'
+                                        }}>{pkg.name}</h3>
+                                        <span style={{
+                                            background: `${pkg.color}15`,
+                                            border: `1px solid ${pkg.color}44`,
+                                            color: pkg.color,
+                                            padding: '2px 8px',
+                                            borderRadius: '4px',
+                                            fontSize: '0.68rem',
+                                            fontWeight: '800',
+                                            textTransform: 'uppercase',
+                                            letterSpacing: '0.5px',
+                                            display: 'inline-block'
+                                        }}>
+                                            {pkg.tag || 'Sri Lanka'}
+                                        </span>
+                                    </div>
+                                    {/* Glowing Badge for Duration on the Top-Right Corner - Solid & Readable */}
+                                    <div style={{
+                                        background: pkg.color,
+                                        borderRadius: '12px',
+                                        padding: '6px 14px',
+                                        color: '#000',
+                                        fontSize: '0.75rem',
+                                        fontWeight: '900',
                                         fontFamily: 'var(--font-accent)',
+                                        whiteSpace: 'nowrap',
+                                        boxShadow: `0 4px 15px ${pkg.color}44`,
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        gap: '6px',
+                                        textTransform: 'uppercase',
                                         letterSpacing: '0.5px'
                                     }}>
-                                        <i className="fa-regular fa-clock" style={{ fontSize: '0.95rem' }}></i>
+                                        <i className="fa-regular fa-clock" style={{ color: '#000' }}></i>
                                         {pkg.duration}
-                                    </p>
-                                    <div style={{ textAlign: 'right', flexShrink: 0 }}>
-                                        <span style={{ color: pkg.color === 'var(--neon-yellow)' ? '#ffcc00' : pkg.color, fontSize: '1.7rem', fontWeight: '900', fontFamily: 'var(--font-accent)', textShadow: `0 0 15px ${pkg.color === 'var(--neon-yellow)' ? '#ffcc00' : pkg.color}33` }}>${pkg.price}</span>
-                                        <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.75rem', display: 'block', fontWeight: '500', fontFamily: 'var(--font-main)' }}>Per Person</span>
                                     </div>
                                 </div>
+
+                                <div style={{ position: 'relative', height: '220px', overflow: 'hidden' }}>
+                                    <img src={pkg.image} alt={pkg.name} className="custom-pkg-img" />
+                                    <div style={{
+                                        position: 'absolute',
+                                        bottom: 0,
+                                        left: 0,
+                                        width: '100%',
+                                        height: '60%',
+                                        background: 'linear-gradient(to top, rgba(12, 12, 12, 1) 0%, transparent 100%)',
+                                        zIndex: 1
+                                    }}></div>
+                                </div>
+
+                                <div style={{ padding: '25px 30px 30px 30px', flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
+                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '22px', gap: '15px' }}>
+                                        <p style={{ 
+                                            color: pkg.color === 'var(--neon-yellow)' ? '#ffcc00' : pkg.color, 
+                                            fontWeight: '700', 
+                                            margin: 0, 
+                                            display: 'flex', 
+                                            alignItems: 'center', 
+                                            gap: '8px',
+                                            fontSize: '0.88rem',
+                                            fontFamily: 'var(--font-accent)',
+                                            letterSpacing: '0.5px'
+                                        }}>
+                                            <i className="fa-regular fa-clock" style={{ fontSize: '0.95rem' }}></i>
+                                            {pkg.duration}
+                                        </p>
+                                        <div style={{ textAlign: 'right', flexShrink: 0 }}>
+                                            {/* Actual Price Cut */}
+                                            <span style={{ 
+                                                textDecoration: 'line-through', 
+                                                color: 'rgba(255,255,255,0.4)', 
+                                                fontSize: '1.05rem', 
+                                                marginRight: '8px',
+                                                fontWeight: '600',
+                                                fontFamily: 'var(--font-accent)'
+                                            }}>
+                                                ${originalPrice}
+                                            </span>
+                                            {/* Highlighted Current Price */}
+                                            <span style={{ 
+                                                color: '#39ff14', 
+                                                fontSize: '1.8rem', 
+                                                fontWeight: '950', 
+                                                fontFamily: 'var(--font-accent)', 
+                                                textShadow: '0 0 15px rgba(57, 255, 20, 0.4)' 
+                                            }}>
+                                                ${discountedPrice}
+                                            </span>
+                                            <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.75rem', display: 'block', fontWeight: '500', fontFamily: 'var(--font-main)' }}>Per Person</span>
+                                        </div>
+                                    </div>
 
                                 <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 30px 0', flexGrow: 1, display: 'flex', flexDirection: 'column', gap: '12px' }}>
                                     {pkg.features.map((feature, index) => (
@@ -325,7 +388,8 @@ export default function TourPackages() {
                                 </a>
                             </div>
                         </div>
-                    ))}
+                    );
+                })}
                 </div>
             </div>
 
@@ -345,7 +409,7 @@ export default function TourPackages() {
                 .custom-pkg-card {
                     background: linear-gradient(135deg, rgba(12, 12, 12, 0.98) 0%, rgba(3, 3, 3, 1) 100%);
                     border-radius: 24px;
-                    overflow: hidden;
+                    overflow: visible;
                     display: flex;
                     flex-direction: column;
                     min-height: 560px;

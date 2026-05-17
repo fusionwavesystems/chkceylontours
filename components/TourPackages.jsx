@@ -81,14 +81,40 @@ const TourPackages = () => {
 
                 <div className="package-slider">
                     {packages.map((pkg, i) => {
+                        const discounts = [10, 15, 15, 20, 25, 30];
+                        const discountPercent = discounts[i % discounts.length];
+                        const originalPrice = parseFloat(pkg.price);
+                        const discountedPrice = Math.round(originalPrice * (1 - discountPercent / 100));
+                        
                         const shadowColor = pkg.color === 'var(--neon-green)' ? 'rgba(57, 255, 20, 0.35)' : 'rgba(255, 240, 31, 0.35)';
                         const glowValue = pkg.color === 'var(--neon-green)' ? 'var(--neon-glow-green)' : 'var(--neon-glow)';
                         
                         return (
                             <div key={i} className="custom-package-card reveal" style={{ 
                                 transitionDelay: `${i * 0.15}s`,
-                                border: `2px solid ${pkg.color}`
+                                border: `2px solid ${pkg.color}`,
+                                position: 'relative'
                             }}>
+                                {/* Floating Discount Badge at the top of the box */}
+                                <div style={{
+                                    position: 'absolute',
+                                    top: '-14px',
+                                    left: '20px',
+                                    background: 'rgba(220, 38, 38, 0.95)',
+                                    color: '#fff',
+                                    padding: '4px 12px',
+                                    borderRadius: '8px',
+                                    fontSize: '0.78rem',
+                                    fontWeight: '900',
+                                    fontFamily: 'var(--font-accent)',
+                                    boxShadow: '0 0 12px rgba(220, 38, 38, 0.5)',
+                                    zIndex: 10,
+                                    letterSpacing: '0.5px',
+                                    textTransform: 'uppercase'
+                                }}>
+                                    {discountPercent}% OFF SPECIAL
+                                </div>
+
                                 {/* Modern Top Header for Package Title */}
                                 <div style={{ 
                                     padding: '22px 28px', 
@@ -97,7 +123,9 @@ const TourPackages = () => {
                                     display: 'flex',
                                     justifyContent: 'space-between',
                                     alignItems: 'flex-start',
-                                    gap: '15px'
+                                    gap: '15px',
+                                    borderTopLeftRadius: '22px',
+                                    borderTopRightRadius: '22px'
                                 }}>
                                     <div style={{ flexGrow: 1, minWidth: 0 }}>
                                         <h3 style={{ 
@@ -138,8 +166,28 @@ const TourPackages = () => {
                                 )}
 
                                 <div style={{ padding: '25px 30px 30px 30px', display: 'flex', flexDirection: 'column', flex: 1 }}>
-                                     <div className="price-container" style={{ marginBottom: '22px' }}>
-                                         <span className="price-val" style={{ color: pkg.color === 'var(--neon-yellow)' ? '#ffcc00' : pkg.color, textShadow: `0 0 15px ${pkg.color === 'var(--neon-yellow)' ? '#ffcc00' : pkg.color}33` }}>${pkg.price}</span>
+                                     <div className="price-container" style={{ marginBottom: '22px', display: 'flex', alignItems: 'baseline' }}>
+                                         {/* Actual Price Cut */}
+                                         <span style={{ 
+                                             textDecoration: 'line-through', 
+                                             color: 'rgba(255,255,255,0.4)', 
+                                             fontSize: '1.05rem', 
+                                             marginRight: '8px',
+                                             fontWeight: '600',
+                                             fontFamily: 'var(--font-accent)'
+                                         }}>
+                                             ${originalPrice}
+                                         </span>
+                                         {/* Highlighted Current Price */}
+                                         <span className="price-val" style={{ 
+                                             color: '#39ff14', 
+                                             fontSize: '1.8rem', 
+                                             fontWeight: '950', 
+                                             fontFamily: 'var(--font-accent)', 
+                                             textShadow: '0 0 15px rgba(57, 255, 20, 0.4)' 
+                                         }}>
+                                             ${discountedPrice}
+                                         </span>
                                          <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.85rem', marginLeft: '6px', fontWeight: '500', fontFamily: 'var(--font-main)' }}>/ person</span>
                                      </div>
 
@@ -206,7 +254,7 @@ const TourPackages = () => {
                     max-width: 380px;
                     background: linear-gradient(135deg, rgba(12, 12, 12, 0.98) 0%, rgba(3, 3, 3, 1) 100%);
                     border-radius: 24px;
-                    overflow: hidden;
+                    overflow: visible;
                     display: flex;
                     flex-direction: column;
                     min-height: 560px; /* Uniform minimum height */

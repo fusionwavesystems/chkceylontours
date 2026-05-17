@@ -53,62 +53,24 @@ const Preloader = () => {
             {/* Logo Container */}
             <div className="preloader-logo-container" style={{
                 position: 'relative',
-                width: '300px', // Increased size since rings are gone
-                height: '300px',
-                marginBottom: '40px',
+                width: '450px', /* Wider for the landscape logo */
+                height: '250px',
+                marginBottom: '20px',
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center'
             }}>
                 <img 
-                    src="/logo.png" 
+                    src="/logo_full.png" 
                     alt="CHK Ceylon Tours Logo" 
                     style={{ 
                         width: '100%', 
                         height: '100%', 
                         objectFit: 'contain',
-                        filter: 'drop-shadow(0 0 15px rgba(255, 240, 31, 0.4))',
+                        filter: 'drop-shadow(0 0 25px rgba(255, 255, 255, 0.25))',
                         animation: 'pulse 2s ease-in-out infinite'
                     }} 
                 />
-            </div>
-
-            {/* Brand Name with Animated Gradient */}
-            <div className="logo-text-container" style={{ 
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center', 
-                animation: 'fadeInUp 1s ease-out forwards',
-                opacity: 0
-            }}>
-                <div className="logo-brand" style={{ display: 'flex', alignItems: 'baseline', marginBottom: '5px' }}>
-                    <span className="logo-chk" style={{ 
-                        fontSize: '4.5rem', 
-                        color: 'var(--neon-yellow)',
-                        textShadow: 'var(--neon-glow)',
-                        animation: 'neon-flicker 3s infinite, shine 3s linear infinite',
-                        background: 'linear-gradient(to right, var(--neon-yellow) 20%, #fff 50%, var(--neon-yellow) 80%)',
-                        backgroundSize: '200% auto',
-                        WebkitBackgroundClip: 'text',
-                        WebkitTextFillColor: 'transparent'
-                    }}>CHK</span>
-                    <span className="logo-ceylon" style={{ 
-                        fontSize: '2.2rem',
-                        color: 'var(--neon-yellow)',
-                        textShadow: 'var(--neon-glow)',
-                        marginLeft: '15px',
-                        textTransform: 'uppercase',
-                        animation: 'neon-flicker 3s infinite 0.5s', // Slight delay for stagger
-                    }}>CEYLON TOURS</span>
-                </div>
-                <div className="logo-tagline" style={{ 
-                    fontSize: '0.9rem', 
-                    letterSpacing: '5px',
-                    color: '#fff',
-                    textTransform: 'uppercase',
-                    fontWeight: '700',
-                    opacity: 0.8
-                }}>OUR WISH IS YOUR HAPPINESS</div>
             </div>
 
             {/* Progress Bar */}
@@ -151,24 +113,9 @@ const Preloader = () => {
                     100% { width: 100%; }
                 }
                 @media (max-width: 768px) {
-                    .logo-brand {
-                        flex-direction: row !important;
-                        gap: 10px !important;
-                    }
-                    .logo-chk {
-                        font-size: 2.8rem !important;
-                    }
-                    .logo-ceylon {
-                        font-size: 1.4rem !important;
-                        margin-left: 0 !important;
-                    }
-                    .logo-tagline {
-                        font-size: 0.6rem !important;
-                        letter-spacing: 2px !important;
-                    }
                     .preloader-logo-container {
-                        width: 150px !important;
-                        height: 150px !important;
+                        width: 280px !important;
+                        height: 160px !important;
                         margin-bottom: 15px !important;
                     }
                     .preloader-progress {

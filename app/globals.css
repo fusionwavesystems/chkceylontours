@@ -254,18 +254,19 @@ nav.scrolled .container {
 .logo-chk {
     font-size: 3.5rem;
     font-weight: 950;
-    color: #000;
+    color: #ffffff;
+    -webkit-text-stroke: 1.5px #ffffff; /* Thick white neon stroke */
     letter-spacing: -1px;
     line-height: 0.9;
-    /* Removed yellow glow for a cleaner black look as requested */
-    text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.3);
+    text-shadow: 0 0 6px rgba(255, 255, 255, 0.4); /* Reduced subtle glow */
 }
 
 .logo-ceylon {
     font-size: 1.8rem;
-    font-weight: 700;
-    color: #000;
-    text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.2);
+    font-weight: 800;
+    color: #ffffff;
+    -webkit-text-stroke: 0.8px #ffffff; /* Balanced white stroke */
+    text-shadow: 0 0 4px rgba(255, 255, 255, 0.3); /* Reduced subtle glow */
 }
 
 .logo-tagline {
@@ -296,10 +297,12 @@ nav.scrolled .logo {
 
 nav.scrolled .logo-chk {
     font-size: 2.2rem;
+    -webkit-text-stroke: 1.1px #ffffff; /* Proportional stroke when shrunken */
 }
 
 nav.scrolled .logo-ceylon {
     font-size: 1.2rem;
+    -webkit-text-stroke: 0.5px #ffffff; /* Proportional stroke when shrunken */
 }
 
 nav.scrolled .logo-tagline {

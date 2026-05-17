@@ -15,15 +15,18 @@ const Navbar = ({ config }) => {
     return (
         <nav className={`${scrolled ? 'scrolled' : ''} ${mobileOpen ? 'mobile-open' : ''}`}>
             <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <a href="/" className="logo">
-                    <img src="/logo.png" alt="Logo" className="logo-img" />
-                    <div className="logo-text-container">
-                        <div className="logo-brand">
-                            <span className="logo-chk">CHK</span>
-                            <span className="logo-ceylon">CEYLON TOURS</span>
-                        </div>
-                        <div className="logo-tagline">OUR WISH IS YOUR HAPPINESS</div>
-                    </div>
+                <a href="/" className="logo" style={{ display: 'flex', alignItems: 'center', padding: '5px 0' }}>
+                    <img 
+                        src="/logo_full.png" 
+                        alt="CHK Ceylon Tours Logo" 
+                        style={{ 
+                            height: scrolled ? '85px' : '125px', 
+                            width: 'auto', 
+                            objectFit: 'contain',
+                            transition: 'all 0.5s ease',
+                            filter: 'drop-shadow(0 0 12px rgba(255, 255, 255, 0.15))'
+                        }} 
+                    />
                 </a>
 
                 <div style={{ display: 'flex', alignItems: 'center', gap: scrolled ? '20px' : '40px' }}>
