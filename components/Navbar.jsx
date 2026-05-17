@@ -19,15 +19,38 @@ const Navbar = ({ config }) => {
                     <img 
                         src="/logo_full.png" 
                         alt="CHK Ceylon Tours Logo" 
-                        style={{ 
-                            height: scrolled ? '85px' : '125px', 
-                            width: 'auto', 
-                            objectFit: 'contain',
-                            transition: 'all 0.5s ease',
-                            filter: 'drop-shadow(0 0 12px rgba(255, 255, 255, 0.15))'
-                        }} 
+                        className="navbar-logo-img"
                     />
                 </a>
+
+                <style jsx>{`
+                    .navbar-logo-img {
+                        height: 105px;
+                        width: auto;
+                        object-fit: contain;
+                        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+                        filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.15));
+                    }
+                    
+                    :global(nav.scrolled) .navbar-logo-img {
+                        height: 70px;
+                    }
+                    
+                    @media (max-width: 768px) {
+                        .navbar-logo-img {
+                            height: 60px !important;
+                        }
+                        :global(nav.scrolled) .navbar-logo-img {
+                            height: 48px !important;
+                        }
+                        :global(nav) {
+                            padding: 10px 0 !important;
+                        }
+                        :global(nav.scrolled) {
+                            padding: 6px 0 !important;
+                        }
+                    }
+                `}</style>
 
                 <div style={{ display: 'flex', alignItems: 'center', gap: scrolled ? '20px' : '40px' }}>
                     <ul className={`nav-links ${mobileOpen ? 'active' : ''}`}>
