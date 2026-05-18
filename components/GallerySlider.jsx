@@ -98,24 +98,24 @@ const GallerySlider = ({
     const displayImages = [...images, ...images];
 
     return (
-        <section className="gallery-section overflow-hidden py-32" style={{ background: '#000', position: 'relative' }}>
+        <section className="gallery-section overflow-hidden py-32" style={{ background: '#ffffff', position: 'relative' }}>
              {/* Background blobs for visual flair */}
-            <div className="bg-blob" style={{ bottom: '10%', right: '-10%', opacity: '0.12' }}></div>
-            <div className="bg-blob" style={{ top: '10%', left: '-10%', opacity: '0.08', background: 'radial-gradient(circle, rgba(57, 255, 20, 0.15) 0%, transparent 70%)' }}></div>
+            <div className="bg-blob" style={{ bottom: '10%', right: '-10%', opacity: '0.02', background: 'radial-gradient(circle, rgba(13, 74, 37, 0.08) 0%, transparent 70%)' }}></div>
+            <div className="bg-blob" style={{ top: '10%', left: '-10%', opacity: '0.02', background: 'radial-gradient(circle, rgba(21, 128, 61, 0.08) 0%, transparent 70%)' }}></div>
 
             <div className="container mx-auto px-6 mb-20">
                 <div className="section-header reveal active" style={{ 
-                    borderLeft: '12px solid var(--neon-green)', 
+                    borderLeft: '12px solid #0d4a25', 
                     paddingLeft: '30px', 
                     borderRadius: '8px',
-                    boxShadow: '-10px 0 25px rgba(57, 255, 20, 0.25)'
+                    boxShadow: '-10px 0 25px rgba(13, 74, 37, 0.12)'
                 }}>
                     <span className="subtitle" style={{ 
-                        color: 'var(--neon-green)', 
-                        textShadow: 'var(--neon-glow-green)',
+                        color: '#0d4a25', 
+                        textShadow: 'none',
                         letterSpacing: '4px',
-                        fontWeight: '700',
-                        textTransform: 'none', /* Mixed-case! */
+                        fontWeight: '800',
+                        textTransform: 'uppercase',
                         display: 'block',
                         marginBottom: '10px',
                         fontFamily: 'var(--font-main)',
@@ -124,19 +124,19 @@ const GallerySlider = ({
                     <h2 style={{ 
                         fontSize: 'clamp(2.5rem, 6vw, 4.2rem)', 
                         fontWeight: '900', 
-                        color: '#fff', 
+                        color: '#000000', 
                         lineHeight: '1.1',
-                        fontFamily: 'var(--font-main)', /* Switched back to ultra-sleek Outfit */
+                        fontFamily: 'var(--font-main)',
                         letterSpacing: '-1.5px'
                     }}>{title}</h2>
-                    {/* Thick Glowing Gradient Border Line (Pure Yellow-to-Green, No Blue) */}
+                    {/* Thick Glowing Gradient Border Line (Premium Green Gradient) */}
                     <div style={{ 
                         width: '280px', 
                         height: '14px', 
-                        background: 'linear-gradient(90deg, var(--neon-yellow) 0%, var(--neon-green) 100%)', 
+                        background: 'linear-gradient(90deg, #0d4a25 0%, #15803d 100%)', 
                         marginTop: '25px', 
                         borderRadius: '12px', 
-                        boxShadow: '0 0 25px rgba(57, 255, 20, 0.65), 0 0 12px rgba(255, 240, 31, 0.5)' 
+                        boxShadow: '0 4px 15px rgba(13, 74, 37, 0.25)' 
                     }}></div>
                 </div>
             </div>

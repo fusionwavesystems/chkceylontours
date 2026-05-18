@@ -65,9 +65,18 @@ const Hotels = () => {
         <section id="hotels" style={{ padding: '120px 0', background: '#ffffff', position: 'relative', overflow: 'hidden' }}>
             <div className="container">
                 <div className="section-header reveal" style={{ textAlign: 'center', marginBottom: '80px' }}>
-                    <span className="subtitle" style={{ color: '#0d4a25', textShadow: 'none', fontWeight: '800', letterSpacing: '1px' }}>Premium Stays</span>
-                    <h2 style={{ color: '#000000', fontSize: 'clamp(2.5rem, 6vw, 4rem)', fontWeight: '900' }}>Handpicked Hotels</h2>
-                    <p style={{ color: '#222222', fontSize: '1.2rem', maxWidth: '700px', margin: '0 auto', fontWeight: '500', lineHeight: '1.6' }}>
+                    <span className="subtitle" style={{ 
+                        color: '#0d4a25', 
+                        fontWeight: '800', 
+                        letterSpacing: '4px',
+                        display: 'block',
+                        marginBottom: '10px',
+                        fontFamily: 'var(--font-main)',
+                        fontSize: '1.05rem',
+                        textTransform: 'uppercase'
+                    }}>Premium Stays</span>
+                    <h2 style={{ color: '#000000', fontSize: 'clamp(2.5rem, 6vw, 4rem)', fontWeight: '900', fontFamily: 'var(--font-accent)' }}>Handpicked Hotels</h2>
+                    <p style={{ color: '#222222', fontSize: '1.1rem', maxWidth: '700px', margin: '20px auto 0 auto', fontWeight: '500', lineHeight: '1.6', fontFamily: 'var(--font-main)' }}>
                         We've curated the most luxurious and authentic stays across the island to ensure your comfort is never compromised.
                     </p>
                 </div>
@@ -80,7 +89,12 @@ const Hotels = () => {
                 }}>
                     {hotels.length > 0 ? (
                         hotels.map((hotel) => (
-                            <div key={hotel.id} className="dest-card reveal" style={{ height: '480px', borderRadius: '24px' }}>
+                            <div key={hotel.id} className="dest-card reveal" style={{ 
+                                height: '480px', 
+                                borderRadius: '24px',
+                                border: '2.5px solid transparent',
+                                background: 'linear-gradient(#000, #000) padding-box, linear-gradient(135deg, #0d4a25 0%, #22c55e 100%) border-box'
+                            }}>
                                 <img 
                                     src={hotel.image || 'https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=800&auto=format&fit=crop'} 
                                     alt={hotel.name} 
@@ -132,8 +146,26 @@ const Hotels = () => {
                     )}
                 </div>
                 <div style={{ textAlign: 'center', marginTop: '60px' }} className="reveal">
-                    <a href="/hotels" className="btn btn-primary" style={{ padding: '15px 50px', textDecoration: 'none' }}>
-                        Explore More Hotels <i className="fas fa-arrow-right" style={{ marginLeft: '10px' }}></i>
+                    <a href="/hotels" className="btn-custom-hotels" style={{ 
+                        padding: '15px 50px', 
+                        textDecoration: 'none',
+                        background: 'linear-gradient(135deg, #0d4a25 0%, #15803d 100%)',
+                        color: '#ffffff',
+                        border: 'none',
+                        borderRadius: '12px',
+                        fontWeight: '800',
+                        fontSize: '0.95rem',
+                        fontFamily: 'var(--font-accent)',
+                        textTransform: 'uppercase',
+                        letterSpacing: '1px',
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: '10px',
+                        boxShadow: '0 4px 15px rgba(13, 74, 37, 0.2)',
+                        transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)'
+                    }}>
+                        Explore More Hotels <i className="fas fa-arrow-right" style={{ fontSize: '0.9rem' }}></i>
                     </a>
                 </div>
             </div>
@@ -144,6 +176,14 @@ const Hotels = () => {
                     border-color: var(--neon-green) !important;
                     transform: translateY(-5px);
                     box-shadow: 0 10px 20px rgba(57, 255, 20, 0.3);
+                }
+                .btn-custom-hotels:hover {
+                    transform: translateY(-3px) !important;
+                    box-shadow: 0 8px 25px rgba(21, 128, 61, 0.45) !important;
+                    background: linear-gradient(135deg, #15803d 0%, #16a34a 100%) !important;
+                }
+                :global(.dest-card):hover {
+                    box-shadow: 0 15px 35px rgba(34, 197, 94, 0.35) !important;
                 }
             `}</style>
             <ImageLightbox src={selectedImage} onClose={() => setSelectedImage(null)} />

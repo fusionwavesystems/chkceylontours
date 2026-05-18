@@ -89,7 +89,7 @@ export default function Hotels() {
                 padding: '0'
             }}>
                 <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', background: 'linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.8) 100%)', zIndex: 1 }}></div>
-                <div className="hero-content" style={{ zIndex: 10, padding: '0 20px', textAlign: 'center', maxWidth: '100%', position: 'relative' }}>
+                <div className="hero-content" style={{ zIndex: 10, padding: '80px 20px 0 20px', textAlign: 'center', maxWidth: '100%', position: 'relative' }}>
                     <h1 className="reveal active" style={{ fontSize: 'clamp(2.5rem, 8vw, 5rem)', textShadow: '2px 2px 15px rgba(0, 0, 0, 0.9), var(--neon-glow)' }}>Luxury Stays</h1>
                 </div>
             </section>

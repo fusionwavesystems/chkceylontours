@@ -72,17 +72,17 @@ const Gallery = () => {
             <div className="container">
                 <div className="reveal text-center" style={{ marginBottom: "50px" }}>
                     <span className="subtitle" style={{ 
-                        color: "var(--neon-green)", 
-                        textShadow: "0 0 10px rgba(57, 255, 20, 0.4)",
+                        color: "#d97706", 
                         letterSpacing: '4px',
-                        fontWeight: '700',
+                        fontWeight: '800',
                         display: 'block',
                         marginBottom: '10px',
                         fontFamily: 'var(--font-main)',
-                        fontSize: '1.05rem'
+                        fontSize: '1.05rem',
+                        textTransform: 'uppercase'
                     }}>Memories in Sri Lanka</span>
-                    <h2 style={{ fontSize: "clamp(2.3rem, 5vw, 3.5rem)", marginTop: "10px", color: '#fff', fontFamily: 'var(--font-accent)', fontWeight: '800' }}>Our Travel Gallery</h2>
-                    <div style={{ width: "80px", height: "4px", background: "var(--neon-green)", margin: "20px auto", borderRadius: "10px" }}></div>
+                    <h2 style={{ fontSize: "clamp(2.3rem, 5vw, 3.5rem)", marginTop: "10px", color: '#ffffff', fontFamily: 'var(--font-accent)', fontWeight: '900' }}>Our Travel Gallery</h2>
+                    <div style={{ width: "80px", height: "4px", background: "linear-gradient(90deg, #facc15 0%, #d97706 100%)", margin: "20px auto", borderRadius: "10px" }}></div>
                 </div>
 
                 <div className="gallery-grid" style={{ 
@@ -103,25 +103,25 @@ const Gallery = () => {
                             <div key={image.id || index} className="gallery-card reveal" style={{ 
                                 display: 'flex', 
                                 flexDirection: 'column',
-                                background: '#0d0d0d',
-                                border: '2px solid rgba(255, 240, 31, 0.45)', // Sleek glowing yellow border
+                                background: 'linear-gradient(#ffffff, #ffffff) padding-box, linear-gradient(135deg, #facc15 0%, #d97706 100%) border-box',
+                                border: '2px solid transparent',
                                 borderRadius: '24px',
                                 padding: '18px',
                                 transition: 'all 0.5s ease',
-                                boxShadow: '0 10px 30px rgba(0, 0, 0, 0.65)',
+                                boxShadow: '0 10px 30px rgba(0, 0, 0, 0.45)',
                                 overflow: 'hidden',
                                 justifyContent: 'space-between',
-                                height: '420px' // Sleek standardized height for absolute alignment!
+                                height: '420px'
                             }}>
-                                {/* 1st: White Text (Title) on Top */}
+                                {/* 1st: Title on Top */}
                                 <div style={{ 
                                     padding: '0 2px 12px 2px', 
-                                    borderBottom: '1px solid rgba(255, 255, 255, 0.08)'
+                                    borderBottom: '1px solid rgba(0, 0, 0, 0.06)'
                                 }}>
                                     <h3 className="gallery-card-title-text" style={{ 
                                         fontSize: "1.15rem", 
                                         margin: 0, 
-                                        color: "#fff", 
+                                        color: "#000000", 
                                         fontWeight: "800", 
                                         fontFamily: 'var(--font-accent)',
                                         textTransform: "none",
@@ -226,24 +226,24 @@ const Gallery = () => {
                                     flexGrow: 1,
                                     justifyContent: 'space-between'
                                 }}>
-                                    {/* Highly Readable yellow Location text inside a sleek, premium, transparent dark yellow box container */}
+                                    {/* Location text inside a sleek translucent gray box container */}
                                     {location ? (
                                         <div style={{ 
                                             display: 'flex',
                                             alignItems: 'flex-start',
                                             gap: '8px',
-                                            background: 'rgba(255, 240, 31, 0.04)',
-                                            border: '1px solid rgba(255, 240, 31, 0.15)',
+                                            background: 'rgba(0, 0, 0, 0.05)',
+                                            border: '1px solid rgba(0, 0, 0, 0.08)',
                                             padding: '8px 12px',
                                             borderRadius: '12px',
                                             width: '100%',
                                             margin: '0 0 10px 0'
                                         }}>
-                                            <i className="fa-solid fa-map-pin" style={{ color: 'var(--neon-yellow)', marginTop: '3px', fontSize: '0.8rem', flexShrink: 0 }}></i>
+                                            <i className="fa-solid fa-map-pin" style={{ color: '#d97706', marginTop: '3px', fontSize: '0.85rem', flexShrink: 0 }}></i>
                                             <span style={{ 
-                                                color: 'var(--neon-yellow)', 
+                                                color: '#d97706', 
                                                 fontSize: '0.78rem', 
-                                                fontWeight: '700',
+                                                fontWeight: '850',
                                                 fontFamily: 'var(--font-accent)',
                                                 lineHeight: '1.4',
                                                 display: 'block'
@@ -268,13 +268,13 @@ const Gallery = () => {
                                                 padding: '10px 20px',
                                                 borderRadius: '50px',
                                                 background: 'transparent',
-                                                border: '1.5px solid var(--neon-yellow)',
-                                                color: 'var(--neon-yellow)',
+                                                border: '1.5px solid #d97706',
+                                                color: '#d97706',
                                                 textDecoration: 'none',
                                                 fontWeight: '800',
                                                 fontSize: '0.8rem',
                                                 transition: 'all 0.4s ease',
-                                                boxShadow: '0 0 15px rgba(255, 240, 31, 0.15)',
+                                                boxShadow: '0 4px 12px rgba(217, 119, 6, 0.15)',
                                                 marginTop: '4px',
                                                 width: '100%'
                                             }}
@@ -295,32 +295,30 @@ const Gallery = () => {
                      transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1) !important;
                      will-change: transform, border-color, box-shadow;
                  }
-                 .gallery-card:hover {
-                     transform: translateY(-8px);
-                     border-color: var(--neon-yellow) !important;
-                     box-shadow: 0 20px 40px rgba(255, 240, 31, 0.2), 0 0 25px rgba(255, 240, 31, 0.08) !important;
-                 }
-                 .gallery-card:hover .gallery-img {
-                     transform: scale(1.1);
-                 }
-                 .gallery-card:hover .gallery-overlay {
-                     opacity: 1;
-                 }
-                 .gallery-card:hover .gallery-card-title-text {
-                     color: var(--neon-green);
-                     text-shadow: 0 0 10px rgba(57, 255, 20, 0.3);
-                 }
-                 .preview-btn:hover {
-                     background: #fff !important;
-                     color: #000 !important;
-                     transform: scale(1.05);
-                 }
-                 .card-link-btn:hover {
-                     background: var(--neon-yellow) !important;
-                     color: #000 !important;
-                     box-shadow: 0 0 25px rgba(255, 240, 31, 0.45) !important;
-                     transform: scale(1.02);
-                 }
+                  .gallery-card:hover {
+                      transform: translateY(-8px);
+                      box-shadow: 0 15px 30px rgba(250, 204, 21, 0.35) !important;
+                  }
+                  .gallery-card:hover .gallery-img {
+                      transform: scale(1.1);
+                  }
+                  .gallery-card:hover .gallery-overlay {
+                      opacity: 1;
+                  }
+                  .gallery-card:hover .gallery-card-title-text {
+                      color: #d97706;
+                  }
+                  .preview-btn:hover {
+                      background: #fff !important;
+                      color: #000 !important;
+                      transform: scale(1.05);
+                  }
+                  .card-link-btn:hover {
+                      background: #d97706 !important;
+                      color: #ffffff !important;
+                      box-shadow: 0 8px 20px rgba(217, 119, 6, 0.3) !important;
+                      transform: scale(1.02);
+                  }
                 .text-center {
                     text-align: center;
                 }

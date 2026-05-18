@@ -4,88 +4,56 @@ import React, { useState } from 'react';
 import ReviewFormModal from './ReviewFormModal';
 
 const ReviewFloatingButton = () => {
-    const [isLabelVisible, setIsLabelVisible] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     return (
         <>
             <button 
                 onClick={() => setIsModalOpen(true)}
-                onMouseEnter={() => setIsLabelVisible(true)}
-                onMouseLeave={() => setIsLabelVisible(false)}
                 className="review-float-btn"
                 aria-label="Give us a review"
             >
-                <i className="fas fa-star"></i>
-                <span className={`review-tooltip ${isLabelVisible ? 'visible' : ''}`}>
-                    Leave a Review
-                </span>
+                <i className="fas fa-star" style={{ fontSize: '0.95rem', color: '#000' }}></i>
+                <span style={{ 
+                    fontFamily: 'var(--font-main)', 
+                    fontWeight: '800', 
+                    fontSize: '0.82rem', 
+                    letterSpacing: '0.5px' 
+                }}>Review us</span>
 
                 <style jsx>{`
                     .review-float-btn {
                         position: fixed;
-                        bottom: 110px; /* Above WhatsApp button */
+                        bottom: 95px; /* Significantly increased spacing above WhatsApp button */
                         right: 30px;
-                        width: 65px;
-                        height: 65px;
-                        background: #ffc107;
+                        padding: 10px 18px;
+                        background: linear-gradient(135deg, #ffc107 0%, #d39e00 100%);
                         color: #000;
-                        border: none;
-                        border-radius: 50%;
+                        border: 1px solid rgba(0, 0, 0, 0.1);
+                        border-radius: 12px;
                         display: flex;
                         align-items: center;
                         justify-content: center;
-                        font-size: 1.8rem;
-                        box-shadow: 0 10px 25px rgba(255, 193, 7, 0.4);
+                        gap: 8px;
+                        box-shadow: 0 10px 25px rgba(211, 158, 0, 0.3);
                         z-index: 9999;
                         cursor: pointer;
-                        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+                        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
                     }
                     .review-float-btn:hover {
-                        transform: scale(1.1) rotate(15deg);
-                        background: #ffca2c;
-                        box-shadow: 0 15px 30px rgba(255, 193, 7, 0.5);
-                    }
-                    .review-tooltip {
-                        position: absolute;
-                        right: 80px;
-                        background: rgba(0, 0, 0, 0.85);
-                        color: white;
-                        padding: 8px 16px;
-                        border-radius: 12px;
-                        font-size: 0.9rem;
-                        font-weight: 500;
-                        white-space: nowrap;
-                        opacity: 0;
-                        visibility: hidden;
-                        transition: all 0.3s;
-                        pointer-events: none;
-                        backdrop-filter: blur(4px);
-                        border: 1px solid rgba(255, 255, 255, 0.1);
-                    }
-                    .review-tooltip::after {
-                        content: '';
-                        position: absolute;
-                        right: -6px;
-                        top: 50%;
-                        transform: translateY(-50%);
-                        border-left: 6px solid rgba(0, 0, 0, 0.85);
-                        border-top: 6px solid transparent;
-                        border-bottom: 6px solid transparent;
-                    }
-                    .review-tooltip.visible {
-                        opacity: 1;
-                        visibility: visible;
-                        right: 75px;
+                        transform: translateY(-3px) scale(1.03);
+                        background: linear-gradient(135deg, #ffca2c 0%, #e0a800 100%);
+                        box-shadow: 0 15px 30px rgba(211, 158, 0, 0.5);
                     }
                     
                     @media (max-width: 768px) {
                         .review-float-btn {
-                            bottom: 100px;
+                            bottom: 85px;
                             right: 20px;
-                            width: 55px;
-                            height: 55px;
-                            font-size: 1.5rem;
+                            padding: 8px 14px;
+                        }
+                        .review-float-btn span {
+                            font-size: 0.75rem !important;
                         }
                     }
                 `}</style>

@@ -2,13 +2,32 @@ import React, { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
 import ImageLightbox from './ImageLightbox';
 
+const cleanFeatures = (features) => {
+    if (!features || !Array.isArray(features)) return [];
+    return features.filter(f => {
+        if (!f || typeof f !== 'string') return false;
+        const lower = f.toLowerCase();
+        return !(
+            lower.includes('validity') ||
+            lower.includes('before booking') ||
+            lower.includes('customize') ||
+            lower.includes('hidden charges') ||
+            lower.includes('hidden fees') ||
+            lower.includes('package price') ||
+            lower.includes('above cost includes') ||
+            lower.includes('the above cost includes') ||
+            lower.includes('inclusions & exclusions')
+        );
+    });
+};
+
 const fallbackPackages = [
     { name: 'Heritage Legend', price: '850', duration: '7 Days', features: ['Cultural Sites', 'Private Driver', 'Luxury Hotels'], color: 'var(--neon-yellow)' },
     { name: 'Wild Spirit', price: '1200', duration: '10 Days', features: ['Jungle Safari', 'Beach Villa', 'Guided Hikes'], color: 'var(--neon-green)' },
     { name: 'Island Romance', price: '2500', duration: '14 Days', features: ['Honeymoon Decor', 'Candlelight Dinner', 'All Inclusive'], color: 'var(--neon-yellow)' }
 ];
 
-const getFeatureIcon = (feature, color) => {
+const getFeatureIcon = (feature, color, isDark = false) => {
     const text = feature.toLowerCase();
     let iconClass = "fa-solid fa-circle-check"; // Default check
     
@@ -32,7 +51,10 @@ const getFeatureIcon = (feature, color) => {
         iconClass = "fa-solid fa-star";
     }
 
-    return <i className={iconClass} style={{ color: color, marginRight: '14px', fontSize: '1.1rem', filter: `drop-shadow(0 0 3px ${color}77)` }}></i>;
+    const iconColor = isDark ? (color === 'var(--neon-green)' ? '#0f766e' : '#b45309') : color;
+    const shadowFilter = isDark ? 'none' : `drop-shadow(0 0 3px ${color}77)`;
+
+    return <i className={iconClass} style={{ color: iconColor, marginRight: '14px', fontSize: '1.1rem', filter: shadowFilter }}></i>;
 };
 
 const TourPackages = () => {
@@ -165,12 +187,20 @@ const TourPackages = () => {
                                      </div>
                                 )}
 
-                                <div style={{ padding: '25px 30px 30px 30px', display: 'flex', flexDirection: 'column', flex: 1 }}>
+                                <div style={{ 
+                                    padding: '25px 30px 30px 30px', 
+                                    display: 'flex', 
+                                    flexDirection: 'column', 
+                                    flex: 1,
+                                    backgroundColor: '#ffffff',
+                                    borderBottomLeftRadius: '22px',
+                                    borderBottomRightRadius: '22px'
+                                }}>
                                      <div className="price-container" style={{ marginBottom: '22px', display: 'flex', alignItems: 'baseline' }}>
                                          {/* Actual Price Cut */}
                                          <span style={{ 
                                              textDecoration: 'line-through', 
-                                             color: 'rgba(255,255,255,0.4)', 
+                                             color: '#9ca3af', 
                                              fontSize: '1.05rem', 
                                              marginRight: '8px',
                                              fontWeight: '600',
@@ -180,21 +210,20 @@ const TourPackages = () => {
                                          </span>
                                          {/* Highlighted Current Price */}
                                          <span className="price-val" style={{ 
-                                             color: '#39ff14', 
+                                             color: '#16a34a', 
                                              fontSize: '1.8rem', 
                                              fontWeight: '950', 
-                                             fontFamily: 'var(--font-accent)', 
-                                             textShadow: '0 0 15px rgba(57, 255, 20, 0.4)' 
+                                             fontFamily: 'var(--font-accent)'
                                          }}>
                                              ${discountedPrice}
                                          </span>
-                                         <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.85rem', marginLeft: '6px', fontWeight: '500', fontFamily: 'var(--font-main)' }}>/ person</span>
+                                         <span style={{ color: '#6b7280', fontSize: '0.85rem', marginLeft: '6px', fontWeight: '600', fontFamily: 'var(--font-main)' }}>/ person</span>
                                      </div>
 
                                      <ul style={{ textAlign: 'left', marginBottom: '25px', padding: '0', listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '14px' }}>
-                                         {Array.isArray(pkg.features) && pkg.features.map((f, j) => (
-                                             <li key={j} style={{ color: 'rgba(255,255,255,0.7)', display: 'flex', alignItems: 'center', fontSize: '0.92rem', fontWeight: '500', fontFamily: 'var(--font-main)' }}>
-                                                 {getFeatureIcon(f, pkg.color)}
+                                         {Array.isArray(pkg.features) && cleanFeatures(pkg.features).map((f, j) => (
+                                             <li key={j} style={{ color: '#1f2937', display: 'flex', alignItems: 'center', fontSize: '0.92rem', fontWeight: '600', fontFamily: 'var(--font-main)' }}>
+                                                 {getFeatureIcon(f, pkg.color, true)}
                                                  {f}
                                              </li>
                                          ))}

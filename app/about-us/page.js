@@ -73,7 +73,7 @@ export default function AboutUs() {
                     textAlign: "center"
                 }}
             >
-                <div className="container">
+                <div className="container" style={{ paddingTop: '80px' }}>
                     <div className="reveal">
                         <span className="subtitle" style={{ color: "var(--neon-yellow)", textShadow: "var(--neon-glow)" }}>A Journey in Pursuit of Memories</span>
                         <h1 style={{ fontSize: "clamp(3.5rem, 8vw, 4.5rem)", margin: "20px 0", lineHeight: "1.1" }}>About Us</h1>

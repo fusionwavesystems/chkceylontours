@@ -5,6 +5,25 @@ import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import { supabase } from '../../lib/supabase';
 
+const cleanFeatures = (features) => {
+    if (!features || !Array.isArray(features)) return [];
+    return features.filter(f => {
+        if (!f || typeof f !== 'string') return false;
+        const lower = f.toLowerCase();
+        return !(
+            lower.includes('validity') ||
+            lower.includes('before booking') ||
+            lower.includes('customize') ||
+            lower.includes('hidden charges') ||
+            lower.includes('hidden fees') ||
+            lower.includes('package price') ||
+            lower.includes('above cost includes') ||
+            lower.includes('the above cost includes') ||
+            lower.includes('inclusions & exclusions')
+        );
+    });
+};
+
 const fallbackPackagesData = [
     {
         id: 1,
@@ -68,7 +87,7 @@ const fallbackPackagesData = [
     }
 ];
 
-const getFeatureIcon = (feature, color) => {
+const getFeatureIcon = (feature, color, isDark = false) => {
     if (!feature || typeof feature !== 'string') return null;
     const text = feature.toLowerCase();
     let iconClass = "fa-solid fa-circle-check"; // Default check
@@ -93,7 +112,10 @@ const getFeatureIcon = (feature, color) => {
         iconClass = "fa-solid fa-star";
     }
 
-    return <i className={iconClass} style={{ color: color, marginRight: '12px', fontSize: '1.05rem', filter: `drop-shadow(0 0 3px ${color}77)` }}></i>;
+    const iconColor = isDark ? (color === 'var(--neon-green)' ? '#0f766e' : '#b45309') : color;
+    const shadowFilter = isDark ? 'none' : `drop-shadow(0 0 3px ${color}77)`;
+
+    return <i className={iconClass} style={{ color: iconColor, marginRight: '12px', fontSize: '1.05rem', filter: shadowFilter }}></i>;
 };
 
 export default function TourPackages() {
@@ -103,6 +125,24 @@ export default function TourPackages() {
     useEffect(() => {
         const fetchPackages = async () => {
             try {
+                const peraheraOfferPackage = {
+                    id: 'perahera-special-offer',
+                    name: "Esala Perahera Special Offer",
+                    duration: "10 Days / 9 Nights",
+                    price: "1800",
+                    image: "/Activites/perahera.png",
+                    tag: "Special Offer",
+                    color: "#dc2626",
+                    features: [
+                        "Exclusive Perahera Front Row Seats",
+                        "Luxury Heritage Stays in Kandy",
+                        "Full Cultural Triangle Guided Tour",
+                        "Private English Speaking Driver",
+                        "Temple of the Tooth Relic Tour",
+                        "All Entrance Tickets Included"
+                    ]
+                };
+
                 const { data, error } = await supabase.from('packages').select('*');
                 if (error) throw error;
 
@@ -112,13 +152,30 @@ export default function TourPackages() {
                         color: pkg.color || 'var(--neon-green)',
                         features: Array.isArray(pkg.features) ? pkg.features : []
                     }));
-                    setPackagesData(sanitizedData);
+                    setPackagesData([peraheraOfferPackage, ...sanitizedData]);
                 } else {
-                    setPackagesData(fallbackPackagesData);
+                    setPackagesData([peraheraOfferPackage, ...fallbackPackagesData]);
                 }
             } catch (err) {
                 console.error('Error fetching packages:', err);
-                setPackagesData(fallbackPackagesData);
+                const fallbackPerahera = {
+                    id: 'perahera-special-offer',
+                    name: "Esala Perahera Special Offer",
+                    duration: "10 Days / 9 Nights",
+                    price: "1800",
+                    image: "/Activites/perahera.png",
+                    tag: "Special Offer",
+                    color: "#dc2626",
+                    features: [
+                        "Exclusive Perahera Front Row Seats",
+                        "Luxury Heritage Stays in Kandy",
+                        "Full Cultural Triangle Guided Tour",
+                        "Private English Speaking Driver",
+                        "Temple of the Tooth Relic Tour",
+                        "All Entrance Tickets Included"
+                    ]
+                };
+                setPackagesData([fallbackPerahera, ...fallbackPackagesData]);
             } finally {
                 setLoading(false);
             }
@@ -151,24 +208,25 @@ export default function TourPackages() {
                 position: 'relative'
             }}>
                 <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', background: 'linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.85) 100%)', zIndex: 1 }}></div>
-                <div className="hero-content" style={{ zIndex: 10, padding: '0 20px', textAlign: 'center', maxWidth: '100%', position: 'relative' }}>
+                <div className="hero-content" style={{ zIndex: 10, padding: '80px 20px 0 20px', textAlign: 'center', maxWidth: '100%', position: 'relative' }}>
                     <h1 className="reveal active" style={{ 
-                        fontSize: 'clamp(2.5rem, 8vw, 4.5rem)', 
+                        fontSize: 'clamp(2.5rem, 8vw, 5rem)', 
                         textShadow: '2px 2px 20px rgba(0, 0, 0, 0.95), var(--neon-glow)',
                         fontFamily: 'var(--font-display)',
-                        fontWeight: '800',
-                        textTransform: 'none'
+                        fontWeight: '900',
+                        textTransform: 'uppercase',
+                        letterSpacing: '2px'
                     }}>Curated Journeys</h1>
                     <p style={{ 
-                        color: 'rgba(255, 255, 255, 0.9)', 
-                        fontSize: '1.1rem', 
-                        fontWeight: '600', 
-                        marginTop: '15px',
-                        letterSpacing: '1.5px',
+                        color: 'var(--neon-yellow)', 
+                        fontSize: '1.2rem', 
+                        fontWeight: '700', 
+                        marginTop: '10px',
+                        letterSpacing: '3px',
                         textTransform: 'uppercase',
                         fontFamily: 'var(--font-accent)',
                         textShadow: '0 2px 10px rgba(0,0,0,0.9)'
-                    }}>Discover the Magic of Sri Lanka with CHK Ceylon Tours</p>
+                    }}>Discover the Magic of Sri Lanka</p>
                     <p style={{ 
                         color: 'rgba(255, 255, 255, 0.7)', 
                         fontSize: '0.95rem', 
@@ -193,6 +251,249 @@ export default function TourPackages() {
             <Navbar />
 
             <div className="container" style={{ padding: '80px 20px 100px 20px', position: 'relative', zIndex: 10 }}>
+
+                {/* Dedicated Row for Seasonal Special Offers */}
+                <div style={{ marginBottom: '80px' }}>
+                    <div style={{ textAlign: 'center', marginBottom: '45px' }}>
+                        <span className="subtitle" style={{ 
+                            color: '#ef4444', 
+                            textShadow: '0 0 15px rgba(220, 38, 38, 0.35)',
+                            letterSpacing: '4px',
+                            fontWeight: '800',
+                            display: 'block',
+                            marginBottom: '10px',
+                            fontFamily: 'var(--font-main)',
+                            fontSize: '1.05rem',
+                            textTransform: 'uppercase'
+                        }}>Limited seasonal offer</span>
+                        <h2 style={{ 
+                            color: '#fff', 
+                            fontSize: '2.5rem', 
+                            marginTop: '10px',
+                            fontFamily: 'var(--font-accent)',
+                            fontWeight: '900',
+                            textTransform: 'none'
+                        }}>Seasonal Special Offers</h2>
+                        <div style={{ width: '80px', height: '4px', background: 'linear-gradient(90deg, #dc2626 0%, #f97316 100%)', margin: '15px auto 0 auto', borderRadius: '2px' }}></div>
+                    </div>
+
+                    <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+                        <div className="fire-border-wrapper" style={{
+                            padding: '7.5px',
+                            borderRadius: '24px',
+                            background: 'linear-gradient(90deg, #dc2626, #000000, #ef4444, #000000, #dc2626)',
+                            backgroundSize: '300% 300%',
+                            position: 'relative',
+                            maxWidth: '420px',
+                            width: '100%',
+                            display: 'flex',
+                            flexDirection: 'column'
+                        }}>
+                            {packagesData.filter(pkg => pkg.id === 'perahera-special-offer').map(pkg => {
+                                const originalPrice = parseFloat(pkg.price);
+                                const discountedPrice = Math.round(originalPrice * 0.5); // 50% OFF
+                                return (
+                                    <div key={pkg.id} className="custom-pkg-card" style={{
+                                        border: 'none',
+                                        margin: 0,
+                                        height: '100%',
+                                        borderRadius: '20px',
+                                        overflow: 'visible',
+                                        position: 'relative'
+                                    }}>
+                                        {/* Floating Discount Badge Sitting Perfectly on top of border */}
+                                        <div style={{
+                                            position: 'absolute',
+                                            top: '-18px',
+                                            left: '20px',
+                                            background: '#dc2626',
+                                            border: '2.5px solid #ffffff',
+                                            color: '#ffffff',
+                                            padding: '5px 14px',
+                                            borderRadius: '8px',
+                                            fontSize: '0.85rem',
+                                            fontWeight: '950',
+                                            fontFamily: 'var(--font-accent)',
+                                            boxShadow: '0 0 15px rgba(220, 38, 38, 0.8)',
+                                            zIndex: 20,
+                                            letterSpacing: '0.5px',
+                                            textTransform: 'uppercase'
+                                        }}>
+                                            50% OFF SPECIAL
+                                        </div>
+
+                                        {/* Floating Gold Star Badge in the Top Right Corner */}
+                                        <div style={{
+                                            position: 'absolute',
+                                            top: '15px',
+                                            right: '15px',
+                                            background: 'linear-gradient(135deg, #fbbf24 0%, #d97706 100%)',
+                                            color: '#000',
+                                            width: '34px',
+                                            height: '34px',
+                                            borderRadius: '50%',
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            boxShadow: '0 0 15px rgba(251, 191, 36, 0.8)',
+                                            zIndex: 20,
+                                            border: '2px solid #ffffff'
+                                        }}>
+                                            <i className="fa-solid fa-star" style={{ fontSize: '1rem', color: '#000' }}></i>
+                                        </div>
+
+                                        {/* Modern Top Header for Package Title */}
+                                        <div style={{ 
+                                            padding: '22px 28px', 
+                                            borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
+                                            background: 'rgba(255, 255, 255, 0.02)',
+                                            display: 'flex',
+                                            justifyContent: 'space-between',
+                                            alignItems: 'flex-start',
+                                            gap: '15px',
+                                            borderTopLeftRadius: '20px',
+                                            borderTopRightRadius: '20px'
+                                        }}>
+                                            <div style={{ flexGrow: 1, minWidth: 0 }}>
+                                                <h3 style={{ 
+                                                    fontSize: '1.4rem', 
+                                                    color: '#fff', 
+                                                    margin: '0 0 8px 0',
+                                                    fontWeight: '800',
+                                                    fontFamily: 'var(--font-accent)',
+                                                    lineHeight: '1.25'
+                                                }}>{pkg.name}</h3>
+                                                <span style={{
+                                                    background: 'rgba(220, 38, 38, 0.15)',
+                                                    border: '1px solid rgba(220, 38, 38, 0.4)',
+                                                    color: '#ef4444',
+                                                    padding: '2px 8px',
+                                                    borderRadius: '4px',
+                                                    fontSize: '0.68rem',
+                                                    fontWeight: '800',
+                                                    textTransform: 'uppercase',
+                                                    letterSpacing: '0.5px',
+                                                    display: 'inline-block'
+                                                }}>
+                                                    {pkg.tag}
+                                                </span>
+                                            </div>
+                                            {/* Glowing Badge for Duration */}
+                                            <div style={{
+                                                background: '#dc2626',
+                                                borderRadius: '12px',
+                                                padding: '6px 14px',
+                                                color: '#fff',
+                                                fontSize: '0.75rem',
+                                                fontWeight: '900',
+                                                fontFamily: 'var(--font-accent)',
+                                                whiteSpace: 'nowrap',
+                                                boxShadow: `0 4px 15px rgba(220, 38, 38, 0.3)`,
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                gap: '6px',
+                                                textTransform: 'uppercase',
+                                                letterSpacing: '0.5px'
+                                            }}>
+                                                <i className="fa-regular fa-clock" style={{ color: '#fff' }}></i>
+                                                {pkg.duration}
+                                            </div>
+                                        </div>
+
+                                        <div style={{ position: 'relative', height: '220px', overflow: 'hidden' }}>
+                                            <img src={pkg.image} alt={pkg.name} className="custom-pkg-img" />
+                                            <div style={{
+                                                position: 'absolute',
+                                                bottom: 0,
+                                                left: 0,
+                                                width: '100%',
+                                                height: '60%',
+                                                background: 'linear-gradient(to top, rgba(12, 12, 12, 1) 0%, transparent 100%)',
+                                                zIndex: 1
+                                            }}></div>
+                                        </div>
+
+                                        <div style={{ 
+                                            padding: '25px 30px 30px 30px', 
+                                            flexGrow: 1, 
+                                            display: 'flex', 
+                                            flexDirection: 'column',
+                                            backgroundColor: '#ffffff',
+                                            borderBottomLeftRadius: '20px',
+                                            borderBottomRightRadius: '20px'
+                                        }}>
+                                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '22px', gap: '15px' }}>
+                                                <p style={{ 
+                                                    color: '#dc2626', 
+                                                    fontWeight: '800', 
+                                                    margin: 0, 
+                                                    display: 'flex', 
+                                                    alignItems: 'center', 
+                                                    gap: '8px',
+                                                    fontSize: '0.88rem',
+                                                    fontFamily: 'var(--font-accent)',
+                                                    letterSpacing: '0.5px'
+                                                }}>
+                                                    <i className="fa-regular fa-clock" style={{ fontSize: '0.95rem' }}></i>
+                                                    {pkg.duration}
+                                                </p>
+                                                <div style={{ textAlign: 'right', flexShrink: 0 }}>
+                                                    <span style={{ 
+                                                        textDecoration: 'line-through', 
+                                                        color: '#9ca3af', 
+                                                        fontSize: '1.05rem', 
+                                                        marginRight: '8px',
+                                                        fontWeight: '600',
+                                                        fontFamily: 'var(--font-accent)'
+                                                    }}>
+                                                        ${originalPrice}
+                                                    </span>
+                                                    <span style={{ 
+                                                        color: '#16a34a', 
+                                                        fontSize: '1.8rem', 
+                                                        fontWeight: '950', 
+                                                        fontFamily: 'var(--font-accent)'
+                                                    }}>
+                                                        ${discountedPrice}
+                                                    </span>
+                                                    <span style={{ color: '#6b7280', fontSize: '0.75rem', display: 'block', fontWeight: '600', fontFamily: 'var(--font-main)' }}>Per Person</span>
+                                                </div>
+                                            </div>
+
+                                            <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 30px 0', flexGrow: 1, display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                                                {cleanFeatures(pkg.features).map((feature, index) => (
+                                                    <li key={index} style={{ 
+                                                        color: '#1f2937', 
+                                                        display: 'flex', 
+                                                        alignItems: 'center', 
+                                                        fontSize: '0.92rem',
+                                                        fontWeight: '600',
+                                                        fontFamily: 'var(--font-main)'
+                                                    }}>
+                                                        {getFeatureIcon(feature, pkg.color, true)}
+                                                        {feature}
+                                                    </li>
+                                                ))}
+                                            </ul>
+
+                                            <a href={`https://wa.me/94776981971?text=I'm interested in the ${pkg.name} package`}
+                                                className="custom-pkg-btn"
+                                                style={{
+                                                    background: `linear-gradient(135deg, #dc2626 0%, #991b1b 100%)`,
+                                                    color: '#fff',
+                                                    boxShadow: `0 4px 15px rgba(220, 38, 38, 0.3)`
+                                                }}>
+                                                Enquire Now
+                                                <i className="fa-solid fa-paper-plane" style={{ fontSize: '0.85rem', transition: 'transform 0.3s ease' }}></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    </div>
+                </div>
+
                 <div style={{ textAlign: 'center', marginBottom: '60px' }}>
                     <span className="subtitle" style={{ 
                         color: 'var(--neon-yellow)', 
@@ -216,7 +517,7 @@ export default function TourPackages() {
                 </div>
 
                 <div className="packages-grid">
-                    {packagesData.map((pkg, index) => {
+                    {packagesData.filter(pkg => pkg.id !== 'perahera-special-offer').map((pkg, index) => {
                         const discounts = [10, 15, 15, 20, 25, 30];
                         const discountPercent = discounts[index % discounts.length];
                         const originalPrice = parseFloat(pkg.price);
@@ -318,11 +619,19 @@ export default function TourPackages() {
                                     }}></div>
                                 </div>
 
-                                <div style={{ padding: '25px 30px 30px 30px', flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
+                                <div style={{ 
+                                    padding: '25px 30px 30px 30px', 
+                                    flexGrow: 1, 
+                                    display: 'flex', 
+                                    flexDirection: 'column',
+                                    backgroundColor: '#ffffff',
+                                    borderBottomLeftRadius: '22px',
+                                    borderBottomRightRadius: '22px'
+                                }}>
                                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '22px', gap: '15px' }}>
                                         <p style={{ 
-                                            color: pkg.color === 'var(--neon-yellow)' ? '#ffcc00' : pkg.color, 
-                                            fontWeight: '700', 
+                                            color: pkg.color === 'var(--neon-yellow)' ? '#b45309' : (pkg.color === '#dc2626' ? '#dc2626' : '#0f766e'), 
+                                            fontWeight: '800', 
                                             margin: 0, 
                                             display: 'flex', 
                                             alignItems: 'center', 
@@ -338,7 +647,7 @@ export default function TourPackages() {
                                             {/* Actual Price Cut */}
                                             <span style={{ 
                                                 textDecoration: 'line-through', 
-                                                color: 'rgba(255,255,255,0.4)', 
+                                                color: '#9ca3af', 
                                                 fontSize: '1.05rem', 
                                                 marginRight: '8px',
                                                 fontWeight: '600',
@@ -348,39 +657,38 @@ export default function TourPackages() {
                                             </span>
                                             {/* Highlighted Current Price */}
                                             <span style={{ 
-                                                color: '#39ff14', 
+                                                color: '#16a34a', 
                                                 fontSize: '1.8rem', 
                                                 fontWeight: '950', 
-                                                fontFamily: 'var(--font-accent)', 
-                                                textShadow: '0 0 15px rgba(57, 255, 20, 0.4)' 
+                                                fontFamily: 'var(--font-accent)'
                                             }}>
                                                 ${discountedPrice}
                                             </span>
-                                            <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.75rem', display: 'block', fontWeight: '500', fontFamily: 'var(--font-main)' }}>Per Person</span>
+                                            <span style={{ color: '#6b7280', fontSize: '0.75rem', display: 'block', fontWeight: '600', fontFamily: 'var(--font-main)' }}>Per Person</span>
                                         </div>
                                     </div>
 
                                 <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 30px 0', flexGrow: 1, display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                                    {pkg.features.map((feature, index) => (
+                                    {cleanFeatures(pkg.features).map((feature, index) => (
                                         <li key={index} style={{ 
-                                            color: 'rgba(255,255,255,0.7)', 
+                                            color: '#1f2937', 
                                             display: 'flex', 
                                             alignItems: 'center', 
                                             fontSize: '0.92rem',
-                                            fontWeight: '500',
+                                            fontWeight: '600',
                                             fontFamily: 'var(--font-main)'
                                         }}>
-                                            {getFeatureIcon(feature, pkg.color)}
+                                            {getFeatureIcon(feature, pkg.color, true)}
                                             {feature}
                                         </li>
                                     ))}
                                 </ul>
 
-                                <a href={`https://wa.me/94771234567?text=I'm interested in the ${pkg.name} package`}
+                                <a href={`https://wa.me/94776981971?text=I'm interested in the ${pkg.name} package`}
                                     className="custom-pkg-btn"
                                     style={{
-                                        background: `linear-gradient(135deg, ${pkg.color} 0%, ${pkg.color === 'var(--neon-green)' ? '#15b300' : '#ffb300'} 100%)`,
-                                        color: '#000',
+                                        background: `linear-gradient(135deg, ${pkg.color} 0%, ${pkg.color === 'var(--neon-green)' ? '#15b300' : (pkg.color === '#dc2626' ? '#991b1b' : '#ffb300')} 100%)`,
+                                        color: pkg.color === '#dc2626' ? '#fff' : '#000',
                                         boxShadow: `0 4px 15px ${pkg.color}33`
                                     }}>
                                     Enquire Now
@@ -434,6 +742,47 @@ export default function TourPackages() {
                     border-color: var(--neon-green) !important;
                     box-shadow: 0 25px 50px rgba(57, 255, 20, 0.25),
                                 0 0 30px rgba(57, 255, 20, 0.12) !important;
+                }
+
+                /* Firing Special Offer Permanent Flame Flicker */
+                .fire-border-wrapper {
+                    animation: fire-border-running 2.5s linear infinite, fire-flicker 0.9s infinite ease-in-out !important;
+                    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1) !important;
+                }
+
+                .fire-border-wrapper:hover {
+                    transform: translateY(-15px) scale(1.035) !important;
+                    box-shadow: 0 25px 60px rgba(249, 115, 22, 0.5), 
+                                0 0 45px rgba(220, 38, 38, 0.3) !important;
+                }
+
+                @keyframes fire-border-running {
+                    0% { background-position: 0% 50%; }
+                    50% { background-position: 100% 50%; }
+                    100% { background-position: 0% 50%; }
+                }
+
+                @keyframes fire-flicker {
+                    0%, 100% {
+                        box-shadow: 0 0 35px rgba(220, 38, 38, 0.85), 
+                                    0 -12px 40px rgba(249, 115, 22, 0.6), 
+                                    0 12px 25px rgba(0, 0, 0, 0.6) !important;
+                    }
+                    25% {
+                        box-shadow: 0 0 45px rgba(220, 38, 38, 0.95), 
+                                    0 -20px 50px rgba(234, 179, 8, 0.7), 
+                                    0 12px 25px rgba(0, 0, 0, 0.6) !important;
+                    }
+                    50% {
+                        box-shadow: 0 0 32px rgba(220, 38, 38, 0.75), 
+                                    0 -10px 35px rgba(249, 115, 22, 0.5), 
+                                    0 12px 25px rgba(0, 0, 0, 0.6) !important;
+                    }
+                    75% {
+                        box-shadow: 0 0 50px rgba(220, 38, 38, 0.98), 
+                                    0 -25px 65px rgba(249, 115, 22, 0.85), 
+                                    0 12px 25px rgba(0, 0, 0, 0.6) !important;
+                    }
                 }
 
                 .custom-pkg-img {

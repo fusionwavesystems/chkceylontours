@@ -11,59 +11,42 @@ const WhatsAppButton = () => {
             rel="noopener noreferrer"
             aria-label="Chat with us on WhatsApp"
         >
-            <i className="fab fa-whatsapp"></i>
-            <span className="tooltip">Chat with us!</span>
+            <i className="fab fa-whatsapp" style={{ fontSize: '1.8rem' }}></i>
+
             <style jsx>{`
                 .float-wp {
                     position: fixed;
-                    bottom: 30px;
+                    bottom: 25px;
                     right: 30px;
-                    width: 65px;
-                    height: 65px;
-                    background: #25d366;
+                    width: 60px;
+                    height: 60px;
+                    background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
                     color: white;
+                    border: 1px solid rgba(255, 255, 255, 0.15);
                     border-radius: 50%;
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    font-size: 2.2rem;
-                    box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4);
+                    box-shadow: 0 10px 30px rgba(18, 140, 126, 0.4);
                     z-index: 10000;
                     text-decoration: none;
-                    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+                    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
                 }
                 .float-wp:hover {
-                    transform: scale(1.1);
-                    background: #20ba5a;
+                    transform: translateY(-3px) scale(1.05);
+                    background: linear-gradient(135deg, #20ba5a 0%, #0f766e 100%);
+                    box-shadow: 0 15px 35px rgba(18, 140, 126, 0.6);
                 }
-                .tooltip {
-                    position: absolute;
-                    right: 80px;
-                    background: rgba(0, 0, 0, 0.8);
-                    color: white;
-                    padding: 8px 15px;
-                    border-radius: 10px;
-                    font-size: 0.9rem;
-                    white-space: nowrap;
-                    opacity: 0;
-                    visibility: hidden;
-                    transition: 0.3s;
-                    pointer-events: none;
-                }
-                .tooltip::after {
-                    content: '';
-                    position: absolute;
-                    right: -5px;
-                    top: 50%;
-                    transform: translateY(-50%);
-                    border-left: 5px solid rgba(0, 0, 0, 0.8);
-                    border-top: 5px solid transparent;
-                    border-bottom: 5px solid transparent;
-                }
-                .float-wp:hover .tooltip {
-                    opacity: 1;
-                    visibility: visible;
-                    right: 75px;
+                @media (max-width: 768px) {
+                    .float-wp {
+                        bottom: 20px;
+                        right: 20px;
+                        width: 50px;
+                        height: 50px;
+                    }
+                    .float-wp i {
+                        font-size: 1.5rem !important;
+                    }
                 }
             `}</style>
         </a>
