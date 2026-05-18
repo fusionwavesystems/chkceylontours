@@ -173,11 +173,11 @@ export default function ActivitiesPage() {
                 <div style={{ position: 'relative', zIndex: 10, maxWidth: '900px', paddingTop: '80px' }}>
                     <h1 className="reveal active" style={{ 
                         fontSize: 'clamp(2.5rem, 8vw, 5rem)', 
-                        textShadow: '2px 2px 20px rgba(0, 0, 0, 0.95), var(--neon-glow)',
-                        fontFamily: 'var(--font-display)',
-                        fontWeight: '900',
-                        textTransform: 'uppercase',
-                        letterSpacing: '2px',
+                        textShadow: '1px 1px 12px rgba(0, 0, 0, 0.8)',
+                        fontFamily: 'var(--font-main)',
+                        fontWeight: '700',
+                        textTransform: 'none',
+                        letterSpacing: '0.5px',
                         margin: 0
                     }}>Activities to Do</h1>
                     <p style={{ 

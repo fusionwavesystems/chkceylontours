@@ -22,7 +22,7 @@ const GuestMemorySlider = () => {
                         transition: 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)'
                     }}>
                         <img 
-                            src={img.image} 
+                            src={img.image} loading="lazy" decoding="async" 
                             alt={img.country} 
                             style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                         />

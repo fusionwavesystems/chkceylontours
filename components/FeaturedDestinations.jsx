@@ -28,7 +28,7 @@ const FeaturedDestinations = ({ destinations }) => {
                     {displayDestinations.map((dest, i) => (
                         <div key={i} className="dest-card">
 
-                            <img src={dest.image} alt={dest.title} style={{ cursor: 'pointer' }} onClick={() => setSelectedImage(dest.image)} />
+                            <img src={dest.image} alt={dest.title} style={{ cursor: 'pointer' }} onClick={() => setSelectedImage(dest.image)} loading="lazy" decoding="async" />
 
                             <div className="dest-overlay"></div>
                             <div className="dest-info">

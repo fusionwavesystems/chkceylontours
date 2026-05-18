@@ -88,17 +88,17 @@ const TourPackages = () => {
             <div className="container">
                 <div className="section-header reveal">
                     <span className="subtitle" style={{ 
-                        color: 'var(--neon-green)', 
-                        textShadow: 'var(--neon-glow-green)',
+                        color: 'var(--neon-yellow)', 
+                        textShadow: '0 2px 10px rgba(0,0,0,0.9)',
                         letterSpacing: '4px',
-                        fontWeight: '700',
+                        fontWeight: '800',
                         display: 'block',
                         marginBottom: '10px',
                         fontFamily: 'var(--font-main)',
                         fontSize: '1.05rem'
                     }}>Curated Journeys</span>
-                    <h2 style={{ color: 'white', fontFamily: 'var(--font-accent)', fontSize: '2.5rem', fontWeight: '800', textTransform: 'none' }}>Featured Tour Packages</h2>
-                    <div style={{ width: '80px', height: '4px', background: 'var(--gradient-vibrant)', marginTop: '15px', borderRadius: '2px' }}></div>
+                    <h2 style={{ color: 'white', fontFamily: 'var(--font-display)', fontSize: 'clamp(2.5rem, 6vw, 4.2rem)', fontWeight: '900', textTransform: 'uppercase', letterSpacing: '1px', textShadow: '2px 2px 20px rgba(0, 0, 0, 0.95), var(--neon-glow)', lineHeight: '1.1' }}>Featured Tour Packages</h2>
+                    <div style={{ width: '280px', height: '14px', background: 'linear-gradient(90deg, #facc15 0%, #d97706 100%)', marginTop: '25px', borderRadius: '12px', boxShadow: '0 4px 15px rgba(250, 204, 21, 0.25)' }}></div>
                 </div>
 
                 <div className="package-slider">
@@ -183,7 +183,7 @@ const TourPackages = () => {
 
                                 {pkg.image && (
                                      <div className="custom-package-card-img-wrapper" onClick={() => setSelectedImage(pkg.image)}>
-                                         <img src={pkg.image} alt={pkg.name} className="custom-package-card-img" />
+                                         <img src={pkg.image} alt={pkg.name} className="custom-package-card-img" loading="lazy" decoding="async" />
                                      </div>
                                 )}
 

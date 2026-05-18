@@ -180,7 +180,7 @@ const GallerySlider = ({
                                               src={img.image} 
                                               alt={img.country || 'Destination Captured Moment'} 
                                               className="gallery-card-img"
-                                              loading="lazy"
+                                              loading="lazy" decoding="async"
                                           />
                                           {/* Solid high-contrast yellow badge with bold black text on top-right of the photo */}
                                           {duration && (
@@ -303,11 +303,11 @@ const GallerySlider = ({
 
                 /* Gentle premium out-of-phase floating wave animation */
                 .gallery-card-wrapper:nth-child(odd) {
-                    animation: cardFloatOdd 7s ease-in-out infinite;
+                    /* disabled float to prevent layout thrashing */
                 }
 
                 .gallery-card-wrapper:nth-child(even) {
-                    animation: cardFloatEven 7s ease-in-out infinite;
+                    /* disabled float to prevent layout thrashing */
                 }
 
                 .gallery-card-wrapper:hover {

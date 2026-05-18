@@ -211,12 +211,12 @@ export default function TourPackages() {
                 <div className="hero-content" style={{ zIndex: 10, padding: '80px 20px 0 20px', textAlign: 'center', maxWidth: '100%', position: 'relative' }}>
                     <h1 className="reveal active" style={{ 
                         fontSize: 'clamp(2.5rem, 8vw, 5rem)', 
-                        textShadow: '2px 2px 20px rgba(0, 0, 0, 0.95), var(--neon-glow)',
-                        fontFamily: 'var(--font-display)',
-                        fontWeight: '900',
-                        textTransform: 'uppercase',
-                        letterSpacing: '2px'
-                    }}>Curated Journeys</h1>
+                        textShadow: '1px 1px 12px rgba(0, 0, 0, 0.8)',
+                        fontFamily: 'var(--font-main)',
+                        fontWeight: '700',
+                        textTransform: 'none',
+                        letterSpacing: '0.5px'
+                    }}>Tour Packages</h1>
                     <p style={{ 
                         color: 'var(--neon-yellow)', 
                         fontSize: '1.2rem', 
@@ -401,7 +401,7 @@ export default function TourPackages() {
                                         </div>
 
                                         <div style={{ position: 'relative', height: '220px', overflow: 'hidden' }}>
-                                            <img src={pkg.image} alt={pkg.name} className="custom-pkg-img" />
+                                            <img src={pkg.image} alt={pkg.name} className="custom-pkg-img" loading="lazy" decoding="async" />
                                             <div style={{
                                                 position: 'absolute',
                                                 bottom: 0,
@@ -607,7 +607,7 @@ export default function TourPackages() {
                                 </div>
 
                                 <div style={{ position: 'relative', height: '220px', overflow: 'hidden' }}>
-                                    <img src={pkg.image} alt={pkg.name} className="custom-pkg-img" />
+                                    <img src={pkg.image} alt={pkg.name} className="custom-pkg-img" loading="lazy" decoding="async" />
                                     <div style={{
                                         position: 'absolute',
                                         bottom: 0,

@@ -108,7 +108,7 @@ export default function Hotels() {
                     {hotelsData.map((hotel) => (
                         <div key={hotel.id} className="dest-card pulse-glow" style={{ height: '480px', border: '1px solid rgba(255, 255, 255, 0.1)' }}>
 
-                            <img src={hotel.image} alt={hotel.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                            <img src={hotel.image} alt={hotel.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} loading="lazy" decoding="async" />
                             <div className="dest-overlay" style={{ background: 'linear-gradient(to bottom, transparent 40%, rgba(0, 0, 0, 0.95))' }}></div>
                             <div className="dest-info" style={{ padding: '30px' }}>
                                 <h3 style={{ fontSize: '1.8rem', color: '#fff', marginBottom: '8px' }}>{hotel.name}</h3>

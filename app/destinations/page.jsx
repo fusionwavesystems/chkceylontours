@@ -71,18 +71,28 @@ export default function Destinations() {
         display: 'block'
       }}>
         <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', background: 'linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.85) 100%)', zIndex: 1 }}></div>
-        <div className="hero-content" style={{ zIndex: 10, padding: '0 20px', textAlign: 'center', maxWidth: '850px', margin: '0 auto', position: 'relative' }}>
+        <div className="hero-content" style={{ zIndex: 10, padding: '80px 20px 0 20px', textAlign: 'center', maxWidth: '850px', margin: '0 auto', position: 'relative' }}>
             <h1 className="reveal active" style={{ 
-                fontSize: 'clamp(2.5rem, 6vw, 4.5rem)', 
-                textTransform: 'uppercase',
-                fontWeight: '900',
-                letterSpacing: '1px',
-                color: '#fff',
-                margin: '0 0 35px 0',
-                textShadow: '2px 2px 15px rgba(0, 0, 0, 0.9), var(--neon-glow)' 
+                fontSize: 'clamp(2.5rem, 8vw, 5rem)', 
+                textShadow: '1px 1px 12px rgba(0, 0, 0, 0.8)',
+                fontFamily: 'var(--font-main)',
+                fontWeight: '700',
+                textTransform: 'none',
+                letterSpacing: '0.5px',
+                margin: '0 0 10px 0'
             }}>
-              {districtData ? districtData.name : (selectedProvince ? selectedProvince.name : 'Explore Destination')}
+              {districtData ? districtData.name : (selectedProvince ? selectedProvince.name : 'Destinations')}
             </h1>
+            <p style={{ 
+                color: 'var(--neon-yellow)', 
+                fontSize: '1.2rem', 
+                fontWeight: '700', 
+                margin: '0 0 25px 0',
+                letterSpacing: '3px',
+                textTransform: 'uppercase',
+                fontFamily: 'var(--font-accent)',
+                textShadow: '0 2px 10px rgba(0,0,0,0.9)'
+            }}>The Wonders of Ceylon</p>
 
             {/* Render the Why Choose CHK Ceylon Tours section ONLY on the main destinations index page */}
             {!selectedProvince && !selectedDistrictId && (

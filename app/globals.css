@@ -491,6 +491,10 @@ nav.scrolled .nav-links a {
     gap: 30px;
     width: max-content;
     animation: rotateLeft 40s linear infinite;
+    will-change: transform;
+    backface-visibility: hidden;
+    perspective: 1000px;
+    transform-style: preserve-3d;
 }
 
 .destinations-slider:hover {
@@ -499,11 +503,11 @@ nav.scrolled .nav-links a {
 
 @keyframes rotateLeft {
     from {
-        transform: translateX(0);
+        transform: translate3d(0, 0, 0);
     }
 
     to {
-        transform: translateX(-50%);
+        transform: translate3d(-50%, 0, 0);
     }
 }
 

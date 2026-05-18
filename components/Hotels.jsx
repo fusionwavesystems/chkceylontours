@@ -96,7 +96,7 @@ const Hotels = () => {
                                 background: 'linear-gradient(#000, #000) padding-box, linear-gradient(135deg, #0d4a25 0%, #22c55e 100%) border-box'
                             }}>
                                 <img 
-                                    src={hotel.image || 'https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=800&auto=format&fit=crop'} 
+                                    src={hotel.image || 'https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=800&auto=format&fit=crop'} loading="lazy" decoding="async" 
                                     alt={hotel.name} 
                                     style={{ width: '100%', height: '100%', objectFit: 'cover', cursor: 'pointer', transition: 'transform 1.2s cubic-bezier(0.16, 1, 0.3, 1)' }} 
                                     onClick={() => setSelectedImage(hotel.image)}
