@@ -1100,3 +1100,11 @@ nav.scrolled .nav-links a {
         margin-top: 0 !important;
     }
 }
+
+/* Hide floating buttons when the mobile menu overlay is active */
+body.menu-open .float-wp,
+body.menu-open .review-float-btn {
+    opacity: 0 !important;
+    pointer-events: none !important;
+    transform: translateY(20px) !important;
+}
