@@ -1,16 +1,31 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ReviewFormModal from './ReviewFormModal';
 
 const ReviewFloatingButton = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isVisible, setIsVisible] = useState(true);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            // Hide if within 250px of the bottom (near footer)
+            const isNearBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 250;
+            setIsVisible(!isNearBottom);
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        // Initial check
+        handleScroll();
+
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
 
     return (
         <>
             <button 
                 onClick={() => setIsModalOpen(true)}
-                className="review-float-btn"
+                className={`review-float-btn ${!isVisible ? 'hidden-btn' : ''}`}
                 aria-label="Give us a review"
             >
                 <i className="fas fa-star" style={{ fontSize: '0.95rem', color: '#000' }}></i>
@@ -55,6 +70,12 @@ const ReviewFloatingButton = () => {
                         .review-float-btn span {
                             font-size: 0.75rem !important;
                         }
+                    }
+
+                    .hidden-btn {
+                        opacity: 0 !important;
+                        pointer-events: none !important;
+                        transform: translateY(20px) !important;
                     }
                 `}</style>
             </button>

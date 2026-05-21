@@ -47,6 +47,7 @@ export default function Hotels() {
     useEffect(() => {
         const fetchHotels = async () => {
             try {
+                document.title = "Luxury Hotels & Stays in Sri Lanka | CHK Ceylon Tours";
                 const { data, error } = await supabase.from('hotels').select('*');
                 if (error) throw error;
 
@@ -73,8 +74,6 @@ export default function Hotels() {
 
     return (
         <div style={{ minHeight: '100vh', backgroundColor: '#000', position: 'relative' }}>
-            <title>Luxury Hotels & Stays in Sri Lanka | CHK Ceylon Tours</title>
-            <meta name="description" content="Book the finest luxury hotels and eco-lodges in Sri Lanka. From beachfront resorts in Tangalle to safari lodges in Yala, we curate the best stays for your journey." />
 
             {/* Hero Section */}
             <section className="hero" style={{

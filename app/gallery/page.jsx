@@ -8,6 +8,8 @@ import WhatsAppButton from '@/components/WhatsAppButton';
 
 export default function GalleryPage() {
     useEffect(() => {
+        document.title = "Travel Gallery | CHK Ceylon Tours - Moments in Sri Lanka";
+
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -37,9 +39,6 @@ export default function GalleryPage() {
 
     return (
         <div className="app-main" style={{ background: '#000000', minHeight: '100vh' }}>
-            <title>Travel Gallery | CHK Ceylon Tours - Moments in Sri Lanka</title>
-            <meta name="description" content="Explore our travel gallery featuring beautiful moments from across Sri Lanka. See the beauty of Ella, Galle, Mirissa and more through our lens." />
-            
             <Navbar />
 
             {/* Hero Section */}

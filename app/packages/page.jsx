@@ -129,6 +129,7 @@ export default function TourPackages() {
     useEffect(() => {
         const fetchPackages = async () => {
             try {
+                document.title = "Premium Tour Packages | Sri Lanka Travel - CHK Ceylon Tours";
                 const peraheraOfferPackage = {
                     id: 'perahera-special-offer',
                     name: "Esala Perahera Special Offer",
@@ -204,8 +205,6 @@ export default function TourPackages() {
 
     return (
         <div style={{ minHeight: '100vh', backgroundColor: '#000', position: 'relative', overflowX: 'hidden' }}>
-            <title>Premium Tour Packages | Sri Lanka Travel - CHK Ceylon Tours</title>
-            <meta name="description" content="Explore our curated Sri Lankan tour packages. Whether you're seeking a romantic honeymoon, a wild adventure, or a cultural deep-dive, we have the perfect itinerary for you." />
 
             {/* Hero Section with Beautiful Glassmorphic Off-White Title Card */}
             <section className="hero" style={{

@@ -21,7 +21,7 @@ const Banner = () => {
                     text-transform: uppercase;
                     box-shadow: 0 4px 20px rgba(220, 38, 38, 0.5);
                     position: relative;
-                    z-index: 1001;
+                    z-index: 99;
                     animation: shine 4s linear infinite;
                     border-bottom: 2px solid #ef4444;
                     font-family: var(--font-accent);

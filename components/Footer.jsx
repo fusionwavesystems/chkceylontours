@@ -29,27 +29,48 @@ const Footer = () => {
                 <div className="divider" style={{ width: '100%', height: '1px', background: 'rgba(255,255,255,0.1)', marginBottom: '30px' }}></div>
 
                 <div className="bottom-links" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '20px', opacity: 0.6, fontSize: '0.9rem' }}>
-                    <p>
-                        © Software designed by{' '}
+                    <div className="dev-credit-gradient-wrapper" style={{
+                        padding: '1.5px',
+                        background: 'linear-gradient(90deg, #00d4ff 0%, #0072ff 100%)',
+                        borderRadius: '30px',
+                        display: 'inline-flex',
+                        boxShadow: '0 4px 20px rgba(0, 114, 255, 0.3)',
+                        margin: '0 auto'
+                    }}>
+                        <div className="dev-credit-box" style={{
+                            padding: '12px 24px',
+                            background: '#151515', // Dark background to cover the gradient inside
+                            borderRadius: '29px',
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            flexWrap: 'wrap',
+                            gap: '8px',
+                        }}>
+                        <span>© Software designed by</span>
                         <a href="https://fusionwavesystems.com" target="_blank" rel="noopener noreferrer" style={{ 
                             background: 'linear-gradient(90deg, #00d4ff 0%, #0072ff 100%)', 
                             WebkitBackgroundClip: 'text', 
                             WebkitTextFillColor: 'transparent',
                             fontWeight: '800',
                             textDecoration: 'none',
-                            display: 'inline-block'
+                            display: 'inline-block',
+                            whiteSpace: 'nowrap'
                         }}>
                             Fusion Wave Systems (Pvt) Ltd
-                        </a>{' '}
-                        |{' '}
-                        <a href="tel:+94718530500" style={{ color: 'white', textDecoration: 'none' }} onMouseOver={(e) => e.target.style.textDecoration = 'underline'} onMouseOut={(e) => e.target.style.textDecoration = 'none'}>
-                            +94 71 8 530 500
-                        </a>{' '}
-                        /{' '}
-                        <a href="tel:+94726530500" style={{ color: 'white', textDecoration: 'none' }} onMouseOver={(e) => e.target.style.textDecoration = 'underline'} onMouseOut={(e) => e.target.style.textDecoration = 'none'}>
-                            +94 72 6 530 500
                         </a>
-                    </p>
+                        <span style={{ opacity: 0.5 }}>|</span>
+                        <span style={{ whiteSpace: 'nowrap' }}>
+                            <a href="tel:+94718530500" style={{ color: 'white', textDecoration: 'none' }} onMouseOver={(e) => e.target.style.textDecoration = 'underline'} onMouseOut={(e) => e.target.style.textDecoration = 'none'}>
+                                +94 71 8 530 500
+                            </a>
+                            <span style={{ margin: '0 6px', opacity: 0.5 }}>/</span>
+                            <a href="tel:+94726530500" style={{ color: 'white', textDecoration: 'none' }} onMouseOver={(e) => e.target.style.textDecoration = 'underline'} onMouseOut={(e) => e.target.style.textDecoration = 'none'}>
+                                +94 72 6 530 500
+                            </a>
+                        </span>
+                    </div>
+                    </div>
                     <div style={{ display: 'flex', gap: '30px' }}>
                         <a href="/admin/login" style={{ color: 'white' }} title="Admin Login"><i className="fas fa-lock"></i></a>
                         <a href="/about-us" style={{ color: 'white' }}>About Us</a>

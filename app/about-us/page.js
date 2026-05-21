@@ -22,6 +22,8 @@ export default function AboutUs() {
 
     useEffect(() => {
         if (!loading) {
+            document.title = "About Us | CHK Ceylon Tours - Your Sri Lanka Travel Experts";
+            
             const observer = new IntersectionObserver(
                 (entries) => {
                     entries.forEach((entry) => {
@@ -56,8 +58,6 @@ export default function AboutUs() {
 
     return (
         <div className="app-main">
-            <title>About Us | CHK Ceylon Tours - Your Sri Lanka Travel Experts</title>
-            <meta name="description" content="Learn about CHK Ceylon Tours, our mission to provide authentic Sri Lankan experiences, and why we are the top choice for travelers worldwide." />
             <Navbar config={config} />
 
             <section

@@ -155,16 +155,11 @@ export default function RootLayout({ children }) {
           rel="stylesheet"
         />
 
-        {/* Font Awesome — load asynchronously to avoid render-blocking */}
+        {/* Font Awesome */}
         <link
           rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-          media="print"
-          onLoad="this.media='all'"
         />
-        <noscript>
-          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-        </noscript>
 
         {/* JSON-LD Structured Data for Google Search */}
         <script

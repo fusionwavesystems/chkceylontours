@@ -36,6 +36,10 @@ export default function AllReviews() {
         fetchData();
     }, []);
 
+    useEffect(() => {
+        document.title = "Guest Reviews | CHK Ceylon Tours";
+    }, []);
+
     if (loading) {
         return (
             <div className="loading-state h-screen flex items-center justify-center">
@@ -46,8 +50,6 @@ export default function AllReviews() {
 
     return (
         <div className="reviews-page min-h-screen">
-            <title>Guest Reviews | CHK Ceylon Tours</title>
-            <meta name="description" content="Read what our guests have to say about their experiences with CHK Ceylon Tours." />
             
             <Navbar config={config} />
 

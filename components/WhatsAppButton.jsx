@@ -1,12 +1,28 @@
 "use client";
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 const WhatsAppButton = () => {
+    const [isVisible, setIsVisible] = useState(true);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            // Hide if within 250px of the bottom (near footer)
+            const isNearBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 250;
+            setIsVisible(!isNearBottom);
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        // Initial check
+        handleScroll();
+
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
+
     return (
         <a
             href="https://wa.me/94776981971"
-            className="float-wp"
+            className={`float-wp ${!isVisible ? 'hidden-btn' : ''}`}
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Chat with us on WhatsApp"
@@ -81,6 +97,12 @@ const WhatsAppButton = () => {
                         width: 26px !important;
                         height: 26px !important;
                     }
+                }
+
+                .hidden-btn {
+                    opacity: 0 !important;
+                    pointer-events: none !important;
+                    transform: translateY(20px) !important;
                 }
             `}</style>
         </a>
