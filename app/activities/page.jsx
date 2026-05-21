@@ -3,6 +3,43 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
+import { supabase } from '../../lib/supabase';
+
+const getFeatureIcon = (feature, color, isDark = false) => {
+    if (!feature || typeof feature !== 'string') return null;
+    const text = feature.toLowerCase();
+    let iconClass = "fa-solid fa-location-dot"; // Default travel bullet (no tick-box)
+    
+    if (text.includes('culture') || text.includes('site') || text.includes('temple') || text.includes('heritage') || text.includes('ancient') || text.includes('unesco') || text.includes('fortress') || text.includes('fort') || text.includes('museum')) {
+        iconClass = "fa-solid fa-landmark-dome";
+    } else if (text.includes('driver') || text.includes('car') || text.includes('transfer') || text.includes('transport') || text.includes('private') || text.includes('comfort') || text.includes('vehicle') || text.includes('chauffeur') || text.includes('air cond') || text.includes('jeep') || text.includes('4x4') || text.includes('ride') || text.includes('boat')) {
+        iconClass = "fa-solid fa-car-rear";
+    } else if (text.includes('hotel') || text.includes('resort') || text.includes('stay') || text.includes('accommodation') || text.includes('luxury') || text.includes('villa') || text.includes('glamping') || text.includes('saty')) {
+        iconClass = "fa-solid fa-hotel";
+    } else if (text.includes('safari') || text.includes('wild') || text.includes('jungle') || text.includes('animal') || text.includes('leopard') || text.includes('elephant') || text.includes('yala') || text.includes('national park') || text.includes('spot') || text.includes('track') || text.includes('crocodile') || text.includes('naturalist')) {
+        iconClass = "fa-solid fa-paw";
+    } else if (text.includes('beach') || text.includes('coast') || text.includes('sea') || text.includes('whale') || text.includes('surf') || text.includes('fishing') || text.includes('ocean') || text.includes('coral') || text.includes('snorkeling') || text.includes('scuba') || text.includes('river')) {
+        iconClass = "fa-solid fa-umbrella-beach";
+    } else if (text.includes('hike') || text.includes('trek') || text.includes('mountain') || text.includes('climb') || text.includes('hill') || text.includes('plain') || text.includes('trail') || text.includes('summit') || text.includes('peak') || text.includes('view') || text.includes('nature') || text.includes('village')) {
+        iconClass = "fa-solid fa-mountain-sun";
+    } else if (text.includes('honeymoon') || text.includes('romance') || text.includes('decor') || text.includes('love') || text.includes('couple')) {
+        iconClass = "fa-solid fa-heart";
+    } else if (text.includes('dinner') || text.includes('meal') || text.includes('food') || text.includes('drink') || text.includes('fiesta') || text.includes('seafood') || text.includes('breakfast') || text.includes('lunch') || text.includes('tea')) {
+        iconClass = "fa-solid fa-utensils";
+    } else if (text.includes('tax') || text.includes('taxes') || text.includes('vat') || text.includes('charge') || text.includes('government') || text.includes('fee')) {
+        iconClass = "fa-solid fa-file-invoice-dollar";
+    } else if (text.includes('guide') || text.includes('chauffeur') || text.includes('guid') || text.includes('speaking') || text.includes('chaufer') || text.includes('instructor')) {
+        iconClass = "fa-solid fa-user-tie";
+    } else if (text.includes('inclusive') || text.includes('tour') || text.includes('all') || text.includes('immersion') || text.includes('explorer') || text.includes('ticket') || text.includes('entrance') || text.includes('permit')) {
+        iconClass = "fa-solid fa-star";
+    }
+
+    const iconColor = isDark ? (color === 'var(--neon-green)' ? '#0f766e' : '#b45309') : color;
+    const shadowFilter = isDark ? 'none' : `drop-shadow(0 0 3px ${color}77)`;
+
+    return <i className={iconClass} style={{ color: iconColor, marginRight: '10px', fontSize: '0.95rem', filter: shadowFilter }}></i>;
+};
+
 
 const activitiesData = [
     // Wild Safaris
@@ -152,10 +189,38 @@ const ImageLightbox = ({ src, onClose }) => {
 export default function ActivitiesPage() {
     const [selectedCategory, setSelectedCategory] = useState('all');
     const [selectedImage, setSelectedImage] = useState(null);
+    const [activities, setActivities] = useState([]);
+
+    useEffect(() => {
+        const fetchActivities = async () => {
+            try {
+                const { data, error } = await supabase.from('activities').select('*').order('created_at', { ascending: false });
+                if (error) {
+                    console.error('Error fetching activities:', error);
+                    setActivities(activitiesData);
+                } else if (data && data.length > 0) {
+                    // Map database columns to support UI conventions
+                    const mapped = data.map(act => ({
+                        ...act,
+                        desc: act.description || act.desc,
+                        features: Array.isArray(act.features) ? act.features : []
+                    }));
+                    setActivities(mapped);
+                } else {
+                    setActivities(activitiesData);
+                }
+            } catch (err) {
+                console.error(err);
+                setActivities(activitiesData);
+            }
+        };
+
+        fetchActivities();
+    }, []);
 
     const filteredActivities = selectedCategory === 'all' 
-        ? activitiesData 
-        : activitiesData.filter(act => act.category === selectedCategory);
+        ? activities 
+        : activities.filter(act => act.category === selectedCategory);
 
     return (
         <div style={{ backgroundColor: '#000', minHeight: '100vh', color: '#fff', overflow: 'hidden' }}>
@@ -282,7 +347,7 @@ export default function ActivitiesPage() {
                                     letterSpacing: '0.5px',
                                     textTransform: 'uppercase'
                                 }}>
-                                    {act.tag}
+                                    {act.category === 'safari' ? 'Wild Safaris' : act.category === 'hiking' ? 'Hiking & Trekking' : act.category === 'cycling' ? 'Cycling Tours' : act.category === 'water' ? 'Water Sports' : act.category}
                                 </div>
 
                                 {/* Header with title and color indicator */}
@@ -306,20 +371,38 @@ export default function ActivitiesPage() {
                                             fontFamily: 'var(--font-accent)',
                                             lineHeight: '1.25'
                                         }}>{act.name}</h3>
-                                        <span style={{
-                                            background: `${act.color}15`,
-                                            border: `1px solid ${act.color}44`,
-                                            color: act.color,
-                                            padding: '2px 8px',
-                                            borderRadius: '4px',
-                                            fontSize: '0.68rem',
-                                            fontWeight: '800',
-                                            textTransform: 'uppercase',
-                                            letterSpacing: '0.5px',
-                                            display: 'inline-block'
-                                        }}>
-                                            {act.location}
-                                        </span>
+                                        <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                                            <span style={{
+                                                background: `${act.color}15`,
+                                                border: `1px solid ${act.color}44`,
+                                                color: act.color,
+                                                padding: '2px 8px',
+                                                borderRadius: '4px',
+                                                fontSize: '0.68rem',
+                                                fontWeight: '800',
+                                                textTransform: 'uppercase',
+                                                letterSpacing: '0.5px',
+                                                display: 'inline-block'
+                                            }}>
+                                                {act.location}
+                                            </span>
+                                            {act.tag && (
+                                                <span style={{
+                                                    background: 'rgba(255, 255, 255, 0.08)',
+                                                    border: '1px solid rgba(255, 255, 255, 0.15)',
+                                                    color: 'rgba(255, 255, 255, 0.7)',
+                                                    padding: '2px 8px',
+                                                    borderRadius: '4px',
+                                                    fontSize: '0.68rem',
+                                                    fontWeight: '800',
+                                                    textTransform: 'uppercase',
+                                                    letterSpacing: '0.5px',
+                                                    display: 'inline-block'
+                                                }}>
+                                                    {act.tag}
+                                                </span>
+                                            )}
+                                        </div>
                                     </div>
                                 </div>
 
@@ -369,7 +452,7 @@ export default function ActivitiesPage() {
                                                  fontFamily: 'var(--font-main)',
                                                  fontWeight: '600'
                                              }}>
-                                                 <i className="fa-solid fa-circle-check" style={{ color: act.color === 'var(--neon-green)' ? '#15803d' : '#b45309', marginRight: '10px', fontSize: '0.95rem' }}></i>
+                                                 {getFeatureIcon(feat, act.color, true)}
                                                  {feat}
                                              </li>
                                          ))}

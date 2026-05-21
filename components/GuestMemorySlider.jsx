@@ -4,53 +4,140 @@ import React from 'react';
 import { guestGalleryData } from '../data/guestGallery';
 
 const GuestMemorySlider = () => {
-    // Duplicate data for seamless loop
     const displayImages = [...guestGalleryData, ...guestGalleryData];
 
     return (
-        <div className="guest-memories-wrapper py-10 overflow-hidden" style={{ background: '#000' }}>
-            <div className="slider-track" style={{ display: 'flex', gap: '30px', width: 'max-content', animation: 'slideLeft 60s linear infinite' }}>
+        <div className="guest-memories-wrapper overflow-hidden" style={{ background: '#000', padding: '40px 0 60px' }}>
+            <div className="slider-track">
                 {displayImages.map((img, idx) => (
-                    <div key={idx} className="guest-memory-card" style={{ 
-                        width: '300px', 
-                        height: '450px', 
-                        borderRadius: '35px', 
-                        position: 'relative', 
-                        overflow: 'hidden', 
-                        flexShrink: 0,
-                        border: '1px solid rgba(255,255,255,0.05)',
-                        transition: 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)'
-                    }}>
-                        <img 
-                            src={img.image} loading="lazy" decoding="async" 
-                            alt={img.country} 
-                            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                        />
+                    <div key={idx} className={`card-slot ${idx % 2 === 0 ? 'float-a' : 'float-b'}`}>
+                        <div className="photo-frame">
+                            <img
+                                src={img.image}
+                                loading="lazy"
+                                decoding="async"
+                                alt={img.country}
+                            />
+                            {/* Orange glow country label */}
+                            <div className="memory-label">
+                                <i className="fas fa-map-marker-alt"></i>
+                                {img.country}
+                            </div>
+                        </div>
                     </div>
                 ))}
             </div>
 
             <style jsx>{`
-                @keyframes slideLeft {
-                    from { transform: translateX(0); }
-                    to { transform: translateX(calc(-330px * ${guestGalleryData.length})); }
+                /* ── Marquee: right → left ── */
+                .slider-track {
+                    display: flex;
+                    gap: 28px;
+                    width: max-content;
+                    animation: slideRightToLeft 50s linear infinite;
+                    align-items: center;
                 }
                 .slider-track:hover {
                     animation-play-state: paused;
                 }
-                .guest-memory-card:hover {
-                    transform: scale(1.05) translateY(-10px);
-                    border-color: var(--neon-yellow) !important;
-                    box-shadow: 0 20px 40px rgba(255, 240, 31, 0.15);
+
+                @keyframes slideRightToLeft {
+                    from { transform: translateX(0); }
+                    to   { transform: translateX(calc(-318px * ${guestGalleryData.length})); }
                 }
+
+                /* ── Layout placeholder keeps spacing stable while card floats/tilts ── */
+                .card-slot {
+                    width: 290px;
+                    height: 430px;
+                    flex-shrink: 0;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+
+                /* ── Alternating float phases: cards bob at different rates ── */
+                .float-a { animation: floatBobA 4s ease-in-out infinite; }
+                .float-b { animation: floatBobB 4.6s ease-in-out infinite; }
+
+                @keyframes floatBobA {
+                    0%, 100% { transform: translateY(0px)   rotate(-4deg); }
+                    50%       { transform: translateY(-18px) rotate(4deg);  }
+                }
+                @keyframes floatBobB {
+                    0%, 100% { transform: translateY(-10px) rotate(3deg);  }
+                    50%       { transform: translateY(10px)  rotate(-3deg); }
+                }
+
+                /* ── Photo frame: orange glowing border ONLY, no background box ── */
+                .photo-frame {
+                    width: 270px;
+                    height: 400px;
+                    border-radius: 28px;
+                    overflow: hidden;
+                    position: relative;
+                    /* Orange glowing border */
+                    border: 3px solid #ff6a00;
+                    box-shadow:
+                        0 0 0 1px rgba(255, 106, 0, 0.15),
+                        0 0 18px 4px rgba(255, 106, 0, 0.55),
+                        0 0 45px 8px rgba(255, 106, 0, 0.25);
+                    transition: box-shadow 0.4s ease, transform 0.4s ease;
+                }
+
+                /* Stronger glow on hover */
+                .card-slot:hover {
+                    animation-play-state: paused !important;
+                }
+                .card-slot:hover .photo-frame {
+                    box-shadow:
+                        0 0 0 2px rgba(255, 106, 0, 0.4),
+                        0 0 30px 8px rgba(255, 106, 0, 0.75),
+                        0 0 70px 12px rgba(255, 106, 0, 0.35);
+                    transform: scale(1.06);
+                }
+
+                .photo-frame img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    display: block;
+                }
+
+                /* Country label */
+                .memory-label {
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    right: 0;
+                    padding: 28px 16px 16px;
+                    background: linear-gradient(transparent, rgba(0,0,0,0.82));
+                    color: #ff6a00;
+                    font-size: 0.78rem;
+                    font-weight: 800;
+                    font-family: var(--font-accent);
+                    letter-spacing: 1.5px;
+                    text-transform: uppercase;
+                    display: flex;
+                    align-items: center;
+                    gap: 6px;
+                    text-shadow: 0 0 8px rgba(255, 106, 0, 0.7);
+                }
+
+                /* ── Responsive ── */
                 @media (max-width: 768px) {
-                    .guest-memory-card {
-                        width: 250px !important;
-                        height: 380px !important;
+                    .card-slot {
+                        width: 230px !important;
+                        height: 360px !important;
                     }
-                    @keyframes slideLeft {
+                    .photo-frame {
+                        width: 210px !important;
+                        height: 330px !important;
+                        border-radius: 20px !important;
+                    }
+                    @keyframes slideRightToLeft {
                         from { transform: translateX(0); }
-                        to { transform: translateX(calc(-280px * ${guestGalleryData.length})); }
+                        to   { transform: translateX(calc(-258px * ${guestGalleryData.length})); }
                     }
                 }
             `}</style>

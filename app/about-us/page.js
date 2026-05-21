@@ -206,6 +206,33 @@ export default function AboutUs() {
                         </div>
                     </div>
 
+                    {/* A Personal Message of Gratitude */}
+                    <div className="reveal" style={{ 
+                        marginTop: "120px", 
+                        padding: "50px 40px", 
+                        background: "rgba(255, 240, 31, 0.02)", 
+                        border: "1px dashed rgba(255, 240, 31, 0.2)",
+                        borderRadius: "24px",
+                        maxWidth: "850px",
+                        margin: "120px auto 0",
+                        textAlign: "center"
+                    }}>
+                        <i className="fas fa-praying-hands" style={{ fontSize: "2.5rem", color: "var(--neon-yellow)", textShadow: "var(--neon-glow)", marginBottom: "20px" }}></i>
+                        <p style={{ 
+                            fontSize: "2rem", 
+                            lineHeight: "1.5", 
+                            color: "#fff",
+                            fontFamily: "var(--font-handwritten)",
+                            margin: 0,
+                            letterSpacing: "0.5px"
+                        }}>
+                            "Thank you once again to Mother Earth and the message that my mother brought to me to enter the tourism industry first. Thank you very much to every tourist who has traveled with me so far and to the heads of tourism agencies who have given me tours and to my friends and all my friends in the tourism industry. It is because of the support and love you all have given that I have had so many experiences. Thank you to all of you❤️🇱🇰🙏"
+                        </p>
+                        <span style={{ display: "block", marginTop: "20px", fontWeight: "700", color: "var(--neon-yellow)", fontSize: "1.1rem" }}>
+                            — Dilan Lekamarachchi, CEO
+                        </span>
+                    </div>
+
                     <div className="reveal" style={{ marginTop: "120px" }}>
                         <h2 style={{ fontSize: "3rem", textAlign: "center", marginBottom: "60px", color: "var(--neon-yellow)" }}>Our Team</h2>
                         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))", gap: "60px", alignItems: "start" }}>
@@ -291,7 +318,7 @@ export default function AboutUs() {
 
                     <div className="reveal" style={{ marginTop: "120px" }}>
                         <h2 style={{ fontSize: "3rem", textAlign: "center", marginBottom: "60px" }}>Contact Information</h2>
-                        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "30px" }}>
+                        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "30px" }}>
                             <div
                                 style={{
                                     padding: "40px",
@@ -341,20 +368,171 @@ export default function AboutUs() {
                                 <p style={{ color: "rgba(255,255,255,0.7)", marginBottom: "15px", fontSize: "0.9rem", fontStyle: "italic" }}>(Ill Full Moon Poya Day) Hours might differ</p>
                                 <p style={{ color: "var(--neon-yellow)", fontWeight: "bold" }}>24 hours a day Our Special representative for You</p>
                             </div>
+
+                            <div
+                                style={{
+                                    padding: "40px 30px",
+                                    background: "rgba(255,255,255,0.05)",
+                                    backdropFilter: "blur(10px)",
+                                    borderRadius: "20px",
+                                    border: "1px solid rgba(255,255,255,0.1)",
+                                    textAlign: "center",
+                                    display: "flex",
+                                    flexDirection: "column",
+                                    alignItems: "center",
+                                    justifyContent: "space-between"
+                                }}
+                            >
+                                <div>
+                                    <i className="fas fa-file-signature" style={{ fontSize: "3rem", color: "var(--neon-yellow)", marginBottom: "25px", textShadow: "var(--neon-glow)" }}></i>
+                                    <h3 style={{ fontSize: "1.5rem", marginBottom: "15px" }}>Company BR</h3>
+                                    <p style={{ color: "rgba(255,255,255,0.7)", fontSize: "0.85rem", marginBottom: "15px", lineHeight: "1.5" }}>
+                                        CHK Ceylon Tours (PVT) LTD is a certified & officially registered travel agency in Sri Lanka.
+                                    </p>
+                                </div>
+                                <a 
+                                    href="/CHK%20Ceylon%20Tours%20(PVT)LTD.jpg.jpeg" 
+                                    target="_blank" 
+                                    rel="noopener noreferrer"
+                                    style={{
+                                        display: "block",
+                                        borderRadius: "12px",
+                                        overflow: "hidden",
+                                        border: "1px solid rgba(255, 240, 31, 0.3)",
+                                        boxShadow: "0 0 15px rgba(255,240,31,0.15)",
+                                        transition: "all 0.3s ease",
+                                        cursor: "pointer",
+                                        maxWidth: "160px",
+                                        marginTop: "10px"
+                                    }}
+                                    className="br-cert-link"
+                                >
+                                    <img 
+                                        src="/CHK%20Ceylon%20Tours%20(PVT)LTD.jpg.jpeg" 
+                                        alt="CHK Ceylon Tours BR Certificate" 
+                                        style={{ width: "100%", height: "auto", display: "block" }} 
+                                    />
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="reveal" style={{ 
+                        marginTop: "80px", 
+                        padding: "50px 40px", 
+                        background: "rgba(255, 255, 255, 0.02)", 
+                        border: "1px solid rgba(255, 255, 255, 0.05)",
+                        borderRadius: "24px",
+                        textAlign: "center"
+                    }}>
+                        <span style={{ 
+                            color: "var(--neon-green)", 
+                            textShadow: "var(--neon-glow-green)", 
+                            letterSpacing: "3px", 
+                            fontWeight: "800", 
+                            textTransform: "uppercase",
+                            fontSize: "0.9rem",
+                            display: "block",
+                            marginBottom: "10px"
+                        }}>Connect With Us</span>
+                        <h2 style={{ fontSize: "2.5rem", marginBottom: "15px", fontFamily: "var(--font-main)" }}>Follow Our Journey</h2>
+                        <p style={{ color: "rgba(255,255,255,0.6)", maxWidth: "600px", margin: "0 auto 40px", fontSize: "1rem", lineHeight: "1.6" }}>
+                            Stay updated with our latest tours, guest moments, and discover the hidden beauty of Sri Lanka through our social channels.
+                        </p>
+                        
+                        <div style={{ 
+                            display: "flex", 
+                            justifyContent: "center", 
+                            gap: "25px", 
+                            flexWrap: "wrap" 
+                        }}>
+                            <a 
+                                href="https://web.facebook.com/profile.php?id=61567698557599&sk=followers" 
+                                target="_blank" 
+                                rel="noopener noreferrer" 
+                                className="social-highlight-btn fb-btn"
+                                style={{
+                                    display: "flex",
+                                    alignItems: "center",
+                                    gap: "12px",
+                                    padding: "14px 28px",
+                                    borderRadius: "50px",
+                                    fontSize: "1rem",
+                                    fontWeight: "800",
+                                    color: "#fff",
+                                    textDecoration: "none",
+                                    transition: "all 0.3s ease",
+                                    boxShadow: "0 4px 15px rgba(24, 119, 242, 0.25)"
+                                }}
+                            >
+                                <i className="fab fa-facebook-f" style={{ fontSize: "1.3rem" }}></i> Facebook Page
+                            </a>
+
+                            <a 
+                                href="https://www.instagram.com/chkceylon?igsh=MXNldXFpd3h4bGNzeA==&utm_source=ig_contact_invite" 
+                                target="_blank" 
+                                rel="noopener noreferrer" 
+                                className="social-highlight-btn ig-btn"
+                                style={{
+                                    display: "flex",
+                                    alignItems: "center",
+                                    gap: "12px",
+                                    padding: "14px 28px",
+                                    borderRadius: "50px",
+                                    fontSize: "1rem",
+                                    fontWeight: "800",
+                                    color: "#fff",
+                                    textDecoration: "none",
+                                    transition: "all 0.3s ease",
+                                    boxShadow: "0 4px 15px rgba(225, 48, 108, 0.25)"
+                                }}
+                            >
+                                <i className="fab fa-instagram" style={{ fontSize: "1.3rem" }}></i> Instagram Feed
+                            </a>
+
+                            <a 
+                                href="https://www.youtube.com/channel/UCFlor_kOoJYITY9bUN0EYpw" 
+                                target="_blank" 
+                                rel="noopener noreferrer" 
+                                className="social-highlight-btn yt-btn"
+                                style={{
+                                    display: "flex",
+                                    alignItems: "center",
+                                    gap: "12px",
+                                    padding: "14px 28px",
+                                    borderRadius: "50px",
+                                    fontSize: "1rem",
+                                    fontWeight: "800",
+                                    color: "#fff",
+                                    textDecoration: "none",
+                                    transition: "all 0.3s ease",
+                                    boxShadow: "0 4px 15px rgba(255, 0, 0, 0.25)"
+                                }}
+                            >
+                                <i className="fab fa-youtube" style={{ fontSize: "1.3rem" }}></i> YouTube Channel
+                            </a>
                         </div>
                     </div>
 
                     <div className="reveal" style={{ marginTop: "60px" }}>
-                        <div
+                        <a
+                            href="https://www.google.com/maps/place/C+H+K+Ceylon+Tours/@7.0556776,80.0682114,17z/data=!3m1!4b1!4m6!3m5!1s0x3ae2ff886c88333b:0x7de35313567ebbd1!8m2!3d7.0556776!4d80.0682114!16s%2Fg%2F11zkv68sh8?entry=ttu&g_ep=EgoyMDI2MDUxNy4wIKXMDSoASAFQAw%3D%3D"
+                            target="_blank"
+                            rel="noopener noreferrer"
                             style={{
+                                display: "block",
                                 width: "100%",
                                 height: "400px",
                                 borderRadius: "20px",
                                 overflow: "hidden",
                                 border: "1px solid rgba(255,255,255,0.1)",
                                 boxShadow: "0 10px 30px rgba(0,0,0,0.5)",
-                                background: "rgba(255,255,255,0.05)"
+                                background: "rgba(255,255,255,0.05)",
+                                position: "relative",
+                                cursor: "pointer",
+                                transition: "all 0.3s ease"
                             }}
+                            className="map-link-container"
                         >
                             <iframe
                                 width="100%"
@@ -363,14 +541,34 @@ export default function AboutUs() {
                                 scrolling="no"
                                 marginHeight="0"
                                 marginWidth="0"
-                                src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3959.604262086843!2d80.06560427499775!3d7.05569909294667!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zN8KwMDMnMjAuNSJOIDgwwrAwNCcwNS41IkU!5e0!3m2!1sen!2slk!4v1775662380271!5m2!1sen!2slk"
+                                src="https://maps.google.com/maps?q=C%20H%20K%20Ceylon%20Tours&t=&z=17&ie=UTF8&iwloc=&output=embed"
                                 title="CHK Ceylon Tours Location"
-                                style={{ border: 0, filter: "invert(90%) hue-rotate(180deg)" }}
+                                style={{ border: 0, filter: "invert(90%) hue-rotate(180deg)", pointerEvents: "none" }}
                                 allowFullScreen=""
                                 loading="lazy"
                                 referrerPolicy="no-referrer-when-downgrade"
                             ></iframe>
-                        </div>
+                            <div style={{
+                                position: "absolute",
+                                bottom: "20px",
+                                right: "20px",
+                                background: "rgba(0,0,0,0.85)",
+                                border: "1px solid var(--neon-yellow)",
+                                padding: "10px 20px",
+                                borderRadius: "30px",
+                                color: "var(--neon-yellow)",
+                                fontSize: "0.9rem",
+                                fontWeight: "bold",
+                                display: "flex",
+                                alignItems: "center",
+                                gap: "8px",
+                                boxShadow: "var(--neon-glow)",
+                                transition: "all 0.3s ease",
+                                zIndex: 10
+                            }} className="map-btn">
+                                <i className="fas fa-external-link-alt"></i> Open in Google Maps
+                            </div>
+                        </a>
                     </div>
                 </div>
             </section>
@@ -388,6 +586,48 @@ export default function AboutUs() {
                     background: rgba(255,255,255,0.08);
                     border-color: var(--neon-yellow);
                     box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+                }
+                :global(.br-cert-link):hover {
+                    transform: scale(1.06);
+                    border-color: var(--neon-yellow) !important;
+                    box-shadow: 0 0 25px rgba(255, 240, 31, 0.4) !important;
+                }
+                :global(.map-link-container):hover {
+                    border-color: var(--neon-yellow) !important;
+                    box-shadow: 0 0 30px rgba(255, 240, 31, 0.25) !important;
+                }
+                 :global(.map-link-container):hover .map-btn {
+                    background: var(--neon-yellow) !important;
+                    color: #000 !important;
+                    box-shadow: 0 0 20px rgba(255, 240, 31, 0.6) !important;
+                }
+                :global(.social-highlight-btn) {
+                    position: relative;
+                    overflow: hidden;
+                }
+                :global(.fb-btn) {
+                    background: linear-gradient(135deg, #1877f2 0%, #0056b3 100%) !important;
+                    border: 1px solid rgba(24, 119, 242, 0.2) !important;
+                }
+                :global(.ig-btn) {
+                    background: linear-gradient(135deg, #833ab4 0%, #fd1d1d 50%, #fcb045 100%) !important;
+                    border: 1px solid rgba(225, 48, 108, 0.2) !important;
+                }
+                :global(.yt-btn) {
+                    background: linear-gradient(135deg, #ff0000 0%, #990000 100%) !important;
+                    border: 1px solid rgba(255, 0, 0, 0.2) !important;
+                }
+                :global(.social-highlight-btn):hover {
+                    transform: translateY(-3px) scale(1.03) !important;
+                }
+                :global(.fb-btn):hover {
+                    box-shadow: 0 10px 25px rgba(24, 119, 242, 0.5) !important;
+                }
+                :global(.ig-btn):hover {
+                    box-shadow: 0 10px 25px rgba(225, 48, 108, 0.5) !important;
+                }
+                :global(.yt-btn):hover {
+                    box-shadow: 0 10px 25px rgba(255, 0, 0, 0.5) !important;
                 }
                 @media (max-width: 768px) {
                     .about-content .reveal {

@@ -90,25 +90,29 @@ const fallbackPackagesData = [
 const getFeatureIcon = (feature, color, isDark = false) => {
     if (!feature || typeof feature !== 'string') return null;
     const text = feature.toLowerCase();
-    let iconClass = "fa-solid fa-circle-check"; // Default check
+    let iconClass = "fa-solid fa-location-dot"; // Default travel bullet (no tick-box)
     
-    if (text.includes('culture') || text.includes('site') || text.includes('temple') || text.includes('heritage') || text.includes('unesco') || text.includes('fortress') || text.includes('fort') || text.includes('ancient')) {
+    if (text.includes('culture') || text.includes('site') || text.includes('temple') || text.includes('heritage') || text.includes('unesco') || text.includes('fortress') || text.includes('fort') || text.includes('ancient') || text.includes('museum')) {
         iconClass = "fa-solid fa-landmark-dome";
-    } else if (text.includes('driver') || text.includes('car') || text.includes('transfer') || text.includes('transport') || text.includes('private')) {
+    } else if (text.includes('driver') || text.includes('car') || text.includes('transfer') || text.includes('transport') || text.includes('private') || text.includes('comfort') || text.includes('vehicle') || text.includes('chauffeur') || text.includes('air cond')) {
         iconClass = "fa-solid fa-car-rear";
-    } else if (text.includes('hotel') || text.includes('resort') || text.includes('stay') || text.includes('accommodation') || text.includes('luxury') || text.includes('villa') || text.includes('glamping')) {
+    } else if (text.includes('hotel') || text.includes('resort') || text.includes('stay') || text.includes('accommodation') || text.includes('luxury') || text.includes('villa') || text.includes('glamping') || text.includes('saty')) {
         iconClass = "fa-solid fa-hotel";
-    } else if (text.includes('safari') || text.includes('wild') || text.includes('jungle') || text.includes('animal') || text.includes('leopard') || text.includes('elephant')) {
+    } else if (text.includes('safari') || text.includes('wild') || text.includes('jungle') || text.includes('animal') || text.includes('leopard') || text.includes('elephant') || text.includes('yala') || text.includes('national park')) {
         iconClass = "fa-solid fa-paw";
-    } else if (text.includes('beach') || text.includes('coast') || text.includes('sea') || text.includes('whale') || text.includes('surf') || text.includes('fishing')) {
+    } else if (text.includes('beach') || text.includes('coast') || text.includes('sea') || text.includes('whale') || text.includes('surf') || text.includes('fishing') || text.includes('ocean')) {
         iconClass = "fa-solid fa-umbrella-beach";
     } else if (text.includes('hike') || text.includes('trek') || text.includes('mountain') || text.includes('climb') || text.includes('hill') || text.includes('plain')) {
         iconClass = "fa-solid fa-mountain-sun";
     } else if (text.includes('honeymoon') || text.includes('romance') || text.includes('decor') || text.includes('love') || text.includes('couple')) {
         iconClass = "fa-solid fa-heart";
-    } else if (text.includes('dinner') || text.includes('meal') || text.includes('food') || text.includes('drink') || text.includes('fiesta') || text.includes('seafood')) {
+    } else if (text.includes('dinner') || text.includes('meal') || text.includes('food') || text.includes('drink') || text.includes('fiesta') || text.includes('seafood') || text.includes('breakfast') || text.includes('lunch')) {
         iconClass = "fa-solid fa-utensils";
-    } else if (text.includes('inclusive') || text.includes('guide') || text.includes('tour') || text.includes('all') || text.includes('immersion') || text.includes('explorer')) {
+    } else if (text.includes('tax') || text.includes('taxes') || text.includes('vat') || text.includes('charge') || text.includes('government') || text.includes('fee')) {
+        iconClass = "fa-solid fa-file-invoice-dollar";
+    } else if (text.includes('guide') || text.includes('chauffeur') || text.includes('guid') || text.includes('speaking') || text.includes('chaufer')) {
+        iconClass = "fa-solid fa-user-tie";
+    } else if (text.includes('inclusive') || text.includes('tour') || text.includes('all') || text.includes('immersion') || text.includes('explorer')) {
         iconClass = "fa-solid fa-star";
     }
 
@@ -188,6 +192,15 @@ export default function TourPackages() {
             <div style={{ color: 'var(--neon-yellow)', fontSize: '1.5rem', fontWeight: 'bold', fontFamily: 'var(--font-accent)', textShadow: 'var(--neon-glow)' }}>Loading Journeys...</div>
         </div>
     );
+
+    const dbSpecialOffers = packagesData.filter(pkg => pkg.is_special_offer === true);
+    
+    // If we have dynamic special offers in the DB, use them; otherwise fall back to the Perahera special offer
+    const specialOfferPackages = dbSpecialOffers.length > 0 
+        ? dbSpecialOffers 
+        : packagesData.filter(pkg => pkg.id === 'perahera-special-offer');
+
+    const regularPackages = packagesData.filter(pkg => !pkg.is_special_offer && pkg.id !== 'perahera-special-offer');
 
     return (
         <div style={{ minHeight: '100vh', backgroundColor: '#000', position: 'relative', overflowX: 'hidden' }}>
@@ -277,23 +290,25 @@ export default function TourPackages() {
                         <div style={{ width: '80px', height: '4px', background: 'linear-gradient(90deg, #dc2626 0%, #f97316 100%)', margin: '15px auto 0 auto', borderRadius: '2px' }}></div>
                     </div>
 
-                    <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
-                        <div className="fire-border-wrapper" style={{
-                            padding: '7.5px',
-                            borderRadius: '24px',
-                            background: 'linear-gradient(90deg, #dc2626, #000000, #ef4444, #000000, #dc2626)',
-                            backgroundSize: '300% 300%',
-                            position: 'relative',
-                            maxWidth: '420px',
-                            width: '100%',
-                            display: 'flex',
-                            flexDirection: 'column'
-                        }}>
-                            {packagesData.filter(pkg => pkg.id === 'perahera-special-offer').map(pkg => {
-                                const originalPrice = parseFloat(pkg.price);
-                                const discountedPrice = Math.round(originalPrice * 0.5); // 50% OFF
-                                return (
-                                    <div key={pkg.id} className="custom-pkg-card" style={{
+                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '40px', justifyContent: 'center', width: '100%' }}>
+                        {specialOfferPackages.map(pkg => {
+                            const isPerahera = pkg.id === 'perahera-special-offer';
+                            const originalPrice = isPerahera ? parseFloat(pkg.price) : (pkg.actual_price || pkg.price);
+                            const discountedPrice = isPerahera ? Math.round(originalPrice * 0.5) : pkg.price;
+                            const discountPercent = isPerahera ? 50 : (pkg.offer_percentage || 0);
+                            return (
+                                <div key={pkg.id} className="fire-border-wrapper" style={{
+                                    padding: '7.5px',
+                                    borderRadius: '24px',
+                                    background: 'linear-gradient(90deg, #dc2626, #000000, #ef4444, #000000, #dc2626)',
+                                    backgroundSize: '300% 300%',
+                                    position: 'relative',
+                                    maxWidth: '420px',
+                                    width: '100%',
+                                    display: 'flex',
+                                    flexDirection: 'column'
+                                }}>
+                                    <div className="custom-pkg-card" style={{
                                         border: 'none',
                                         margin: 0,
                                         height: '100%',
@@ -319,7 +334,7 @@ export default function TourPackages() {
                                             letterSpacing: '0.5px',
                                             textTransform: 'uppercase'
                                         }}>
-                                            50% OFF SPECIAL
+                                            {discountPercent}% OFF SPECIAL
                                         </div>
 
                                         {/* Floating Gold Star Badge in the Top Right Corner */}
@@ -449,7 +464,7 @@ export default function TourPackages() {
                                                         ${originalPrice}
                                                     </span>
                                                     <span style={{ 
-                                                        color: '#16a34a', 
+                                                        color: '#dc2626', 
                                                         fontSize: '1.8rem', 
                                                         fontWeight: '950', 
                                                         fontFamily: 'var(--font-accent)'
@@ -470,7 +485,7 @@ export default function TourPackages() {
                                                         fontWeight: '600',
                                                         fontFamily: 'var(--font-main)'
                                                     }}>
-                                                        {getFeatureIcon(feature, pkg.color, true)}
+                                                        {getFeatureIcon(feature, '#dc2626', true)}
                                                         {feature}
                                                     </li>
                                                 ))}
@@ -488,9 +503,9 @@ export default function TourPackages() {
                                             </a>
                                         </div>
                                     </div>
-                                );
-                            })}
-                        </div>
+                                </div>
+                            );
+                        })}
                     </div>
                 </div>
 
@@ -517,37 +532,34 @@ export default function TourPackages() {
                 </div>
 
                 <div className="packages-grid">
-                    {packagesData.filter(pkg => pkg.id !== 'perahera-special-offer').map((pkg, index) => {
-                        const discounts = [10, 15, 15, 20, 25, 30];
-                        const discountPercent = discounts[index % discounts.length];
-                        const originalPrice = parseFloat(pkg.price);
-                        const discountedPrice = Math.round(originalPrice * (1 - discountPercent / 100));
-
+                    {regularPackages.map((pkg, index) => {
                         return (
                             <div key={pkg.id} className="custom-pkg-card reveal active" style={{
                                 border: `2px solid ${pkg.color}`,
-                                position: 'relative'
+                                position: 'relative',
+                                overflow: 'visible'
                             }}>
-                                {/* Floating Discount Badge at the top of the box */}
-                                <div style={{
-                                    position: 'absolute',
-                                    top: '-14px',
-                                    left: '20px',
-                                    background: 'rgba(220, 38, 38, 0.95)',
-                                    color: '#fff',
-                                    padding: '4px 12px',
-                                    borderRadius: '8px',
-                                    fontSize: '0.78rem',
-                                    fontWeight: '900',
-                                    fontFamily: 'var(--font-accent)',
-                                    boxShadow: '0 0 12px rgba(220, 38, 38, 0.5)',
-                                    zIndex: 10,
-                                    letterSpacing: '0.5px',
-                                    textTransform: 'uppercase'
-                                }}>
-                                    {discountPercent}% OFF SPECIAL
-                                </div>
-
+                                {pkg.actual_price && pkg.offer_percentage && (
+                                    <div style={{
+                                        position: 'absolute',
+                                        top: '-18px',
+                                        left: '20px',
+                                        background: '#dc2626',
+                                        border: '2.5px solid #ffffff',
+                                        color: '#ffffff',
+                                        padding: '5px 14px',
+                                        borderRadius: '8px',
+                                        fontSize: '0.85rem',
+                                        fontWeight: '950',
+                                        fontFamily: 'var(--font-accent)',
+                                        boxShadow: '0 0 15px rgba(220, 38, 38, 0.8)',
+                                        zIndex: 20,
+                                        letterSpacing: '0.5px',
+                                        textTransform: 'uppercase'
+                                    }}>
+                                        -{pkg.offer_percentage}% OFF
+                                    </div>
+                                )}
                                 {/* Modern Top Header for Package Title */}
                                 <div style={{ 
                                     padding: '22px 28px', 
@@ -644,27 +656,46 @@ export default function TourPackages() {
                                             {pkg.duration}
                                         </p>
                                         <div style={{ textAlign: 'right', flexShrink: 0 }}>
-                                            {/* Actual Price Cut */}
-                                            <span style={{ 
-                                                textDecoration: 'line-through', 
-                                                color: '#9ca3af', 
-                                                fontSize: '1.05rem', 
-                                                marginRight: '8px',
-                                                fontWeight: '600',
-                                                fontFamily: 'var(--font-accent)'
-                                            }}>
-                                                ${originalPrice}
-                                            </span>
                                             {/* Highlighted Current Price */}
-                                            <span style={{ 
-                                                color: '#16a34a', 
-                                                fontSize: '1.8rem', 
-                                                fontWeight: '950', 
-                                                fontFamily: 'var(--font-accent)'
-                                            }}>
-                                                ${discountedPrice}
-                                            </span>
-                                            <span style={{ color: '#6b7280', fontSize: '0.75rem', display: 'block', fontWeight: '600', fontFamily: 'var(--font-main)' }}>Per Person</span>
+                                            {pkg.actual_price && pkg.offer_percentage ? (
+                                                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
+                                                    <span style={{ color: '#6b7280', fontSize: '0.9rem', textDecoration: 'line-through', fontFamily: 'var(--font-accent)', fontWeight: 'bold' }}>
+                                                        ${pkg.actual_price}
+                                                    </span>
+                                                    <span style={{ 
+                                                        color: '#dc2626', 
+                                                        fontSize: '1.8rem', 
+                                                        fontWeight: '950', 
+                                                        fontFamily: 'var(--font-accent)',
+                                                        lineHeight: '1.1'
+                                                    }}>
+                                                        ${pkg.price}
+                                                    </span>
+                                                    <span style={{
+                                                        background: 'rgba(220, 38, 38, 0.1)',
+                                                        color: '#dc2626',
+                                                        padding: '1px 6px',
+                                                        borderRadius: '4px',
+                                                        fontSize: '0.68rem',
+                                                        fontWeight: '800',
+                                                        fontFamily: 'var(--font-accent)',
+                                                        marginTop: '2px',
+                                                        display: 'inline-block'
+                                                    }}>-{pkg.offer_percentage}% OFF</span>
+                                                </div>
+                                            ) : (
+                                                <>
+                                                    <span style={{ 
+                                                        color: '#16a34a', 
+                                                        fontSize: '1.8rem', 
+                                                        fontWeight: '950', 
+                                                        fontFamily: 'var(--font-accent)'
+                                                    }}>
+                                                        ${pkg.price}
+                                                    </span>
+                                                    <span style={{ color: '#6b7280', fontSize: '0.75rem', display: 'block', fontWeight: '600', fontFamily: 'var(--font-main)' }}>Per Person</span>
+                                                </>
+                                            )}
                                         </div>
                                     </div>
 

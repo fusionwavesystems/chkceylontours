@@ -106,31 +106,107 @@ export default function Hotels() {
                     margin: '0 auto'
                 }}>
                     {hotelsData.map((hotel) => (
-                        <div key={hotel.id} className="dest-card pulse-glow" style={{ height: '480px', border: '1px solid rgba(255, 255, 255, 0.1)' }}>
+                        <div key={hotel.id} className="custom-hotel-card" style={{
+                            background: '#0c0c0c',
+                            borderRadius: '24px',
+                            border: '1px solid rgba(255, 255, 255, 0.08)',
+                            overflow: 'hidden',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            height: '520px',
+                            transition: 'all 0.5s cubic-bezier(0.16, 1, 0.3, 1)',
+                            boxShadow: '0 10px 30px rgba(0, 0, 0, 0.5)',
+                            position: 'relative'
+                        }}>
+                            {/* Floating Location Badge */}
+                            <div style={{
+                                position: 'absolute',
+                                top: '15px',
+                                left: '15px',
+                                backgroundColor: 'rgba(0, 0, 0, 0.82)',
+                                color: 'var(--neon-green)',
+                                border: '1px solid var(--neon-green)',
+                                padding: '6px 14px',
+                                borderRadius: '20px',
+                                fontSize: '0.78rem',
+                                fontWeight: '800',
+                                zIndex: 10,
+                                textTransform: 'uppercase',
+                                letterSpacing: '0.6px',
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '6px',
+                                boxShadow: '0 0 12px rgba(15, 118, 110, 0.4)'
+                            }}>
+                                <i className="fas fa-map-marker-alt" style={{ fontSize: '0.75rem' }}></i>
+                                {hotel.location}
+                            </div>
 
-                            <img src={hotel.image} alt={hotel.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} loading="lazy" decoding="async" />
-                            <div className="dest-overlay" style={{ background: 'linear-gradient(to bottom, transparent 40%, rgba(0, 0, 0, 0.95))' }}></div>
-                            <div className="dest-info" style={{ padding: '30px' }}>
-                                <h3 style={{ fontSize: '1.8rem', color: '#fff', marginBottom: '8px' }}>{hotel.name}</h3>
-                                <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.9rem', marginBottom: '15px' }}>{hotel.description}</p>
-                                <p style={{ color: 'var(--neon-green)', fontSize: '1rem', fontWeight: 'bold' }}>
-                                    <i className="fas fa-map-marker-alt" style={{ marginRight: '8px' }}></i>
-                                    {hotel.location}
+                             {/* Photo Container */}
+                            <div style={{ position: 'relative', height: '285px', overflow: 'hidden' }}>
+                                <img src={hotel.image} alt={hotel.name} style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 1s cubic-bezier(0.16, 1, 0.3, 1)' }} className="hotel-card-img" />
+                                <div style={{
+                                    position: 'absolute',
+                                    bottom: 0,
+                                    left: 0,
+                                    width: '100%',
+                                    height: '60%',
+                                    background: 'linear-gradient(to top, rgba(12, 12, 12, 0.95) 0%, rgba(12, 12, 12, 0.4) 50%, transparent 100%)',
+                                    zIndex: 2
+                                }}></div>
+                                <h3 style={{
+                                    position: 'absolute',
+                                    bottom: '15px',
+                                    left: '25px',
+                                    right: '25px',
+                                    fontSize: '1.45rem',
+                                    color: '#fff',
+                                    margin: 0,
+                                    fontWeight: '800',
+                                    fontFamily: 'var(--font-accent)',
+                                    zIndex: 5,
+                                    textShadow: '0 2px 10px rgba(0,0,0,0.8)'
+                                }}>
+                                    {hotel.name ? hotel.name.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase()) : ''}
+                                </h3>
+                            </div>
+
+                            {/* Separate Description Box at the bottom (Description + Button) */}
+                            <div style={{
+                                marginTop: 'auto',
+                                background: 'rgba(255, 255, 255, 0.03)',
+                                borderTop: '1px solid rgba(255, 255, 255, 0.05)',
+                                padding: '20px 25px',
+                                display: 'flex',
+                                flexDirection: 'column',
+                                gap: '15px',
+                                flexGrow: 1,
+                                justifyContent: 'space-between'
+                            }}>
+                                <p style={{ color: 'rgba(255, 255, 255, 0.65)', fontSize: '0.86rem', margin: 0, lineHeight: '1.6', fontWeight: '500', fontFamily: 'var(--font-main)' }}>
+                                    {hotel.description}
                                 </p>
                                 <a
                                     href={hotel.website_link || `https://wa.me/94771234567?text=I'm interested in booking ${hotel.name} in ${hotel.location}`}
                                     target={hotel.website_link ? "_blank" : "_self"}
                                     rel="noopener noreferrer"
-                                    className="btn btn-outline"
+                                    className="custom-hotel-btn"
                                     style={{
-                                        marginTop: '25px',
                                         width: '100%',
                                         borderColor: 'var(--neon-yellow)',
                                         color: 'var(--neon-yellow)',
-                                        background: 'rgba(0,0,0,0.5)',
+                                        background: 'rgba(255,240,31,0.05)',
+                                        border: '1px solid var(--neon-yellow)',
                                         textAlign: 'center',
                                         display: 'block',
-                                        padding: '12px 0'
+                                        padding: '11px 0',
+                                        borderRadius: '30px',
+                                        fontWeight: '700',
+                                        fontSize: '0.88rem',
+                                        textTransform: 'uppercase',
+                                        letterSpacing: '0.5px',
+                                        textDecoration: 'none',
+                                        transition: 'all 0.3s ease'
                                     }}
                                 >
                                     {hotel.website_link ? 'Visit Website' : 'Book Now'}
@@ -140,6 +216,22 @@ export default function Hotels() {
                     ))}
                 </div>
             </div>
+
+            <style jsx>{`
+                :global(.custom-hotel-card):hover {
+                    transform: translateY(-10px) scale(1.02);
+                    border-color: var(--neon-yellow) !important;
+                    box-shadow: 0 20px 40px rgba(255, 240, 31, 0.15) !important;
+                }
+                :global(.custom-hotel-card):hover .hotel-card-img {
+                    transform: scale(1.08);
+                }
+                :global(.custom-hotel-btn):hover {
+                    background: var(--neon-yellow) !important;
+                    color: #000 !important;
+                    box-shadow: 0 0 15px rgba(255, 240, 31, 0.3);
+                }
+            `}</style>
 
             <Footer />
         </div>

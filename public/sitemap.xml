@@ -1,28 +1,78 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+
   <url>
     <loc>https://www.chkceylontours.com/</loc>
-    <lastmod>2026-03-24</lastmod>
+    <lastmod>2026-05-22</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://www.chkceylontours.com/home_hero_bg.png</image:loc>
+      <image:title>CHK Ceylon Tours - Sri Lanka Tour Operator</image:title>
+      <image:caption>Welcome to CHK Ceylon Tours - Sri Lanka's #1 private tour operator</image:caption>
+    </image:image>
   </url>
-  <url>
-    <loc>https://www.chkceylontours.com/destinations</loc>
-    <lastmod>2026-03-24</lastmod>
-    <priority>0.8</priority>
-  </url>
+
   <url>
     <loc>https://www.chkceylontours.com/packages</loc>
-    <lastmod>2026-03-24</lastmod>
-    <priority>0.8</priority>
+    <lastmod>2026-05-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+    <image:image>
+      <image:loc>https://www.chkceylontours.com/tour_bg_new.png</image:loc>
+      <image:title>Sri Lanka Tour Packages - CHK Ceylon Tours</image:title>
+    </image:image>
   </url>
+
+  <url>
+    <loc>https://www.chkceylontours.com/destinations</loc>
+    <lastmod>2026-05-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://www.chkceylontours.com/dest_hero_bg_new.png</image:loc>
+      <image:title>Sri Lanka Destinations - Sigiriya, Kandy, Ella, Galle</image:title>
+    </image:image>
+  </url>
+
   <url>
     <loc>https://www.chkceylontours.com/hotels</loc>
-    <lastmod>2026-03-24</lastmod>
-    <priority>0.7</priority>
+    <lastmod>2026-05-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://www.chkceylontours.com/hotel_bg_new.png</image:loc>
+      <image:title>Sri Lanka Hotels - CHK Ceylon Tours Partner Hotels</image:title>
+    </image:image>
   </url>
+
+  <url>
+    <loc>https://www.chkceylontours.com/activities</loc>
+    <lastmod>2026-05-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://www.chkceylontours.com/gallery</loc>
+    <lastmod>2026-05-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.75</priority>
+  </url>
+
+  <url>
+    <loc>https://www.chkceylontours.com/reviews</loc>
+    <lastmod>2026-05-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.75</priority>
+  </url>
+
   <url>
     <loc>https://www.chkceylontours.com/about-us</loc>
-    <lastmod>2026-03-24</lastmod>
-    <priority>0.6</priority>
+    <lastmod>2026-05-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
+
 </urlset>

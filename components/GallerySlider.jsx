@@ -98,21 +98,20 @@ const GallerySlider = ({
     const displayImages = [...images, ...images];
 
     return (
-        <section className="gallery-section overflow-hidden py-32" style={{ background: '#ffffff', position: 'relative' }}>
+        <section className="gallery-section overflow-hidden py-32" style={{ background: '#000000', position: 'relative' }}>
              {/* Background blobs for visual flair */}
             <div className="bg-blob" style={{ bottom: '10%', right: '-10%', opacity: '0.02', background: 'radial-gradient(circle, rgba(13, 74, 37, 0.08) 0%, transparent 70%)' }}></div>
             <div className="bg-blob" style={{ top: '10%', left: '-10%', opacity: '0.02', background: 'radial-gradient(circle, rgba(21, 128, 61, 0.08) 0%, transparent 70%)' }}></div>
 
             <div className="container mx-auto px-6 mb-20">
                 <div className="section-header reveal active" style={{ 
-                    borderLeft: '12px solid #0d4a25', 
-                    paddingLeft: '30px', 
-                    borderRadius: '8px',
-                    boxShadow: '-10px 0 25px rgba(13, 74, 37, 0.12)'
+                    borderLeft: '4px solid var(--neon-yellow)', 
+                    paddingLeft: '20px', 
+                    borderRadius: '0px'
                 }}>
                     <span className="subtitle" style={{ 
-                        color: '#0d4a25', 
-                        textShadow: 'none',
+                        color: 'var(--neon-green)', 
+                        textShadow: 'var(--neon-glow-green)',
                         letterSpacing: '4px',
                         fontWeight: '800',
                         textTransform: 'uppercase',
@@ -124,7 +123,7 @@ const GallerySlider = ({
                     <h2 style={{ 
                         fontSize: 'clamp(2.5rem, 6vw, 4.2rem)', 
                         fontWeight: '900', 
-                        color: '#000000', 
+                        color: '#ffffff', 
                         lineHeight: '1.1',
                         fontFamily: 'var(--font-main)',
                         letterSpacing: '-1.5px'
@@ -133,10 +132,10 @@ const GallerySlider = ({
                     <div style={{ 
                         width: '280px', 
                         height: '14px', 
-                        background: 'linear-gradient(90deg, #0d4a25 0%, #15803d 100%)', 
+                        background: 'var(--gradient-vibrant)', 
                         marginTop: '25px', 
                         borderRadius: '12px', 
-                        boxShadow: '0 4px 15px rgba(13, 74, 37, 0.25)' 
+                        boxShadow: '0 4px 15px rgba(57, 255, 20, 0.3)' 
                     }}></div>
                 </div>
             </div>

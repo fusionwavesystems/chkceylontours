@@ -8,68 +8,124 @@ const ReviewCard = ({ review }) => {
 
     return (
         <div className="review-card blur-reveal">
-            <div className="card-header">
-                <div className="avatar">
-                    {review.name.charAt(0).toUpperCase()}
-                </div>
-                <div className="user-info">
-                    <h4>{review.name} {review.country && <span className="country">({review.country})</span>}</h4>
-                    <div className="rating">
-                        {[...Array(5)].map((_, i) => (
-                            <i 
-                                key={i} 
-                                className={`fas fa-star ${i < review.rating ? 'active' : ''}`}
-                            ></i>
-                        ))}
+            <div className="card-inner">
+                <div className="card-header">
+                    <div className="avatar">
+                        {review.name.charAt(0).toUpperCase()}
+                    </div>
+                    <div className="user-info">
+                        <h4>{review.name} {review.country && <span className="country">({review.country})</span>}</h4>
+                        <div className="rating">
+                            {[...Array(5)].map((_, i) => (
+                                <i 
+                                    key={i} 
+                                    className={`fas fa-star ${i < review.rating ? 'active' : ''}`}
+                                ></i>
+                            ))}
+                        </div>
+                    </div>
+                    <div className="quote-icon">
+                        <i className="fas fa-quote-right"></i>
                     </div>
                 </div>
-                <div className="quote-icon">
-                    <i className="fas fa-quote-right"></i>
-                </div>
-            </div>
-            
-            <p className="message">"{review.message}"</p>
+                
+                <p className="message">"{review.message}"</p>
 
-            {review.images && review.images.length > 0 && (
-                <div className="review-gallery">
-                    {review.images.map((img, idx) => (
-                        <div key={idx} className="thumb" onClick={() => setSelectedImage(img)} style={{ cursor: 'pointer' }}>
-                            <img src={img} alt={`Review photo ${idx + 1}`} loading="lazy" />
-                        </div>
+                {review.images && review.images.length > 0 && (
+                    <div className="review-gallery">
+                        {review.images.map((img, idx) => (
+                            <div key={idx} className="thumb-frame" onClick={() => setSelectedImage(img)} style={{ cursor: 'pointer' }}>
+                                <div className="thumb-img">
+                                    <img src={img} alt={`Review photo ${idx + 1}`} loading="lazy" />
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                )}
 
-                    ))}
-                </div>
-            )}
-
-            <div className="card-footer">
-                <span className="date">
-                    {new Date(review.created_at).toLocaleDateString('en-GB')}
-                </span>
-                <div className="verified">
-                    <i className="fas fa-check-circle"></i>
-                    <span>VERIFIED GUEST</span>
+                <div className="card-footer">
+                    <span className="date">
+                        {new Date(review.created_at).toLocaleDateString('en-GB')}
+                    </span>
+                    <div className="verified">
+                        <i className="fas fa-check-circle"></i>
+                        <span>VERIFIED GUEST</span>
+                    </div>
                 </div>
             </div>
 
             <style jsx>{`
+                /* Running animated border wrapper */
                 .review-card {
-                    background: #0a0a0a;
-                    border: 1px solid rgba(255, 255, 255, 0.05);
-                    padding: 24px;
+                    background: transparent;
+                    padding: 3px; /* space for the running border */
+                    border-radius: 22px;
+                    position: relative;
+                    display: flex;
+                    flex-direction: column;
+                    width: 100%;
+                    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+                    overflow: visible;
+                }
+
+                /* Spinning red conic-gradient border */
+                .review-card::before {
+                    content: '';
+                    position: absolute;
+                    inset: -3px;
+                    border-radius: 24px;
+                    background: conic-gradient(
+                        from 0deg,
+                        #ff0000 0deg,
+                        #ff4400 30deg,
+                        transparent 90deg,
+                        transparent 270deg,
+                        #ff4400 330deg,
+                        #ff0000 360deg
+                    );
+                    animation: spinBorder 2.5s linear infinite;
+                    z-index: 0;
+                }
+
+                /* Yellow solid inner frame */
+                .review-card::after {
+                    content: '';
+                    position: absolute;
+                    inset: 3px;
                     border-radius: 20px;
-                    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-                    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+                    border: 2px solid var(--neon-yellow);
+                    box-shadow: 0 0 12px rgba(255, 240, 31, 0.25), inset 0 0 12px rgba(255, 240, 31, 0.05);
+                    z-index: 1;
+                    pointer-events: none;
+                }
+
+                @keyframes spinBorder {
+                    from { transform: rotate(0deg); }
+                    to   { transform: rotate(360deg); }
+                }
+
+                /* Inner card content bubble — sits above the border layers */
+                .card-inner {
+                    background: #0a0a0a;
+                    border-radius: 19px;
+                    padding: 24px;
                     display: flex;
                     flex-direction: column;
                     gap: 15px;
-                    width: 100%;
                     position: relative;
-                    overflow: hidden;
+                    z-index: 2;
+                    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+                    transition: all 0.4s ease;
                 }
+
                 .review-card:hover {
                     transform: translateY(-10px);
-                    border-color: rgba(255, 193, 7, 0.2);
+                }
+                .review-card:hover .card-inner {
                     box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
+                }
+                .review-card:hover::after {
+                    box-shadow: 0 0 20px rgba(255, 240, 31, 0.5), inset 0 0 20px rgba(255, 240, 31, 0.08);
                 }
                 .card-header {
                     display: flex;
@@ -148,23 +204,69 @@ const ReviewCard = ({ review }) => {
                     gap: 12px;
                     margin-bottom: 5px;
                 }
-                .thumb {
-                    width: 75px;
-                    height: 75px;
-                    border-radius: 15px;
-                    overflow: hidden;
-                    border: 2px solid #1a1a1a;
-                    background: #000;
+                /* Photo thumb — spinning red+yellow border wrapper */
+                .thumb-frame {
+                    width: 79px;
+                    height: 79px;
+                    border-radius: 17px;
+                    position: relative;
+                    background: transparent;
+                    padding: 3px;
+                    flex-shrink: 0;
                     cursor: pointer;
                     transition: transform 0.3s ease;
+                    overflow: visible;
                 }
-                .thumb:hover {
-                    transform: scale(1.05);
+                /* Spinning red conic arc */
+                .thumb-frame::before {
+                    content: '';
+                    position: absolute;
+                    inset: -3px;
+                    border-radius: 19px;
+                    background: conic-gradient(
+                        from 0deg,
+                        #ff0000 0deg,
+                        #ff4400 40deg,
+                        transparent 100deg,
+                        transparent 260deg,
+                        #ff4400 320deg,
+                        #ff0000 360deg
+                    );
+                    animation: spinBorder 2s linear infinite;
+                    z-index: 0;
                 }
-                .thumb img {
+                /* Static yellow inner border ring */
+                .thumb-frame::after {
+                    content: '';
+                    position: absolute;
+                    inset: 3px;
+                    border-radius: 13px;
+                    border: 2px solid var(--neon-yellow);
+                    box-shadow: 0 0 8px rgba(255, 240, 31, 0.3), inset 0 0 8px rgba(255, 240, 31, 0.06);
+                    z-index: 1;
+                    pointer-events: none;
+                }
+                .thumb-frame:hover {
+                    transform: scale(1.08);
+                }
+                .thumb-frame:hover::after {
+                    box-shadow: 0 0 16px rgba(255, 240, 31, 0.55), inset 0 0 12px rgba(255, 240, 31, 0.1);
+                }
+                /* Actual image bubble */
+                .thumb-img {
+                    width: 100%;
+                    height: 100%;
+                    border-radius: 12px;
+                    overflow: hidden;
+                    position: relative;
+                    z-index: 2;
+                    background: #000;
+                }
+                .thumb-img img {
                     width: 100%;
                     height: 100%;
                     object-fit: cover;
+                    display: block;
                 }
                 .card-footer {
                     display: flex;

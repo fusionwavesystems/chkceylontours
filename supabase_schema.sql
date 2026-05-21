@@ -119,3 +119,34 @@ CREATE POLICY "Allow public delete" ON reviews FOR DELETE USING (true);
 
 -- Note: Admin authentication is handled via Supabase Auth (Authentication > Users).
 -- To create an admin, add a user in the Supabase Dashboard.
+
+-- Activities Table
+CREATE TABLE IF NOT EXISTS activities (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    name TEXT NOT NULL,
+    category TEXT NOT NULL,
+    season TEXT NOT NULL,
+    level TEXT NOT NULL,
+    location TEXT NOT NULL,
+    image TEXT,
+    color TEXT NOT NULL,
+    tag TEXT NOT NULL,
+    description TEXT NOT NULL,
+    features TEXT[] NOT NULL,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
+);
+
+ALTER TABLE activities ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "Allow public read-only access." ON activities FOR SELECT USING (true);
+CREATE POLICY "Allow public insert." ON activities FOR INSERT WITH CHECK (true);
+CREATE POLICY "Allow public update." ON activities FOR UPDATE USING (true);
+CREATE POLICY "Allow public delete." ON activities FOR DELETE USING (true);
+
+-- Alter Packages Table for Seasonal Special Offers
+ALTER TABLE packages ADD COLUMN IF NOT EXISTS is_special_offer BOOLEAN DEFAULT FALSE;
+ALTER TABLE packages ADD COLUMN IF NOT EXISTS days INTEGER;
+ALTER TABLE packages ADD COLUMN IF NOT EXISTS nights INTEGER;
+ALTER TABLE packages ADD COLUMN IF NOT EXISTS offer_percentage INTEGER;
+ALTER TABLE packages ADD COLUMN IF NOT EXISTS actual_price NUMERIC;
+
+

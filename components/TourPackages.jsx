@@ -28,26 +28,31 @@ const fallbackPackages = [
 ];
 
 const getFeatureIcon = (feature, color, isDark = false) => {
+    if (!feature || typeof feature !== 'string') return null;
     const text = feature.toLowerCase();
-    let iconClass = "fa-solid fa-circle-check"; // Default check
+    let iconClass = "fa-solid fa-location-dot"; // Default travel bullet (no tick-box)
     
-    if (text.includes('culture') || text.includes('site') || text.includes('temple') || text.includes('heritage') || text.includes('ancient')) {
+    if (text.includes('culture') || text.includes('site') || text.includes('temple') || text.includes('heritage') || text.includes('ancient') || text.includes('unesco') || text.includes('fortress') || text.includes('fort') || text.includes('museum')) {
         iconClass = "fa-solid fa-landmark-dome";
-    } else if (text.includes('driver') || text.includes('car') || text.includes('transfer') || text.includes('transport') || text.includes('private')) {
+    } else if (text.includes('driver') || text.includes('car') || text.includes('transfer') || text.includes('transport') || text.includes('private') || text.includes('comfort') || text.includes('vehicle') || text.includes('chauffeur') || text.includes('air cond')) {
         iconClass = "fa-solid fa-car-rear";
-    } else if (text.includes('hotel') || text.includes('resort') || text.includes('stay') || text.includes('accommodation') || text.includes('luxury')) {
+    } else if (text.includes('hotel') || text.includes('resort') || text.includes('stay') || text.includes('accommodation') || text.includes('luxury') || text.includes('villa') || text.includes('glamping') || text.includes('saty')) {
         iconClass = "fa-solid fa-hotel";
-    } else if (text.includes('safari') || text.includes('wild') || text.includes('jungle') || text.includes('yala') || text.includes('animal')) {
+    } else if (text.includes('safari') || text.includes('wild') || text.includes('jungle') || text.includes('animal') || text.includes('leopard') || text.includes('elephant') || text.includes('yala') || text.includes('national park')) {
         iconClass = "fa-solid fa-paw";
-    } else if (text.includes('beach') || text.includes('villa') || text.includes('coast') || text.includes('sea') || text.includes('mirissa')) {
+    } else if (text.includes('beach') || text.includes('coast') || text.includes('sea') || text.includes('whale') || text.includes('surf') || text.includes('fishing') || text.includes('ocean')) {
         iconClass = "fa-solid fa-umbrella-beach";
-    } else if (text.includes('hike') || text.includes('trek') || text.includes('mountain') || text.includes('climb')) {
+    } else if (text.includes('hike') || text.includes('trek') || text.includes('mountain') || text.includes('climb') || text.includes('hill') || text.includes('plain')) {
         iconClass = "fa-solid fa-mountain-sun";
-    } else if (text.includes('honeymoon') || text.includes('romance') || text.includes('decor') || text.includes('love')) {
+    } else if (text.includes('honeymoon') || text.includes('romance') || text.includes('decor') || text.includes('love') || text.includes('couple')) {
         iconClass = "fa-solid fa-heart";
-    } else if (text.includes('dinner') || text.includes('meal') || text.includes('food') || text.includes('drink') || text.includes('candlelight')) {
+    } else if (text.includes('dinner') || text.includes('meal') || text.includes('food') || text.includes('drink') || text.includes('fiesta') || text.includes('seafood') || text.includes('breakfast') || text.includes('lunch') || text.includes('candlelight')) {
         iconClass = "fa-solid fa-utensils";
-    } else if (text.includes('inclusive') || text.includes('guide') || text.includes('tour') || text.includes('all')) {
+    } else if (text.includes('tax') || text.includes('taxes') || text.includes('vat') || text.includes('charge') || text.includes('government') || text.includes('fee')) {
+        iconClass = "fa-solid fa-file-invoice-dollar";
+    } else if (text.includes('guide') || text.includes('chauffeur') || text.includes('guid') || text.includes('speaking') || text.includes('chaufer')) {
+        iconClass = "fa-solid fa-user-tie";
+    } else if (text.includes('inclusive') || text.includes('tour') || text.includes('all') || text.includes('immersion') || text.includes('explorer')) {
         iconClass = "fa-solid fa-star";
     }
 
@@ -97,45 +102,67 @@ const TourPackages = () => {
                         fontFamily: 'var(--font-main)',
                         fontSize: '1.05rem'
                     }}>Curated Journeys</span>
-                    <h2 style={{ color: 'white', fontFamily: 'var(--font-display)', fontSize: 'clamp(2.5rem, 6vw, 4.2rem)', fontWeight: '900', textTransform: 'uppercase', letterSpacing: '1px', textShadow: '2px 2px 20px rgba(0, 0, 0, 0.95), var(--neon-glow)', lineHeight: '1.1' }}>Featured Tour Packages</h2>
+                    <h2 style={{ color: 'white', fontFamily: 'var(--font-accent)', fontSize: 'clamp(2.2rem, 5vw, 3.4rem)', fontWeight: '900', textTransform: 'uppercase', letterSpacing: '1px', textShadow: '2px 2px 20px rgba(0, 0, 0, 0.95), var(--neon-glow)', lineHeight: '1.1' }}>Featured Tour Packages</h2>
                     <div style={{ width: '280px', height: '14px', background: 'linear-gradient(90deg, #facc15 0%, #d97706 100%)', marginTop: '25px', borderRadius: '12px', boxShadow: '0 4px 15px rgba(250, 204, 21, 0.25)' }}></div>
                 </div>
 
                 <div className="package-slider">
                     {packages.map((pkg, i) => {
-                        const discounts = [10, 15, 15, 20, 25, 30];
-                        const discountPercent = discounts[i % discounts.length];
-                        const originalPrice = parseFloat(pkg.price);
-                        const discountedPrice = Math.round(originalPrice * (1 - discountPercent / 100));
+                        const isSpecial = !!pkg.is_special_offer;
+                        const hasDiscount = !!(pkg.actual_price && pkg.offer_percentage);
+                        const discountPercent = hasDiscount ? (pkg.offer_percentage || 0) : 0;
+                        const originalPrice = hasDiscount ? (pkg.actual_price || pkg.price) : pkg.price;
+                        const discountedPrice = pkg.price;
                         
-                        const shadowColor = pkg.color === 'var(--neon-green)' ? 'rgba(57, 255, 20, 0.35)' : 'rgba(255, 240, 31, 0.35)';
-                        const glowValue = pkg.color === 'var(--neon-green)' ? 'var(--neon-glow-green)' : 'var(--neon-glow)';
+                        const cardColor = isSpecial ? '#ff3366' : pkg.color;
                         
                         return (
-                            <div key={i} className="custom-package-card reveal" style={{ 
+                            <div key={i} className={`custom-package-card reveal ${isSpecial ? 'special-offer-card' : ''}`} style={{ 
                                 transitionDelay: `${i * 0.15}s`,
-                                border: `2px solid ${pkg.color}`,
+                                border: `2px solid ${cardColor}`,
                                 position: 'relative'
                             }}>
                                 {/* Floating Discount Badge at the top of the box */}
-                                <div style={{
-                                    position: 'absolute',
-                                    top: '-14px',
-                                    left: '20px',
-                                    background: 'rgba(220, 38, 38, 0.95)',
-                                    color: '#fff',
-                                    padding: '4px 12px',
-                                    borderRadius: '8px',
-                                    fontSize: '0.78rem',
-                                    fontWeight: '900',
-                                    fontFamily: 'var(--font-accent)',
-                                    boxShadow: '0 0 12px rgba(220, 38, 38, 0.5)',
-                                    zIndex: 10,
-                                    letterSpacing: '0.5px',
-                                    textTransform: 'uppercase'
-                                }}>
-                                    {discountPercent}% OFF SPECIAL
-                                </div>
+                                {isSpecial && (
+                                    <div style={{
+                                        position: 'absolute',
+                                        top: '-14px',
+                                        left: '20px',
+                                        background: '#ff3366',
+                                        color: '#fff',
+                                        padding: '4px 12px',
+                                        borderRadius: '8px',
+                                        fontSize: '0.78rem',
+                                        fontWeight: '900',
+                                        fontFamily: 'var(--font-accent)',
+                                        boxShadow: '0 0 12px rgba(255, 51, 102, 0.6)',
+                                        zIndex: 10,
+                                        letterSpacing: '0.5px',
+                                        textTransform: 'uppercase'
+                                    }}>
+                                        -{discountPercent}% OFF SPECIAL
+                                    </div>
+                                )}
+                                {!isSpecial && hasDiscount && (
+                                    <div style={{
+                                        position: 'absolute',
+                                        top: '-14px',
+                                        left: '20px',
+                                        background: '#ff3366',
+                                        color: '#fff',
+                                        padding: '4px 12px',
+                                        borderRadius: '8px',
+                                        fontSize: '0.78rem',
+                                        fontWeight: '900',
+                                        fontFamily: 'var(--font-accent)',
+                                        boxShadow: '0 0 12px rgba(255, 51, 102, 0.6)',
+                                        zIndex: 10,
+                                        letterSpacing: '0.5px',
+                                        textTransform: 'uppercase'
+                                    }}>
+                                        -{discountPercent}% OFF
+                                    </div>
+                                )}
 
                                 {/* Modern Top Header for Package Title */}
                                 <div style={{ 
@@ -161,22 +188,22 @@ const TourPackages = () => {
                                     </div>
                                     {/* Glowing Badge for Duration on the Top-Right Corner - Solid & Readable */}
                                     <div style={{
-                                        background: pkg.color,
+                                        background: cardColor,
                                         borderRadius: '12px',
                                         padding: '6px 14px',
-                                        color: '#000',
+                                        color: isSpecial ? '#fff' : '#000',
                                         fontSize: '0.75rem',
                                         fontWeight: '900',
                                         fontFamily: 'var(--font-accent)',
                                         whiteSpace: 'nowrap',
-                                        boxShadow: `0 4px 15px ${pkg.color}44`,
+                                        boxShadow: `0 4px 15px ${cardColor}44`,
                                         display: 'flex',
                                         alignItems: 'center',
                                         gap: '6px',
                                         textTransform: 'uppercase',
                                         letterSpacing: '0.5px'
                                     }}>
-                                        <i className="fa-regular fa-clock" style={{ color: '#000' }}></i>
+                                        <i className="fa-regular fa-clock" style={{ color: isSpecial ? '#fff' : '#000' }}></i>
                                         {pkg.duration}
                                     </div>
                                 </div>
@@ -185,7 +212,7 @@ const TourPackages = () => {
                                      <div className="custom-package-card-img-wrapper" onClick={() => setSelectedImage(pkg.image)}>
                                          <img src={pkg.image} alt={pkg.name} className="custom-package-card-img" loading="lazy" decoding="async" />
                                      </div>
-                                )}
+                                 )}
 
                                 <div style={{ 
                                     padding: '25px 30px 30px 30px', 
@@ -198,19 +225,21 @@ const TourPackages = () => {
                                 }}>
                                      <div className="price-container" style={{ marginBottom: '22px', display: 'flex', alignItems: 'baseline' }}>
                                          {/* Actual Price Cut */}
-                                         <span style={{ 
-                                             textDecoration: 'line-through', 
-                                             color: '#9ca3af', 
-                                             fontSize: '1.05rem', 
-                                             marginRight: '8px',
-                                             fontWeight: '600',
-                                             fontFamily: 'var(--font-accent)'
-                                         }}>
-                                             ${originalPrice}
-                                         </span>
+                                         {hasDiscount && (
+                                             <span style={{ 
+                                                 textDecoration: 'line-through', 
+                                                 color: '#9ca3af', 
+                                                 fontSize: '1.05rem', 
+                                                 marginRight: '8px',
+                                                 fontWeight: '600',
+                                                 fontFamily: 'var(--font-accent)'
+                                             }}>
+                                                 ${originalPrice}
+                                             </span>
+                                         )}
                                          {/* Highlighted Current Price */}
                                          <span className="price-val" style={{ 
-                                             color: '#16a34a', 
+                                             color: isSpecial ? '#ff3366' : '#16a34a', 
                                              fontSize: '1.8rem', 
                                              fontWeight: '950', 
                                              fontFamily: 'var(--font-accent)'
@@ -223,7 +252,7 @@ const TourPackages = () => {
                                      <ul style={{ textAlign: 'left', marginBottom: '25px', padding: '0', listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '14px' }}>
                                          {Array.isArray(pkg.features) && cleanFeatures(pkg.features).map((f, j) => (
                                              <li key={j} style={{ color: '#1f2937', display: 'flex', alignItems: 'center', fontSize: '0.92rem', fontWeight: '600', fontFamily: 'var(--font-main)' }}>
-                                                 {getFeatureIcon(f, pkg.color, true)}
+                                                 {getFeatureIcon(f, cardColor, true)}
                                                  {f}
                                              </li>
                                          ))}
@@ -233,9 +262,13 @@ const TourPackages = () => {
                                          href={`https://wa.me/94771234567?text=I'm interested in the ${pkg.name} package`} 
                                          className="custom-enquire-btn" 
                                          style={{ 
-                                             background: `linear-gradient(135deg, ${pkg.color} 0%, ${pkg.color === 'var(--neon-green)' ? '#15b300' : '#ffb300'} 100%)`,
-                                             color: '#000',
-                                             boxShadow: `0 4px 15px ${pkg.color}33`
+                                             background: isSpecial 
+                                                ? 'linear-gradient(135deg, #ff3366 0%, #ff0055 100%)' 
+                                                : `linear-gradient(135deg, ${pkg.color} 0%, ${pkg.color === 'var(--neon-green)' ? '#15b300' : '#ffb300'} 100%)`,
+                                             color: isSpecial ? '#fff' : '#000',
+                                             boxShadow: isSpecial 
+                                                ? '0 4px 15px rgba(255, 51, 102, 0.4)' 
+                                                : `0 4px 15px ${pkg.color}33`
                                          }}
                                      >
                                          Enquire Now 
@@ -308,6 +341,21 @@ const TourPackages = () => {
                     border-color: var(--neon-green) !important;
                     box-shadow: 0 25px 50px rgba(57, 255, 20, 0.25),
                                 0 0 30px rgba(57, 255, 20, 0.12) !important;
+                }
+
+                /* Special Offer Red Border & Shadow (Floating) */
+                .custom-package-card.special-offer-card {
+                    animation: floatRed 3.5s ease-in-out infinite;
+                }
+                .custom-package-card.special-offer-card:hover {
+                    border-color: #ff3366 !important;
+                    box-shadow: 0 25px 50px rgba(255, 51, 102, 0.35),
+                                0 0 30px rgba(255, 51, 102, 0.2) !important;
+                }
+                @keyframes floatRed {
+                    0% { transform: translateY(0px); }
+                    50% { transform: translateY(-10px); }
+                    100% { transform: translateY(0px); }
                 }
 
                 .custom-package-card-img-wrapper {

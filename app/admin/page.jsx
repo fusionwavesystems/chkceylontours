@@ -93,11 +93,16 @@ export default function AdminDashboard() {
 
   // Form States
   const [packageForm, setPackageForm] = useState({
-    name: '', duration: '', price: '', image: '', tag: '', color: 'var(--neon-yellow)', features: ''
+    name: '', duration: '', price: '', image: '', tag: '', color: 'var(--neon-yellow)', features: '',
+    is_special_offer: false, days: '', nights: '', offer_percentage: '', actual_price: ''
   });
 
   const [hotelForm, setHotelForm] = useState({
     name: '', location: '', image: '', tag: '', description: '', website_link: ''
+  });
+
+  const [activityForm, setActivityForm] = useState({
+    name: '', category: 'safari', season: '', level: '', location: '', image: '', tag: '', color: 'var(--neon-yellow)', features: '', description: ''
   });
 
   const [galleryForm, setGalleryForm] = useState({
@@ -112,15 +117,18 @@ export default function AdminDashboard() {
 
   const [packageReset, setPackageReset] = useState(0);
   const [hotelReset, setHotelReset] = useState(0);
+  const [activityReset, setActivityReset] = useState(0);
 
   // File States
   const [packageFile, setPackageFile] = useState(null);
   const [hotelFile, setHotelFile] = useState(null);
+  const [activityFile, setActivityFile] = useState(null);
   const [galleryFile, setGalleryFile] = useState(null);
 
   // Data States
   const [packages, setPackages] = useState([]);
   const [hotels, setHotels] = useState([]);
+  const [activities, setActivities] = useState([]);
   const [gallery, setGallery] = useState([]);
   const [reviews, setReviews] = useState([]);
   const [isEditing, setIsEditing] = useState(null); // stores the ID of the item being edited
@@ -242,6 +250,9 @@ export default function AdminDashboard() {
       const { data: htlData } = await supabase.from('hotels').select('*').order('name');
       if (htlData) setHotels(htlData);
 
+      const { data: actData } = await supabase.from('activities').select('*').order('created_at', { ascending: false });
+      if (actData) setActivities(actData);
+
       const { data: galData } = await supabase.from('gallery').select('*').order('created_at', { ascending: false });
       if (galData) setGallery(galData);
 
@@ -318,6 +329,7 @@ export default function AdminDashboard() {
             onClick={() => {
               if (type === 'packages') setPackageForm({ ...packageForm, image: '' });
               if (type === 'hotels') setHotelForm({ ...hotelForm, image: '' });
+              if (type === 'activities') setActivityForm({ ...activityForm, image: '' });
               if (type === 'gallery') setGalleryForm({ ...galleryForm, image: '' });
               if (type === 'famous') setFamousPlaceForm({ ...famousPlaceForm, image: '' });
             }}
@@ -340,6 +352,7 @@ export default function AdminDashboard() {
             onClick={() => {
               if (type === 'packages') setPackageForm({ ...packageForm, image: '' });
               if (type === 'hotels') setHotelForm({ ...hotelForm, image: '' });
+              if (type === 'activities') setActivityForm({ ...activityForm, image: '' });
               if (type === 'gallery') setGalleryForm({ ...galleryForm, image: '' });
               if (type === 'famous') setFamousPlaceForm({ ...famousPlaceForm, image: '' });
             }}
@@ -364,6 +377,7 @@ export default function AdminDashboard() {
               onClick={() => {
                 if (type === 'packages') setPackageFile(null);
                 if (type === 'hotels') setHotelFile(null);
+                if (type === 'activities') setActivityFile(null);
                 if (type === 'gallery') setGalleryFile(null);
                 if (type === 'famous') setFamousPlaceFile(null);
               }}
@@ -397,8 +411,35 @@ export default function AdminDashboard() {
         ? packageForm.features.split(',').map(f => f.trim()).filter(f => f)
         : packageForm.features;
 
+      const isSpecial = !!packageForm.is_special_offer;
+      const daysVal = packageForm.days ? parseInt(packageForm.days) : null;
+      const nightsVal = packageForm.nights ? parseInt(packageForm.nights) : null;
+      const offerPct = packageForm.offer_percentage ? parseInt(packageForm.offer_percentage) : null;
+      const actPrice = packageForm.actual_price ? parseFloat(packageForm.actual_price) : null;
+
+      let calculatedPrice = packageForm.price;
+      if (actPrice && offerPct) {
+        calculatedPrice = Math.round(actPrice * (1 - offerPct / 100)).toString();
+      }
+
+      let formattedDuration = packageForm.duration;
+      if (daysVal && nightsVal) {
+        formattedDuration = `${daysVal} Days / ${nightsVal} Nights`;
+      }
+
       const { id, created_at, ...cleanFormData } = packageForm;
-      const payload = { ...cleanFormData, image: imageUrl, features: featuresArray };
+      const payload = { 
+        ...cleanFormData, 
+        image: imageUrl, 
+        features: featuresArray,
+        is_special_offer: isSpecial,
+        days: daysVal,
+        nights: nightsVal,
+        offer_percentage: offerPct,
+        actual_price: actPrice,
+        price: calculatedPrice,
+        duration: formattedDuration
+      };
       
       if (isEditing) {
         const { error } = await supabase.from('packages').update(payload).eq('id', isEditing);
@@ -410,7 +451,10 @@ export default function AdminDashboard() {
         showMessage('success', 'Tour Package added successfully!');
       }
 
-      setPackageForm({ name: '', duration: '', price: '', tag: '', color: 'var(--neon-yellow)', features: '' });
+      setPackageForm({ 
+        name: '', duration: '', price: '', tag: '', color: 'var(--neon-yellow)', features: '',
+        is_special_offer: false, days: '', nights: '', offer_percentage: '', actual_price: ''
+      });
       setPackageFile(null);
       setPackageReset(prev => prev + 1);
       setIsEditing(null);
@@ -446,6 +490,43 @@ export default function AdminDashboard() {
       setHotelForm({ name: '', location: '', tag: '', description: '', website_link: '' });
       setHotelFile(null);
       setHotelReset(prev => prev + 1);
+      setIsEditing(null);
+      fetchData();
+    } catch (error) {
+      showMessage('error', error.message);
+    }
+  };
+
+  const handleActivitySubmit = async (e) => {
+    e.preventDefault();
+    try {
+      let imageUrl = activityForm.image;
+      if (activityFile) {
+        imageUrl = await uploadImage(activityFile);
+      } else if (!isEditing) {
+        throw new Error("Please upload an image.");
+      }
+
+      const featuresArray = typeof activityForm.features === 'string' 
+        ? activityForm.features.split(',').map(f => f.trim()).filter(f => f)
+        : activityForm.features;
+
+      const { id, created_at, desc, ...cleanFormData } = activityForm;
+      const payload = { ...cleanFormData, image: imageUrl, features: featuresArray };
+      
+      if (isEditing) {
+        const { error } = await supabase.from('activities').update(payload).eq('id', isEditing);
+        if (error) throw error;
+        showMessage('success', 'Activity updated successfully!');
+      } else {
+        const { error } = await supabase.from('activities').insert([payload]);
+        if (error) throw error;
+        showMessage('success', 'Activity added successfully!');
+      }
+
+      setActivityForm({ name: '', category: 'safari', season: '', level: '', location: '', image: '', tag: '', color: 'var(--neon-yellow)', features: '', description: '' });
+      setActivityFile(null);
+      setActivityReset(prev => prev + 1);
       setIsEditing(null);
       fetchData();
     } catch (error) {
@@ -534,8 +615,19 @@ export default function AdminDashboard() {
   const startEdit = (type, item) => {
     setIsEditing(item.id);
     setActiveTab(type);
-    if (type === 'packages') setPackageForm({ ...item, features: item.features.join(', ') });
+    if (type === 'packages') {
+      setPackageForm({ 
+        ...item, 
+        features: item.features.join(', '),
+        is_special_offer: item.is_special_offer || false,
+        days: item.days !== null && item.days !== undefined ? item.days : '',
+        nights: item.nights !== null && item.nights !== undefined ? item.nights : '',
+        offer_percentage: item.offer_percentage !== null && item.offer_percentage !== undefined ? item.offer_percentage : '',
+        actual_price: item.actual_price !== null && item.actual_price !== undefined ? item.actual_price : ''
+      });
+    }
     if (type === 'hotels') setHotelForm({ ...item, website_link: item.website_link || '' });
+    if (type === 'activities') setActivityForm({ ...item, features: item.features.join(', ') });
     if (type === 'gallery') setGalleryForm({ ...item });
     if (type === 'famous') setFamousPlaceForm({ ...item });
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -628,6 +720,7 @@ export default function AdminDashboard() {
             {[
               { id: 'packages', label: 'Tour Packages', icon: 'fa-suitcase-rolling', color: 'var(--neon-yellow)' },
               { id: 'hotels', label: 'Hotels', icon: 'fa-hotel', color: 'var(--neon-yellow)' },
+              { id: 'activities', label: 'Activities', icon: 'fa-hiking', color: 'var(--neon-yellow)' },
               { id: 'famous', label: 'Famous Places', icon: 'fa-map-marked-alt', color: 'var(--neon-yellow)' },
               { id: 'gallery', label: 'Travel Gallery', icon: 'fa-images', color: 'var(--neon-yellow)' },
               { id: 'reviews', label: 'Guest Reviews', icon: 'fa-star', color: '#ffc107' },
@@ -695,7 +788,7 @@ export default function AdminDashboard() {
         }}>
           <div>
             <h1 style={{ fontSize: '2rem', fontWeight: '700', color: '#fff', marginBottom: '5px' }}>
-              {activeTab === 'packages' ? 'Manage Packages' : activeTab === 'hotels' ? 'Manage Hotels' : activeTab === 'famous' ? 'Manage Famous Places' : 'Manage Gallery'}
+              {activeTab === 'packages' ? 'Manage Packages' : activeTab === 'hotels' ? 'Manage Hotels' : activeTab === 'activities' ? 'Manage Activities' : activeTab === 'famous' ? 'Manage Famous Places' : activeTab === 'gallery' ? 'Manage Gallery' : activeTab === 'reviews' ? 'Manage Guest Reviews' : 'Security Settings'}
             </h1>
             <p style={{ color: 'rgba(255,255,255,0.5)' }}>Add and update your travel offerings.</p>
           </div>
@@ -732,25 +825,167 @@ export default function AdminDashboard() {
                 <h2 style={{ marginBottom: '30px', color: 'var(--neon-yellow)', display: 'flex', alignItems: 'center', gap: '15px' }}>
                   <i className={`fas ${isEditing ? 'fa-edit' : 'fa-plus-circle'}`}></i> {isEditing ? 'Edit Package' : 'Add New Package'}
                 </h2>
-                <div className="admin-form-grid" style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: '20px' }}>
+                <div style={{ 
+                  marginBottom: '25px', 
+                  display: 'flex', 
+                  flexDirection: isMobile ? 'column' : 'row',
+                  gap: '15px', 
+                  background: 'rgba(255, 255, 255, 0.02)', 
+                  padding: '20px', 
+                  borderRadius: '12px', 
+                  border: '1px solid rgba(255, 255, 255, 0.08)' 
+                }}>
+                  <div style={{ display: 'flex', alignItems: 'center', marginRight: '20px' }}>
+                    <span style={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.95rem', fontWeight: 'bold' }}>Package Category:</span>
+                  </div>
+                  <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap' }}>
+                    <label style={{ 
+                      display: 'flex', 
+                      alignItems: 'center', 
+                      gap: '10px', 
+                      color: !packageForm.is_special_offer ? 'var(--neon-green)' : 'rgba(255,255,255,0.6)', 
+                      fontWeight: 'bold', 
+                      fontSize: '1rem',
+                      cursor: 'pointer', 
+                      userSelect: 'none',
+                      background: !packageForm.is_special_offer ? 'rgba(57, 255, 20, 0.08)' : 'transparent',
+                      border: `1px solid ${!packageForm.is_special_offer ? 'var(--neon-green)' : 'rgba(255,255,255,0.1)'}`,
+                      padding: '8px 16px',
+                      borderRadius: '8px',
+                      transition: 'all 0.3s ease'
+                    }}>
+                      <input 
+                        type="radio" 
+                        name="package_category" 
+                        checked={!packageForm.is_special_offer} 
+                        onChange={() => setPackageForm({...packageForm, is_special_offer: false})}
+                        style={{ width: '18px', height: '18px', accentColor: 'var(--neon-green)', cursor: 'pointer' }}
+                      />
+                      <i className="fas fa-umbrella-beach"></i> Normal Tour Package
+                    </label>
+
+                    <label style={{ 
+                      display: 'flex', 
+                      alignItems: 'center', 
+                      gap: '10px', 
+                      color: packageForm.is_special_offer ? '#ff3366' : 'rgba(255,255,255,0.6)', 
+                      fontWeight: 'bold', 
+                      fontSize: '1rem',
+                      cursor: 'pointer', 
+                      userSelect: 'none',
+                      background: packageForm.is_special_offer ? 'rgba(255, 51, 102, 0.08)' : 'transparent',
+                      border: `1px solid ${packageForm.is_special_offer ? '#ff3366' : 'rgba(255,255,255,0.1)'}`,
+                      padding: '8px 16px',
+                      borderRadius: '8px',
+                      transition: 'all 0.3s ease'
+                    }}>
+                      <input 
+                        type="radio" 
+                        name="package_category" 
+                        checked={packageForm.is_special_offer} 
+                        onChange={() => setPackageForm({...packageForm, is_special_offer: true})}
+                        style={{ width: '18px', height: '18px', accentColor: '#ff3366', cursor: 'pointer' }}
+                      />
+                      <i className="fas fa-fire-alt"></i> Seasonal Special Offer
+                    </label>
+                  </div>
+                </div>
+
+                <div className="admin-form-grid" style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: '20px', marginBottom: '20px' }}>
                   <div>
                     <label style={{ display: 'block', marginBottom: '8px', color: 'rgba(255,255,255,0.7)', fontSize: '0.9rem' }}>Package Name</label>
                     <input type="text" style={inputStyle} value={packageForm.name} onChange={e => setPackageForm({...packageForm, name: e.target.value})} required placeholder="e.g. Wildlife Safari Explorer" />
                   </div>
                   <div>
-                    <label style={{ display: 'block', marginBottom: '8px', color: 'rgba(255,255,255,0.7)', fontSize: '0.9rem' }}>Duration</label>
-                    <input type="text" style={inputStyle} value={packageForm.duration} onChange={e => setPackageForm({...packageForm, duration: e.target.value})} required placeholder="e.g. 5 Days / 4 Nights" />
+                    <label style={{ display: 'block', marginBottom: '8px', color: 'rgba(255,255,255,0.7)', fontSize: '0.9rem' }}>Card Tag</label>
+                    <input type="text" style={inputStyle} value={packageForm.tag} onChange={e => setPackageForm({...packageForm, tag: e.target.value})} required placeholder="e.g. Wildlife" />
                   </div>
                 </div>
 
-                <div className="admin-form-grid" style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: '20px' }}>
+                <div className="admin-form-grid" style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1.5fr 1fr 1fr', gap: '20px', marginBottom: '20px' }}>
                   <div>
-                    <label style={{ display: 'block', marginBottom: '8px', color: 'rgba(255,255,255,0.7)', fontSize: '0.9rem' }}>Price (USD)</label>
-                    <input type="number" style={inputStyle} value={packageForm.price} onChange={e => setPackageForm({...packageForm, price: e.target.value})} required placeholder="e.g. 850" />
+                    <label style={{ display: 'block', marginBottom: '8px', color: 'rgba(255,255,255,0.7)', fontSize: '0.9rem' }}>Duration</label>
+                    <input type="text" style={inputStyle} value={packageForm.duration} onChange={e => setPackageForm({...packageForm, duration: e.target.value})} required placeholder="e.g. 5 Days / 4 Nights" />
                   </div>
                   <div>
-                    <label style={{ display: 'block', marginBottom: '8px', color: 'rgba(255,255,255,0.7)', fontSize: '0.9rem' }}>Card Tag</label>
-                    <input type="text" style={inputStyle} value={packageForm.tag} onChange={e => setPackageForm({...packageForm, tag: e.target.value})} required placeholder="e.g. Wildlife" />
+                    <label style={{ display: 'block', marginBottom: '8px', color: 'rgba(255,255,255,0.7)', fontSize: '0.9rem' }}>Days (Optional)</label>
+                    <input 
+                      type="number" 
+                      style={inputStyle} 
+                      value={packageForm.days} 
+                      onChange={e => {
+                        const days = e.target.value;
+                        const durationText = `${days} Days / ${packageForm.nights || 0} Nights`;
+                        setPackageForm({...packageForm, days, duration: durationText});
+                      }} 
+                      placeholder="e.g. 5" 
+                    />
+                  </div>
+                  <div>
+                    <label style={{ display: 'block', marginBottom: '8px', color: 'rgba(255,255,255,0.7)', fontSize: '0.9rem' }}>Nights (Optional)</label>
+                    <input 
+                      type="number" 
+                      style={inputStyle} 
+                      value={packageForm.nights} 
+                      onChange={e => {
+                        const nights = e.target.value;
+                        const durationText = `${packageForm.days || 0} Days / ${nights} Nights`;
+                        setPackageForm({...packageForm, nights, duration: durationText});
+                      }} 
+                      placeholder="e.g. 4" 
+                    />
+                  </div>
+                </div>
+
+                <div className="admin-form-grid" style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr 1fr', gap: '20px', marginBottom: '20px' }}>
+                  <div>
+                    <label style={{ display: 'block', marginBottom: '8px', color: 'rgba(255,255,255,0.7)', fontSize: '0.9rem' }}>Actual Price (USD - Original Price)</label>
+                    <input 
+                      type="number" 
+                      style={inputStyle} 
+                      value={packageForm.actual_price} 
+                      onChange={e => {
+                        const actual = parseFloat(e.target.value) || 0;
+                        const pct = parseFloat(packageForm.offer_percentage) || 0;
+                        const discounted = pct > 0 ? Math.round(actual * (1 - pct / 100)) : actual;
+                        setPackageForm({
+                          ...packageForm, 
+                          actual_price: e.target.value, 
+                          price: discounted > 0 ? discounted.toString() : packageForm.price
+                        });
+                      }} 
+                      placeholder="e.g. 1000" 
+                    />
+                  </div>
+                  <div>
+                    <label style={{ display: 'block', marginBottom: '8px', color: 'rgba(255,255,255,0.7)', fontSize: '0.9rem' }}>Discount Percentage (%)</label>
+                    <input 
+                      type="number" 
+                      style={inputStyle} 
+                      value={packageForm.offer_percentage} 
+                      onChange={e => {
+                        const pct = parseFloat(e.target.value) || 0;
+                        const actual = parseFloat(packageForm.actual_price) || 0;
+                        const discounted = actual > 0 ? Math.round(actual * (1 - pct / 100)) : 0;
+                        setPackageForm({
+                          ...packageForm, 
+                          offer_percentage: e.target.value, 
+                          price: discounted > 0 ? discounted.toString() : packageForm.price
+                        });
+                      }} 
+                      placeholder="e.g. 15" 
+                    />
+                  </div>
+                  <div>
+                    <label style={{ display: 'block', marginBottom: '8px', color: 'var(--neon-yellow)', fontSize: '0.9rem', fontWeight: 'bold' }}>Price (USD - Final Price)</label>
+                    <input 
+                      type="number" 
+                      style={inputStyle} 
+                      value={packageForm.price} 
+                      onChange={e => setPackageForm({...packageForm, price: e.target.value})} 
+                      required 
+                      placeholder="e.g. 850" 
+                    />
                   </div>
                 </div>
 
@@ -767,7 +1002,7 @@ export default function AdminDashboard() {
 
                 <div style={{ display: 'flex', gap: '15px' }}>
                   {isEditing && (
-                    <button type="button" onClick={() => { setIsEditing(null); setPackageForm({ name: '', duration: '', price: '', tag: '', color: 'var(--neon-green)', features: '' }); }} style={{ flex: 1, padding: '15px', borderRadius: '8px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', color: '#fff', cursor: 'pointer' }}>Cancel</button>
+                    <button type="button" onClick={() => { setIsEditing(null); setPackageForm({ name: '', duration: '', price: '', tag: '', color: 'var(--neon-green)', features: '', is_special_offer: false, days: '', nights: '', offer_percentage: '', actual_price: '' }); }} style={{ flex: 1, padding: '15px', borderRadius: '8px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', color: '#fff', cursor: 'pointer' }}>Cancel</button>
                   )}
                   <button type="submit" className="btn btn-primary" style={{ flex: 2, background: 'var(--neon-yellow)', color: '#000', fontWeight: '900', height: '55px', fontSize: '1.1rem' }}>{isEditing ? 'UPDATE PACKAGE' : 'CREATE PACKAGE'}</button>
                 </div>
@@ -776,20 +1011,178 @@ export default function AdminDashboard() {
               <div>
                 <h3 style={{ marginBottom: '20px', fontSize: '1.5rem' }}>Current Packages ({packages.length})</h3>
                 <div className="admin-data-grid" style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fill, minmax(250px, 1fr))', gap: '20px' }}>
-                  {packages.map(pkg => (
-                    <div key={pkg.id} style={{ background: 'rgba(255,255,255,0.03)', borderRadius: '15px', padding: '15px', border: '1px solid rgba(255,255,255,0.05)' }}>
+                  {packages.map(pkg => {
+                    const isSpecial = pkg.is_special_offer === true;
+                    const hasDiscount = !!(pkg.actual_price && pkg.offer_percentage);
+                    return (
+                      <div 
+                        key={pkg.id} 
+                        style={{ 
+                          background: isSpecial ? 'rgba(255, 51, 102, 0.03)' : 'rgba(255,255,255,0.03)', 
+                          borderRadius: '15px', 
+                          padding: '15px', 
+                          border: isSpecial ? '2px solid #ff3366' : '1px solid rgba(255,255,255,0.05)',
+                          boxShadow: isSpecial ? '0 0 20px rgba(255, 51, 102, 0.2)' : 'none',
+                          position: 'relative',
+                          overflow: 'hidden'
+                        }}
+                      >
+                        {isSpecial && (
+                          <div style={{
+                            position: 'absolute',
+                            top: '10px',
+                            right: '10px',
+                            background: '#ff3366',
+                            color: '#fff',
+                            fontSize: '0.7rem',
+                            fontWeight: 'bold',
+                            padding: '4px 8px',
+                            borderRadius: '8px',
+                            boxShadow: '0 2px 8px rgba(255, 51, 102, 0.4)',
+                            zIndex: 10
+                          }}>
+                            <i className="fas fa-fire-alt" style={{ marginRight: '4px' }}></i> SPECIAL OFFER
+                          </div>
+                        )}
+                        {!isSpecial && hasDiscount && (
+                          <div style={{
+                            position: 'absolute',
+                            top: '10px',
+                            right: '10px',
+                            background: '#ff3366',
+                            color: '#fff',
+                            fontSize: '0.7rem',
+                            fontWeight: 'bold',
+                            padding: '4px 8px',
+                            borderRadius: '8px',
+                            boxShadow: '0 2px 8px rgba(255, 51, 102, 0.4)',
+                            zIndex: 10
+                          }}>
+                            <i className="fas fa-tags" style={{ marginRight: '4px' }}></i> {pkg.offer_percentage}% OFF
+                          </div>
+                        )}
+                        <img 
+                          src={pkg.image} 
+                          alt={pkg.name} 
+                          style={{ width: '100%', height: '120px', objectFit: 'cover', borderRadius: '10px', marginBottom: '15px', cursor: 'pointer' }} 
+                          onClick={() => setSelectedImage(pkg.image)}
+                        />
+
+                        <h4 style={{ marginBottom: '5px' }}>{pkg.name}</h4>
+                        {hasDiscount ? (
+                          <p style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.5)', marginBottom: '15px' }}>
+                            {pkg.duration} • <span style={{ textDecoration: 'line-through', marginRight: '5px' }}>${pkg.actual_price}</span><span style={{ color: isSpecial ? '#ff3366' : 'var(--neon-green)', fontWeight: 'bold' }}>${pkg.price} (-{pkg.offer_percentage}%)</span>
+                          </p>
+                        ) : (
+                          <p style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.5)', marginBottom: '15px' }}>{pkg.duration} • ${pkg.price}</p>
+                        )}
+                        <div style={{ display: 'flex', gap: '10px' }}>
+                          <button onClick={() => startEdit('packages', pkg)} style={{ flex: 1, padding: '8px', borderRadius: '5px', background: 'rgba(255, 240, 31, 0.1)', color: 'var(--neon-yellow)', border: '1px solid var(--neon-yellow)', cursor: 'pointer' }}><i className="fas fa-edit"></i></button>
+                          <button onClick={() => handleDelete('packages', pkg.id)} style={{ flex: 1, padding: '8px', borderRadius: '5px', background: 'rgba(255, 77, 77, 0.1)', color: '#ff4d4d', border: '1px solid #ff4d4d', cursor: 'pointer' }}><i className="fas fa-trash"></i></button>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Activities Form */}
+          {activeTab === 'activities' && (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '40px' }}>
+              <form onSubmit={handleActivitySubmit} style={{ borderBottom: '1px solid rgba(255,255,255,0.05)', paddingBottom: '40px' }}>
+                <h2 style={{ marginBottom: '30px', color: 'var(--neon-yellow)', display: 'flex', alignItems: 'center', gap: '15px' }}>
+                  <i className={`fas ${isEditing ? 'fa-edit' : 'fa-plus-circle'}`}></i> {isEditing ? 'Edit Activity' : 'Add New Activity'}
+                </h2>
+                <div className="admin-form-grid" style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: '20px' }}>
+                  <div>
+                    <label style={{ display: 'block', marginBottom: '8px', color: 'rgba(255,255,255,0.7)', fontSize: '0.9rem' }}>Activity Name</label>
+                    <input type="text" style={inputStyle} value={activityForm.name} onChange={e => setActivityForm({...activityForm, name: e.target.value})} required placeholder="e.g. Wildlife Safari in Yala National Park" />
+                  </div>
+                  <div>
+                    <label style={{ display: 'block', marginBottom: '8px', color: 'rgba(255,255,255,0.7)', fontSize: '0.9rem' }}>Select Category</label>
+                    <select style={inputStyle} value={activityForm.category} onChange={e => setActivityForm({...activityForm, category: e.target.value})} required>
+                      <option value="safari">Wild Safaris</option>
+                      <option value="hiking">Hiking & Trekking</option>
+                      <option value="cycling">Cycling Tours</option>
+                      <option value="water">Water Sports</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div className="admin-form-grid" style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: '20px' }}>
+                  <div>
+                    <label style={{ display: 'block', marginBottom: '8px', color: 'rgba(255,255,255,0.7)', fontSize: '0.9rem' }}>Best Season</label>
+                    <input type="text" style={inputStyle} value={activityForm.season} onChange={e => setActivityForm({...activityForm, season: e.target.value})} required placeholder="e.g. All Year (Dry Season Best) or July - October" />
+                  </div>
+                  <div>
+                    <label style={{ display: 'block', marginBottom: '8px', color: 'rgba(255,255,255,0.7)', fontSize: '0.9rem' }}>Level / Pace</label>
+                    <input type="text" style={inputStyle} value={activityForm.level} onChange={e => setActivityForm({...activityForm, level: e.target.value})} required placeholder="e.g. Moderate (1,200 Steps) or Easy / Family Friendly" />
+                  </div>
+                </div>
+
+                <div className="admin-form-grid" style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: '20px' }}>
+                  <div>
+                    <label style={{ display: 'block', marginBottom: '8px', color: 'rgba(255,255,255,0.7)', fontSize: '0.9rem' }}>Location</label>
+                    <input type="text" style={inputStyle} value={activityForm.location} onChange={e => setActivityForm({...activityForm, location: e.target.value})} required placeholder="e.g. Yala National Park" />
+                  </div>
+                  <div>
+                    <label style={{ display: 'block', marginBottom: '8px', color: 'rgba(255,255,255,0.7)', fontSize: '0.9rem' }}>Card Tag</label>
+                    <input type="text" style={inputStyle} value={activityForm.tag} onChange={e => setActivityForm({...activityForm, tag: e.target.value})} required placeholder="e.g. Wild Safari or Scenic Hiking" />
+                  </div>
+                </div>
+
+                <div className="admin-form-grid" style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: '20px' }}>
+                  <div>
+                    <label style={{ display: 'block', marginBottom: '8px', color: 'rgba(255,255,255,0.7)', fontSize: '0.9rem' }}>Border Color Style</label>
+                    <select style={inputStyle} value={activityForm.color} onChange={e => setActivityForm({...activityForm, color: e.target.value})} required>
+                      <option value="var(--neon-green)">Neon Green</option>
+                      <option value="var(--neon-yellow)">Neon Yellow</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label style={{ display: 'block', marginBottom: '8px', color: 'rgba(255,255,255,0.7)', fontSize: '0.9rem' }}>Features (comma-separated)</label>
+                    <input type="text" style={inputStyle} value={activityForm.features} onChange={e => setActivityForm({...activityForm, features: e.target.value})} required placeholder="e.g. Track leopards, Jeep ride, Expert tracker" />
+                  </div>
+                </div>
+
+                <div style={{ marginBottom: '20px' }}>
+                  <label style={{ display: 'block', marginBottom: '8px', color: 'rgba(255,255,255,0.7)', fontSize: '0.9rem' }}>Description</label>
+                  <textarea style={{...inputStyle, height: '120px', resize: 'vertical'}} value={activityForm.description || ''} onChange={e => setActivityForm({...activityForm, description: e.target.value})} required placeholder="Describe this activity in detail..." />
+                </div>
+
+                <div style={{ marginBottom: '30px', padding: '20px', borderRadius: '12px', border: '2px dashed rgba(255,255,255,0.1)', background: 'rgba(255,255,255,0.02)' }}>
+                  <label style={{ display: 'block', marginBottom: '15px', color: 'rgba(255,255,255,0.7)', fontSize: '0.9rem' }}>{isEditing ? 'Change Activity Image (Optional)' : 'Upload Activity Image'}</label>
+                  <input type="file" accept="image/*" style={{ ...inputStyle, marginBottom: '0', background: 'transparent', border: 'none', padding: 0 }} onChange={e => setActivityFile(e.target.files[0])} key={`act-${activityReset}`} required={!isEditing && !activityForm.image} />
+                  {renderImagePreview(activityFile || (isEditing && activityForm.image ? { name: 'Current Image', type: 'image/url', preview: activityForm.image } : null), 'activities')}
+                </div>
+
+                <div style={{ display: 'flex', gap: '15px' }}>
+                  {isEditing && (
+                    <button type="button" onClick={() => { setIsEditing(null); setActivityForm({ name: '', category: 'safari', season: '', level: '', location: '', image: '', tag: '', color: 'var(--neon-yellow)', features: '', description: '' }); }} style={{ flex: 1, padding: '15px', borderRadius: '8px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', color: '#fff', cursor: 'pointer' }}>Cancel</button>
+                  )}
+                  <button type="submit" className="btn btn-primary" style={{ flex: 2, background: 'var(--neon-yellow)', color: '#000', fontWeight: '900', height: '55px', fontSize: '1.1rem' }}>{isEditing ? 'UPDATE ACTIVITY' : 'CREATE ACTIVITY'}</button>
+                </div>
+              </form>
+
+              <div>
+                <h3 style={{ marginBottom: '20px', fontSize: '1.5rem' }}>Current Activities ({activities.length})</h3>
+                <div className="admin-data-grid" style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fill, minmax(250px, 1fr))', gap: '20px' }}>
+                  {activities.map(act => (
+                    <div key={act.id} style={{ background: 'rgba(255,255,255,0.03)', borderRadius: '15px', padding: '15px', border: '1px solid rgba(255,255,255,0.05)' }}>
                       <img 
-                        src={pkg.image} 
-                        alt={pkg.name} 
+                        src={act.image} 
+                        alt={act.name} 
                         style={{ width: '100%', height: '120px', objectFit: 'cover', borderRadius: '10px', marginBottom: '15px', cursor: 'pointer' }} 
-                        onClick={() => setSelectedImage(pkg.image)}
+                        onClick={() => setSelectedImage(act.image)}
                       />
 
-                      <h4 style={{ marginBottom: '5px' }}>{pkg.name}</h4>
-                      <p style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.5)', marginBottom: '15px' }}>{pkg.duration} • ${pkg.price}</p>
+                      <h4 style={{ marginBottom: '5px' }}>{act.name}</h4>
+                      <p style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.5)', marginBottom: '15px' }}>{act.location} • {act.category}</p>
                       <div style={{ display: 'flex', gap: '10px' }}>
-                        <button onClick={() => startEdit('packages', pkg)} style={{ flex: 1, padding: '8px', borderRadius: '5px', background: 'rgba(255, 240, 31, 0.1)', color: 'var(--neon-yellow)', border: '1px solid var(--neon-yellow)', cursor: 'pointer' }}><i className="fas fa-edit"></i></button>
-                        <button onClick={() => handleDelete('packages', pkg.id)} style={{ flex: 1, padding: '8px', borderRadius: '5px', background: 'rgba(255, 77, 77, 0.1)', color: '#ff4d4d', border: '1px solid #ff4d4d', cursor: 'pointer' }}><i className="fas fa-trash"></i></button>
+                        <button onClick={() => startEdit('activities', act)} style={{ flex: 1, padding: '8px', borderRadius: '5px', background: 'rgba(255, 240, 31, 0.1)', color: 'var(--neon-yellow)', border: '1px solid var(--neon-yellow)', cursor: 'pointer' }}><i className="fas fa-edit"></i></button>
+                        <button onClick={() => handleDelete('activities', act.id)} style={{ flex: 1, padding: '8px', borderRadius: '5px', background: 'rgba(255, 77, 77, 0.1)', color: '#ff4d4d', border: '1px solid #ff4d4d', cursor: 'pointer' }}><i className="fas fa-trash"></i></button>
                       </div>
                     </div>
                   ))}

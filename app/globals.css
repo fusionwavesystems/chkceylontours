@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&display=swap');
+
 :root {
     --primary: #004d40;
     --primary-light: #00796b;
@@ -17,6 +19,7 @@
     --font-main: 'Outfit', sans-serif;
     --font-accent: 'Plus Jakarta Sans', sans-serif;
     --font-display: 'Syne', sans-serif;
+    --font-handwritten: 'Caveat', cursive;
 
     --font-heading: 'Playfair Display', serif;
     --gradient-vibrant: linear-gradient(90deg, var(--neon-yellow), var(--neon-green));

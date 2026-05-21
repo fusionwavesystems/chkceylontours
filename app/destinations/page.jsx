@@ -87,16 +87,16 @@ export default function Destinations() {
                 color: 'var(--neon-yellow)', 
                 fontSize: '1.2rem', 
                 fontWeight: '700', 
-                margin: '0 0 25px 0',
+                margin: '20px 0 25px 0',
                 letterSpacing: '3px',
                 textTransform: 'uppercase',
                 fontFamily: 'var(--font-accent)',
                 textShadow: '0 2px 10px rgba(0,0,0,0.9)'
             }}>The Wonders of Ceylon</p>
-
+ 
             {/* Render the Why Choose CHK Ceylon Tours section ONLY on the main destinations index page */}
             {!selectedProvince && !selectedDistrictId && (
-                <div style={{ marginTop: '90px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}> {/* Generous spacing before Why Choose */}
+                <div style={{ marginTop: '45px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}> {/* Balanced spacing before Why Choose */}
                     <h2 style={{ 
                         fontSize: 'clamp(1.5rem, 3.5vw, 2.4rem)', 
                         color: '#fff', 
