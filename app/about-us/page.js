@@ -391,7 +391,7 @@ export default function AboutUs() {
                                     </p>
                                 </div>
                                 <a 
-                                    href="/CHK%20Ceylon%20Tours%20(PVT)LTD.jpg.jpeg" 
+                                    href="/br_certificate.jpeg" 
                                     target="_blank" 
                                     rel="noopener noreferrer"
                                     style={{
@@ -408,7 +408,7 @@ export default function AboutUs() {
                                     className="br-cert-link"
                                 >
                                     <img 
-                                        src="/CHK%20Ceylon%20Tours%20(PVT)LTD.jpg.jpeg" 
+                                        src="/br_certificate.jpeg" 
                                         alt="CHK Ceylon Tours BR Certificate" 
                                         style={{ width: "100%", height: "auto", display: "block" }} 
                                     />
