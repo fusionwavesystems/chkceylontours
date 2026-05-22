@@ -34,35 +34,73 @@ const Hero = ({ heroData }) => {
     };
 
     return (
-        <section className="hero" style={{ justifyContent: 'center' }}>
-            {/* Slides */}
-            {slides.map((slide, idx) => (
-                <div
-                    key={idx}
-                    style={{
-                        position: 'absolute',
-                        inset: 0,
-                        backgroundImage: `url('${slide.image}')`,
-                        backgroundSize: 'cover',
-                        backgroundPosition: 'center',
-                        transition: 'opacity 0.8s ease',
-                        opacity: idx === current ? (fading ? 0 : 1) : 0,
-                        zIndex: 0,
-                    }}
-                />
-            ))}
+        <section className="hero" style={{ justifyContent: 'center', display: 'flex', flexDirection: 'column' }}>
+            <div className="hero-slides-wrapper">
+                {/* Slides */}
+                {slides.map((slide, idx) => (
+                    <div
+                        key={idx}
+                        style={{
+                            position: 'absolute',
+                            inset: 0,
+                            backgroundImage: `url('${slide.image}')`,
+                            backgroundSize: 'cover',
+                            backgroundPosition: 'center',
+                            transition: 'opacity 0.8s ease',
+                            opacity: idx === current ? (fading ? 0 : 1) : 0,
+                            zIndex: 0,
+                        }}
+                    />
+                ))}
 
-            {/* Dark overlay */}
-            <div style={{
-                position: 'absolute', inset: 0,
-                background: 'linear-gradient(to bottom, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.55) 100%)',
-                zIndex: 1
-            }} />
+                {/* Dark overlay */}
+                <div className="hero-overlay" style={{
+                    position: 'absolute', inset: 0,
+                    background: 'linear-gradient(to bottom, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.55) 100%)',
+                    zIndex: 1
+                }} />
+
+                {/* Left / Right Arrows */}
+                {['left', 'right'].map(dir => (
+                    <button
+                        key={dir}
+                        className="hero-arrow mobile-hide"
+                        onClick={() => {
+                            const next = dir === 'left'
+                                ? (current - 1 + slides.length) % slides.length
+                                : (current + 1) % slides.length;
+                            goTo(next);
+                        }}
+                        style={{
+                            position: 'absolute',
+                            top: '50%',
+                            [dir]: '15px',
+                            transform: 'translateY(-50%)',
+                            zIndex: 20,
+                            background: 'rgba(0,0,0,0.4)',
+                            border: '2px solid var(--neon-yellow)',
+                            color: 'var(--neon-yellow)',
+                            borderRadius: '50%',
+                            width: '40px',
+                            height: '40px',
+                            fontSize: '1rem',
+                            cursor: 'pointer',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            transition: 'all 0.3s ease',
+                            boxShadow: 'var(--neon-glow)',
+                        }}
+                    >
+                        <i className={`fas fa-chevron-${dir === 'left' ? 'left' : 'right'}`} />
+                    </button>
+                ))}
+            </div>
 
             {/* Content */}
             <div className="container" style={{ position: 'relative', zIndex: 10 }}>
                 <div className="hero-content">
-                    <div style={{ display: 'inline-block', border: '1px solid var(--neon-red)', padding: '5px 15px', borderRadius: '4px', boxShadow: 'var(--neon-glow-red)', marginBottom: '15px' }}>
+                    <div className="mobile-hide" style={{ display: 'inline-block', border: '1px solid var(--neon-red)', padding: '5px 15px', borderRadius: '4px', boxShadow: 'var(--neon-glow-red)', marginBottom: '15px' }}>
                         <span className="subtitle" style={{ color: 'var(--neon-red)', margin: 0, textShadow: 'var(--neon-glow-red)', display: 'block', textAlign: 'center', fontSize: '0.8rem', letterSpacing: '3px' }}>
                             {heroData?.subtitle_tag || 'Premium Island Experiences'}
                         </span>
@@ -70,7 +108,7 @@ const Hero = ({ heroData }) => {
                     <h1 className="reveal active" style={{ textAlign: 'center' }}>
                         {(heroData?.title || 'Visit Sri Lanka').replace('Sri Lanka', 'Sri\u00A0Lanka')}
                     </h1>
-                    <div className="hero-btns reveal active" style={{ transitionDelay: '0.6s', justifyContent: 'center' }}>
+                    <div className="hero-btns reveal active mobile-hide" style={{ transitionDelay: '0.6s', justifyContent: 'center' }}>
                         <a href="#destinations" className="btn btn-primary">Start Exploring</a>
                         <a href="#packages" className="btn btn-outline" style={{ marginLeft: '20px' }}>View Packages</a>
                     </div>
@@ -114,40 +152,43 @@ const Hero = ({ heroData }) => {
                 </div>
             </div>
 
-            {/* Left / Right Arrows */}
-            {['left', 'right'].map(dir => (
-                <button
-                    key={dir}
-                    onClick={() => {
-                        const next = dir === 'left'
-                            ? (current - 1 + slides.length) % slides.length
-                            : (current + 1) % slides.length;
-                        goTo(next);
-                    }}
-                    style={{
-                        position: 'absolute',
-                        top: '50%',
-                        [dir]: '30px',
-                        transform: 'translateY(-50%)',
-                        zIndex: 20,
-                        background: 'rgba(0,0,0,0.4)',
-                        border: '2px solid var(--neon-yellow)',
-                        color: 'var(--neon-yellow)',
-                        borderRadius: '50%',
-                        width: '50px',
-                        height: '50px',
-                        fontSize: '1.2rem',
-                        cursor: 'pointer',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        transition: 'all 0.3s ease',
-                        boxShadow: 'var(--neon-glow)',
-                    }}
-                >
-                    <i className={`fas fa-chevron-${dir === 'left' ? 'left' : 'right'}`} />
-                </button>
-            ))}
+
+            <style jsx>{`
+                .hero-slides-wrapper {
+                    position: absolute;
+                    inset: 0;
+                    z-index: 0;
+                }
+                @media (max-width: 768px) {
+                    .mobile-hide {
+                        display: none !important;
+                    }
+                    .hero-slides-wrapper {
+                        position: relative;
+                        width: 100%;
+                        margin-top: 20px;
+                        height: 60vh; /* Fills most of the mobile screen */
+                        min-height: 350px;
+                        border-radius: 0;
+                        overflow: hidden;
+                        order: 2;
+                        box-shadow: none;
+                    }
+                    .container {
+                        order: 1;
+                    }
+                    h1.reveal.active {
+                        font-size: 2.8rem !important;
+                        margin-bottom: 0 !important;
+                        margin-top: 10px !important;
+                    }
+                    .hero-arrow {
+                        width: 35px !important;
+                        height: 35px !important;
+                        font-size: 0.9rem !important;
+                    }
+                }
+            `}</style>
         </section>
     );
 };

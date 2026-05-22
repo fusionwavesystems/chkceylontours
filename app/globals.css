@@ -1086,13 +1086,13 @@ nav.scrolled .nav-links a {
 
     /* Generous mobile spacing between fixed header and site page headings */
     .hero {
-        min-height: 480px !important;
         height: auto !important;
-        padding-top: 130px !important;
-        padding-bottom: 50px !important;
+        padding-top: 100px !important;
+        padding-bottom: 0 !important;
         display: flex !important;
         align-items: center !important;
-        justify-content: center !important;
+        justify-content: flex-start !important;
+        flex-direction: column !important;
     }
     
     .hero-content {
