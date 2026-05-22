@@ -55,7 +55,9 @@ CREATE TABLE packages (
 
 ALTER TABLE packages ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "Allow public read-only access." ON packages FOR SELECT USING (true);
-CREATE POLICY "Allow public insert." ON packages FOR INSERT WITH CHECK (true);
+CREATE POLICY "Allow authenticated insert." ON packages FOR INSERT TO authenticated WITH CHECK (true);
+CREATE POLICY "Allow authenticated update." ON packages FOR UPDATE TO authenticated USING (true);
+CREATE POLICY "Allow authenticated delete." ON packages FOR DELETE TO authenticated USING (true);
 
 CREATE TABLE hotels (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -70,12 +72,22 @@ CREATE TABLE hotels (
 
 ALTER TABLE hotels ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "Allow public read-only access." ON hotels FOR SELECT USING (true);
-CREATE POLICY "Allow public insert." ON hotels FOR INSERT WITH CHECK (true);
+CREATE POLICY "Allow authenticated insert." ON hotels FOR INSERT TO authenticated WITH CHECK (true);
+CREATE POLICY "Allow authenticated update." ON hotels FOR UPDATE TO authenticated USING (true);
+CREATE POLICY "Allow authenticated delete." ON hotels FOR DELETE TO authenticated USING (true);
 
--- Adding insert policies for destination tables for the admin dashboard
-CREATE POLICY "Allow public insert." ON provinces FOR INSERT WITH CHECK (true);
-CREATE POLICY "Allow public insert." ON districts FOR INSERT WITH CHECK (true);
-CREATE POLICY "Allow public insert." ON famous_places FOR INSERT WITH CHECK (true);
+-- Adding insert/update/delete policies for destination tables for the admin dashboard
+CREATE POLICY "Allow authenticated insert." ON provinces FOR INSERT TO authenticated WITH CHECK (true);
+CREATE POLICY "Allow authenticated update." ON provinces FOR UPDATE TO authenticated USING (true);
+CREATE POLICY "Allow authenticated delete." ON provinces FOR DELETE TO authenticated USING (true);
+
+CREATE POLICY "Allow authenticated insert." ON districts FOR INSERT TO authenticated WITH CHECK (true);
+CREATE POLICY "Allow authenticated update." ON districts FOR UPDATE TO authenticated USING (true);
+CREATE POLICY "Allow authenticated delete." ON districts FOR DELETE TO authenticated USING (true);
+
+CREATE POLICY "Allow authenticated insert." ON famous_places FOR INSERT TO authenticated WITH CHECK (true);
+CREATE POLICY "Allow authenticated update." ON famous_places FOR UPDATE TO authenticated USING (true);
+CREATE POLICY "Allow authenticated delete." ON famous_places FOR DELETE TO authenticated USING (true);
 
 -- Gallery Table
 CREATE TABLE gallery (
@@ -88,9 +100,9 @@ CREATE TABLE gallery (
 
 ALTER TABLE gallery ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "Allow public read-only access." ON gallery FOR SELECT USING (true);
-CREATE POLICY "Allow public insert." ON gallery FOR INSERT WITH CHECK (true);
-CREATE POLICY "Allow public update." ON gallery FOR UPDATE USING (true);
-CREATE POLICY "Allow public delete." ON gallery FOR DELETE USING (true);
+CREATE POLICY "Allow authenticated insert." ON gallery FOR INSERT TO authenticated WITH CHECK (true);
+CREATE POLICY "Allow authenticated update." ON gallery FOR UPDATE TO authenticated USING (true);
+CREATE POLICY "Allow authenticated delete." ON gallery FOR DELETE TO authenticated USING (true);
 
 -- Reviews Table
 CREATE TABLE IF NOT EXISTS reviews (
@@ -106,16 +118,15 @@ CREATE TABLE IF NOT EXISTS reviews (
 -- Enable Row Level Security
 ALTER TABLE reviews ENABLE ROW LEVEL SECURITY;
 
--- Allow public to submit reviews
+-- Allow public to submit reviews (so users can leave reviews)
 CREATE POLICY "Allow public insert" ON reviews FOR INSERT WITH CHECK (true);
 
 -- Allow public to read ONLY approved reviews
 CREATE POLICY "Allow public read approved" ON reviews FOR SELECT USING (status = 'approved');
 
--- Allow admin (authenticated or with matching policies) to manage all
--- Note: Current admin dashboard uses public actions, so we'll add public update/delete for now to match your existing patterns
-CREATE POLICY "Allow public update" ON reviews FOR UPDATE USING (true);
-CREATE POLICY "Allow public delete" ON reviews FOR DELETE USING (true);
+-- Allow ONLY authenticated admins to update (e.g. approve) or delete reviews
+CREATE POLICY "Allow authenticated update" ON reviews FOR UPDATE TO authenticated USING (true);
+CREATE POLICY "Allow authenticated delete" ON reviews FOR DELETE TO authenticated USING (true);
 
 -- Note: Admin authentication is handled via Supabase Auth (Authentication > Users).
 -- To create an admin, add a user in the Supabase Dashboard.
@@ -138,9 +149,9 @@ CREATE TABLE IF NOT EXISTS activities (
 
 ALTER TABLE activities ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "Allow public read-only access." ON activities FOR SELECT USING (true);
-CREATE POLICY "Allow public insert." ON activities FOR INSERT WITH CHECK (true);
-CREATE POLICY "Allow public update." ON activities FOR UPDATE USING (true);
-CREATE POLICY "Allow public delete." ON activities FOR DELETE USING (true);
+CREATE POLICY "Allow authenticated insert." ON activities FOR INSERT TO authenticated WITH CHECK (true);
+CREATE POLICY "Allow authenticated update." ON activities FOR UPDATE TO authenticated USING (true);
+CREATE POLICY "Allow authenticated delete." ON activities FOR DELETE TO authenticated USING (true);
 
 -- Alter Packages Table for Seasonal Special Offers
 ALTER TABLE packages ADD COLUMN IF NOT EXISTS is_special_offer BOOLEAN DEFAULT FALSE;

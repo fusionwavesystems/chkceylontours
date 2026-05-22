@@ -55,77 +55,35 @@ const ReviewCard = ({ review }) => {
             </div>
 
             <style jsx>{`
-                /* Running animated border wrapper */
+                /* Tour Package style box for reviews */
                 .review-card {
-                    background: transparent;
-                    padding: 3px; /* space for the running border */
-                    border-radius: 22px;
+                    background: linear-gradient(135deg, rgba(12, 12, 12, 0.98) 0%, rgba(3, 3, 3, 1) 100%);
+                    border-radius: 24px;
+                    border: 2px solid #ffcc00;
+                    padding: 24px;
                     position: relative;
                     display: flex;
                     flex-direction: column;
                     width: 100%;
-                    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-                    overflow: visible;
-                }
-
-                /* Spinning red conic-gradient border */
-                .review-card::before {
-                    content: '';
-                    position: absolute;
-                    inset: -3px;
-                    border-radius: 24px;
-                    background: conic-gradient(
-                        from 0deg,
-                        #ff0000 0deg,
-                        #ff4400 30deg,
-                        transparent 90deg,
-                        transparent 270deg,
-                        #ff4400 330deg,
-                        #ff0000 360deg
-                    );
-                    animation: spinBorder 2.5s linear infinite;
-                    z-index: 0;
-                }
-
-                /* Yellow solid inner frame */
-                .review-card::after {
-                    content: '';
-                    position: absolute;
-                    inset: 3px;
-                    border-radius: 20px;
-                    border: 2px solid var(--neon-yellow);
-                    box-shadow: 0 0 12px rgba(255, 240, 31, 0.25), inset 0 0 12px rgba(255, 240, 31, 0.05);
-                    z-index: 1;
-                    pointer-events: none;
-                }
-
-                @keyframes spinBorder {
-                    from { transform: rotate(0deg); }
-                    to   { transform: rotate(360deg); }
-                }
-
-                /* Inner card content bubble — sits above the border layers */
-                .card-inner {
-                    background: #0a0a0a;
-                    border-radius: 19px;
-                    padding: 24px;
-                    display: flex;
-                    flex-direction: column;
-                    gap: 15px;
-                    position: relative;
-                    z-index: 2;
-                    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+                    height: 100%;
                     transition: all 0.4s ease;
+                    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+                    overflow: hidden;
                 }
 
                 .review-card:hover {
-                    transform: translateY(-10px);
+                    transform: translateY(-8px);
+                    box-shadow: 0 15px 40px rgba(255, 204, 0, 0.15);
+                    border-color: #ffda33;
                 }
-                .review-card:hover .card-inner {
-                    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
-                }
-                .review-card:hover::after {
-                    box-shadow: 0 0 20px rgba(255, 240, 31, 0.5), inset 0 0 20px rgba(255, 240, 31, 0.08);
+
+                .card-inner {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 15px;
+                    flex-grow: 1;
+                    position: relative;
+                    z-index: 2;
                 }
                 .card-header {
                     display: flex;
@@ -204,53 +162,24 @@ const ReviewCard = ({ review }) => {
                     gap: 12px;
                     margin-bottom: 5px;
                 }
-                /* Photo thumb — spinning red+yellow border wrapper */
+                /* Clean photo thumb wrapper */
                 .thumb-frame {
                     width: 79px;
                     height: 79px;
-                    border-radius: 17px;
+                    border-radius: 14px;
+                    border: 2px solid rgba(255, 204, 0, 0.5);
                     position: relative;
-                    background: transparent;
-                    padding: 3px;
+                    background: #000;
                     flex-shrink: 0;
                     cursor: pointer;
-                    transition: transform 0.3s ease;
-                    overflow: visible;
+                    transition: transform 0.3s ease, border-color 0.3s ease;
+                    overflow: hidden;
                 }
-                /* Spinning red conic arc */
-                .thumb-frame::before {
-                    content: '';
-                    position: absolute;
-                    inset: -3px;
-                    border-radius: 19px;
-                    background: conic-gradient(
-                        from 0deg,
-                        #ff0000 0deg,
-                        #ff4400 40deg,
-                        transparent 100deg,
-                        transparent 260deg,
-                        #ff4400 320deg,
-                        #ff0000 360deg
-                    );
-                    animation: spinBorder 2s linear infinite;
-                    z-index: 0;
-                }
-                /* Static yellow inner border ring */
-                .thumb-frame::after {
-                    content: '';
-                    position: absolute;
-                    inset: 3px;
-                    border-radius: 13px;
-                    border: 2px solid var(--neon-yellow);
-                    box-shadow: 0 0 8px rgba(255, 240, 31, 0.3), inset 0 0 8px rgba(255, 240, 31, 0.06);
-                    z-index: 1;
-                    pointer-events: none;
-                }
+                
                 .thumb-frame:hover {
                     transform: scale(1.08);
-                }
-                .thumb-frame:hover::after {
-                    box-shadow: 0 0 16px rgba(255, 240, 31, 0.55), inset 0 0 12px rgba(255, 240, 31, 0.1);
+                    border-color: #ffcc00;
+                    box-shadow: 0 0 15px rgba(255, 204, 0, 0.3);
                 }
                 /* Actual image bubble */
                 .thumb-img {

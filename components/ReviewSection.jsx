@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { supabase } from '../lib/supabase';
 import ReviewCard from './ReviewCard';
 import Link from 'next/link';
@@ -10,6 +10,7 @@ import GuestMemorySlider from './GuestMemorySlider';
 const ReviewSection = () => {
     const [reviews, setReviews] = useState([]);
     const [loading, setLoading] = useState(true);
+    const carouselRef = useRef(null);
 
     useEffect(() => {
         const fetchReviews = async () => {
@@ -18,7 +19,7 @@ const ReviewSection = () => {
                 .select('*')
                 .eq('status', 'approved')
                 .order('created_at', { ascending: false })
-                .limit(3);
+                .limit(15);
 
             if (data) setReviews(data);
             setLoading(false);
@@ -26,6 +27,28 @@ const ReviewSection = () => {
 
         fetchReviews();
     }, []);
+
+    // Auto-scroll logic for carousel if more than 3 reviews
+    useEffect(() => {
+        if (reviews.length <= 3) return;
+        
+        const scrollInterval = setInterval(() => {
+            if (carouselRef.current) {
+                const { scrollLeft, scrollWidth, clientWidth } = carouselRef.current;
+                
+                // If reached the end, loop back to start
+                if (scrollLeft + clientWidth >= scrollWidth - 10) {
+                    carouselRef.current.scrollTo({ left: 0, behavior: 'smooth' });
+                } else {
+                    // Scroll by one item width
+                    const itemWidth = carouselRef.current.children[0]?.offsetWidth || 350;
+                    carouselRef.current.scrollBy({ left: itemWidth + 30, behavior: 'smooth' }); // 30 is the gap
+                }
+            }
+        }, 4000); // 4 seconds delay between slides
+        
+        return () => clearInterval(scrollInterval);
+    }, [reviews]);
 
     if (loading) return null;
     if (reviews.length === 0) return null;
@@ -46,8 +69,8 @@ const ReviewSection = () => {
                     <GuestMemorySlider />
                 </div>
 
-                <div className="reviews-carousel reveal">
-                    {reviews.slice(0, 3).map((review) => (
+                <div className="reviews-carousel reveal" ref={carouselRef}>
+                    {reviews.map((review) => (
                         <div key={review.id} className="carousel-item">
                             <ReviewCard review={review} />
                         </div>
