@@ -233,7 +233,7 @@ export default function ActivitiesPage() {
                 justifyContent: 'center',
                 textAlign: 'center',
                 padding: '0 20px',
-                background: 'linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.9) 100%), url("/ac.png") center/cover no-repeat'
+                background: 'linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.9) 100%), url("/act.png") center/cover no-repeat'
             }}>
                 <div style={{ position: 'relative', zIndex: 10, maxWidth: '900px', paddingTop: '80px' }}>
                     <h1 className="reveal active" style={{ 

@@ -7,7 +7,14 @@ import { supabase } from '../../lib/supabase';
 
 const cleanFeatures = (features) => {
     if (!features || !Array.isArray(features)) return [];
-    return features.filter(f => {
+    
+    // Split features by comma if they were stored as a single comma-separated string
+    const flattenedFeatures = features.flatMap(f => {
+        if (typeof f !== 'string') return [f];
+        return f.split(',').map(s => s.trim()).filter(s => s);
+    });
+
+    return flattenedFeatures.filter(f => {
         if (!f || typeof f !== 'string') return false;
         const lower = f.toLowerCase();
         return !(

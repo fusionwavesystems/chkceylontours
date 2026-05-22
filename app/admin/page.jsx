@@ -408,7 +408,7 @@ export default function AdminDashboard() {
       }
 
       const featuresArray = typeof packageForm.features === 'string' 
-        ? packageForm.features.split(',').map(f => f.trim()).filter(f => f)
+        ? packageForm.features.split('\n').map(f => f.trim()).filter(f => f)
         : packageForm.features;
 
       const isSpecial = !!packageForm.is_special_offer;
@@ -508,7 +508,7 @@ export default function AdminDashboard() {
       }
 
       const featuresArray = typeof activityForm.features === 'string' 
-        ? activityForm.features.split(',').map(f => f.trim()).filter(f => f)
+        ? activityForm.features.split('\n').map(f => f.trim()).filter(f => f)
         : activityForm.features;
 
       const { id, created_at, desc, ...cleanFormData } = activityForm;
@@ -618,7 +618,7 @@ export default function AdminDashboard() {
     if (type === 'packages') {
       setPackageForm({ 
         ...item, 
-        features: item.features.join(', '),
+        features: item.features.join('\n'),
         is_special_offer: item.is_special_offer || false,
         days: item.days !== null && item.days !== undefined ? item.days : '',
         nights: item.nights !== null && item.nights !== undefined ? item.nights : '',
@@ -627,7 +627,7 @@ export default function AdminDashboard() {
       });
     }
     if (type === 'hotels') setHotelForm({ ...item, website_link: item.website_link || '' });
-    if (type === 'activities') setActivityForm({ ...item, features: item.features.join(', ') });
+    if (type === 'activities') setActivityForm({ ...item, features: item.features.join('\n') });
     if (type === 'gallery') setGalleryForm({ ...item });
     if (type === 'famous') setFamousPlaceForm({ ...item });
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -1011,8 +1011,8 @@ export default function AdminDashboard() {
                 </div>
 
                 <div style={{ marginBottom: '20px' }}>
-                  <label style={{ display: 'block', marginBottom: '8px', color: 'rgba(255,255,255,0.7)', fontSize: '0.9rem' }}>Features (comma-separated)</label>
-                  <input type="text" style={inputStyle} value={packageForm.features} onChange={e => setPackageForm({...packageForm, features: e.target.value})} required placeholder="e.g. Yala Safari, Glamping, Free Wifi" />
+                  <label style={{ display: 'block', marginBottom: '8px', color: 'rgba(255,255,255,0.7)', fontSize: '0.9rem' }}>Features (One point per line)</label>
+                  <textarea style={{...inputStyle, height: '120px', resize: 'vertical'}} value={packageForm.features} onChange={e => setPackageForm({...packageForm, features: e.target.value})} required placeholder={"Luxury Transport\nEnglish Speaking Guide\nYala Safari"} />
                 </div>
 
                 <div style={{ marginBottom: '30px', padding: '20px', borderRadius: '12px', border: '2px dashed rgba(255,255,255,0.1)', background: 'rgba(255,255,255,0.02)' }}>
@@ -1163,8 +1163,8 @@ export default function AdminDashboard() {
                     </select>
                   </div>
                   <div>
-                    <label style={{ display: 'block', marginBottom: '8px', color: 'rgba(255,255,255,0.7)', fontSize: '0.9rem' }}>Features (comma-separated)</label>
-                    <input type="text" style={inputStyle} value={activityForm.features} onChange={e => setActivityForm({...activityForm, features: e.target.value})} required placeholder="e.g. Track leopards, Jeep ride, Expert tracker" />
+                    <label style={{ display: 'block', marginBottom: '8px', color: 'rgba(255,255,255,0.7)', fontSize: '0.9rem' }}>Features (One point per line)</label>
+                    <textarea style={{...inputStyle, height: '120px', resize: 'vertical'}} value={activityForm.features} onChange={e => setActivityForm({...activityForm, features: e.target.value})} required placeholder={"Track leopards\nJeep ride\nExpert tracker"} />
                   </div>
                 </div>
 
