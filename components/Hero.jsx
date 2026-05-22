@@ -3,9 +3,9 @@
 import React, { useState, useEffect } from 'react';
 
 const slides = [
+    { image: '/hero3.jpg', label: 'Ancient Wonders' },
     { image: '/herosigiriya.jpg', label: 'Premium Island Experiences' },
     { image: '/hero2.jpg', label: 'Coastal Beauty' },
-    { image: '/hero3.jpg', label: 'Ancient Wonders' },
     { image: '/hero4.jpg', label: 'Highland Serenity' },
 ];
 
