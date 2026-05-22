@@ -29,7 +29,7 @@ const ReviewCard = ({ review }) => {
                     </div>
                 </div>
                 
-                <p className="message">"{review.message}"</p>
+                <p className="message">"{review.message.length > 100 ? review.message.substring(0, 100) + '...' : review.message}"</p>
 
                 {review.images && review.images.length > 0 && (
                     <div className="review-gallery">
@@ -148,14 +148,18 @@ const ReviewCard = ({ review }) => {
                     line-height: 1;
                 }
                 .message {
-                    font-size: 1rem;
-                    line-height: 1.6;
+                    font-size: 0.95rem;
+                    line-height: 1.5;
                     color: #e0e0e0;
                     font-style: italic;
                     font-weight: 500;
                     flex-grow: 1;
                     margin: 10px 0;
                     min-width: 0;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 4;
+                    -webkit-box-orient: vertical;
+                    overflow: hidden;
                 }
                 .review-gallery {
                     display: flex;

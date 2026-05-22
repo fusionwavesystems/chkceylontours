@@ -156,14 +156,20 @@ const ReviewFormModal = ({ onClose }) => {
 
                             <div className="form-group">
                                 <label htmlFor="message">Your Message</label>
-                                <textarea 
-                                    id="message"
-                                    rows="4" 
-                                    placeholder="Tell us about your trip..."
-                                    value={message}
-                                    onChange={(e) => setMessage(e.target.value)}
-                                    required
-                                ></textarea>
+                                <div className="textarea-wrapper">
+                                    <textarea 
+                                        id="message"
+                                        className="square-textarea"
+                                        placeholder="Tell us about your trip..."
+                                        value={message}
+                                        onChange={(e) => setMessage(e.target.value)}
+                                        maxLength={100}
+                                        required
+                                    ></textarea>
+                                    <span className="char-counter">
+                                        {message.length}/100
+                                    </span>
+                                </div>
                             </div>
 
                             <div className="form-group">
@@ -283,6 +289,27 @@ const ReviewFormModal = ({ onClose }) => {
                     font-size: 1rem;
                     transition: 0.2s;
                     font-family: inherit;
+                }
+                .textarea-wrapper {
+                    position: relative;
+                    width: 100%;
+                }
+                .square-textarea {
+                    width: 100%;
+                    height: 150px;
+                    resize: none;
+                    border-radius: 12px;
+                }
+                .char-counter {
+                    position: absolute;
+                    bottom: 12px;
+                    right: 16px;
+                    font-size: 0.8rem;
+                    font-weight: 600;
+                    color: #888;
+                    background: rgba(255, 255, 255, 0.9);
+                    padding: 2px 6px;
+                    border-radius: 4px;
                 }
                 input:focus, textarea:focus {
                     outline: none;

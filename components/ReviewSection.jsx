@@ -121,18 +121,17 @@ const ReviewSection = () => {
                     display: none; /* Chrome, Safari and Opera */
                 }
                 .carousel-item {
-                    min-width: calc(33.333% - 20px);
+                    min-width: 320px;
+                    max-width: 320px;
+                    min-height: 350px;
                     flex-shrink: 0;
                     scroll-snap-align: center;
-                }
-                @media (max-width: 1024px) {
-                    .carousel-item {
-                        min-width: calc(50% - 15px);
-                    }
+                    display: flex;
                 }
                 @media (max-width: 768px) {
                     .carousel-item {
-                        min-width: calc(100%);
+                        min-width: 280px;
+                        max-width: 280px;
                     }
                 }
                 .view-all-btn:hover {
