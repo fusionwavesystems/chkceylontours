@@ -104,24 +104,27 @@ const GuestMemorySlider = () => {
                     display: block;
                 }
 
-                /* Country label */
+                /* Country label as a Badge */
                 .memory-label {
                     position: absolute;
-                    bottom: 0;
-                    left: 0;
-                    right: 0;
-                    padding: 28px 16px 16px;
-                    background: linear-gradient(transparent, rgba(0,0,0,0.82));
-                    color: #ff6a00;
-                    font-size: 0.78rem;
+                    top: 15px;
+                    right: 15px;
+                    padding: 6px 14px;
+                    background: #ff6a00;
+                    color: #fff;
+                    font-size: 0.8rem;
                     font-weight: 800;
                     font-family: var(--font-accent);
-                    letter-spacing: 1.5px;
+                    letter-spacing: 1px;
                     text-transform: uppercase;
+                    border-radius: 12px;
                     display: flex;
                     align-items: center;
                     gap: 6px;
-                    text-shadow: 0 0 8px rgba(255, 106, 0, 0.7);
+                    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+                }
+                .memory-label i {
+                    font-size: 0.9rem;
                 }
 
                 /* ── Responsive ── */

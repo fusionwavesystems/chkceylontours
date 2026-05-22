@@ -1,6 +1,6 @@
 export const guestGalleryData = [
-    { id: 1, image: '/review/001.jpg.jpeg', country: 'Nederland' },
-    { id: 2, image: '/review/002.jpg.jpeg', country: 'Canda' },
+    { id: 1, image: '/review/001.jpg.jpeg', country: 'Netherlands' },
+    { id: 2, image: '/review/002.jpg.jpeg', country: 'Canada' },
     { id: 3, image: '/review/003.jpg.jpeg', country: 'United Kingdom' },
     { id: 4, image: '/review/004.jpg.jpeg', country: 'Australia' },
     { id: 5, image: '/review/005.jpg.jpeg', country: 'Germany' },

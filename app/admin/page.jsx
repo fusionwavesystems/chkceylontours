@@ -939,7 +939,7 @@ export default function AdminDashboard() {
 
                 <div className="admin-form-grid" style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr 1fr', gap: '20px', marginBottom: '20px' }}>
                   <div>
-                    <label style={{ display: 'block', marginBottom: '8px', color: 'rgba(255,255,255,0.7)', fontSize: '0.9rem' }}>Actual Price (USD - Original Price)</label>
+                    <label style={{ display: 'block', marginBottom: '8px', color: 'rgba(255,255,255,0.7)', fontSize: '0.9rem' }}>Package price (Without DIscount)</label>
                     <input 
                       type="number" 
                       style={inputStyle} 
@@ -965,24 +965,45 @@ export default function AdminDashboard() {
                       value={packageForm.offer_percentage} 
                       onChange={e => {
                         const pct = parseFloat(e.target.value) || 0;
+                        const final = parseFloat(packageForm.price) || 0;
                         const actual = parseFloat(packageForm.actual_price) || 0;
-                        const discounted = actual > 0 ? Math.round(actual * (1 - pct / 100)) : 0;
-                        setPackageForm({
-                          ...packageForm, 
-                          offer_percentage: e.target.value, 
-                          price: discounted > 0 ? discounted.toString() : packageForm.price
-                        });
+                        
+                        if (final > 0) {
+                          const newActual = pct > 0 ? Math.round(final / (1 - pct / 100)) : final;
+                          setPackageForm({
+                            ...packageForm, 
+                            offer_percentage: e.target.value, 
+                            actual_price: newActual.toString()
+                          });
+                        } else if (actual > 0) {
+                          const discounted = pct > 0 ? Math.round(actual * (1 - pct / 100)) : actual;
+                          setPackageForm({
+                            ...packageForm, 
+                            offer_percentage: e.target.value, 
+                            price: discounted > 0 ? discounted.toString() : packageForm.price
+                          });
+                        } else {
+                          setPackageForm({...packageForm, offer_percentage: e.target.value});
+                        }
                       }} 
                       placeholder="e.g. 15" 
                     />
                   </div>
                   <div>
-                    <label style={{ display: 'block', marginBottom: '8px', color: 'var(--neon-yellow)', fontSize: '0.9rem', fontWeight: 'bold' }}>Price (USD - Final Price)</label>
+                    <label style={{ display: 'block', marginBottom: '8px', color: 'var(--neon-yellow)', fontSize: '0.9rem', fontWeight: 'bold' }}>Display Price (USD - Final Price)</label>
                     <input 
                       type="number" 
                       style={inputStyle} 
                       value={packageForm.price} 
-                      onChange={e => setPackageForm({...packageForm, price: e.target.value})} 
+                      onChange={e => {
+                        const final = parseFloat(e.target.value) || 0;
+                        const pct = parseFloat(packageForm.offer_percentage) || 0;
+                        let newActual = packageForm.actual_price;
+                        if (pct > 0 && final > 0) {
+                          newActual = Math.round(final / (1 - pct / 100)).toString();
+                        }
+                        setPackageForm({...packageForm, price: e.target.value, actual_price: newActual});
+                      }} 
                       required 
                       placeholder="e.g. 850" 
                     />
