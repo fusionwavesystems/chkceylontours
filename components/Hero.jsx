@@ -167,8 +167,9 @@ const Hero = ({ heroData }) => {
                         position: relative;
                         width: 100%;
                         margin-top: 20px;
-                        height: 60vh; /* Fills most of the mobile screen */
-                        min-height: 350px;
+                        aspect-ratio: 4 / 3; /* Matches standard landscape photo, minimizing horizontal cropping */
+                        height: auto;
+                        min-height: auto;
                         border-radius: 0;
                         overflow: hidden;
                         order: 2;
