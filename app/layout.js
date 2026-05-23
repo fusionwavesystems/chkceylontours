@@ -47,7 +47,7 @@ export const metadata = {
     },
   },
   alternates: {
-    canonical: 'https://www.chkceylontours.com',
+    canonical: 'https://chkceylontours.com',
   },
   icons: {
     icon: '/logo.png',
@@ -57,11 +57,11 @@ export const metadata = {
   openGraph: {
     title: 'CHK Ceylon Tours | #1 Best Travel Agency in Sri Lanka',
     description: 'Book with the number one travel agency in Sri Lanka. Expert local guides, bespoke tour packages, and 5-star luxury experiences for international tourists.',
-    url: 'https://www.chkceylontours.com',
+    url: 'https://chkceylontours.com',
     siteName: 'CHK Ceylon Tours',
     images: [
       {
-        url: 'https://www.chkceylontours.com/logo.png',
+        url: 'https://chkceylontours.com/logo.png',
         width: 800,
         height: 800,
         alt: 'CHK Ceylon Tours Logo',
@@ -74,7 +74,7 @@ export const metadata = {
     card: 'summary_large_image',
     title: 'CHK Ceylon Tours | Top Rated Sri Lanka Travel Agency',
     description: 'Book with the number one travel agency in Sri Lanka. Expert local guides, bespoke tour packages, and 5-star luxury experiences for international tourists.',
-    images: ['https://www.chkceylontours.com/logo.png'],
+    images: ['https://chkceylontours.com/logo.png'],
   },
 };
 

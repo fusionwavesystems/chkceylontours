@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.chkceylontours.com/sitemap.xml
+Sitemap: https://chkceylontours.com/sitemap.xml
