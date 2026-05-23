@@ -5,10 +5,10 @@ import WhatsAppButton from '../components/WhatsAppButton';
 
 export const metadata = {
   title: {
-    default: 'CHK Ceylon Tours | #1 Sri Lanka Tour Operator & Travel Agency',
+    default: 'CHK Ceylon Tours | #1 Best Travel Agency & Tour Operator in Sri Lanka',
     template: '%s | CHK Ceylon Tours',
   },
-  description: 'CHK Ceylon Tours — Sri Lanka\'s most trusted private tour operator with 15 years of experience. Luxury & budget tour packages, expert English-speaking guides, Sigiriya, Kandy, Ella, Mirissa, Galle & more. Book your dream Sri Lanka holiday today!',
+  description: 'Experience the ultimate Sri Lanka holiday with CHK Ceylon Tours, the number one travel agency and top-rated tour operator. We provide bespoke private tours, luxury travel packages, and expert English-speaking guides for foreign travelers.',
   keywords: [
     // Brand
     'CHK Ceylon Tours', 'CHK Ceylon', 'CHK tours Sri Lanka',
@@ -55,8 +55,8 @@ export const metadata = {
     apple: '/logo.png',
   },
   openGraph: {
-    title: 'CHK Ceylon Tours | #1 Sri Lanka Tour Operator',
-    description: 'Explore pristine beaches, ancient ruins, Sigiriya Rock & emerald tea hills with Sri Lanka\'s most trusted tour experts. 15 years of experience. 100% personalised tours.',
+    title: 'CHK Ceylon Tours | #1 Best Travel Agency in Sri Lanka',
+    description: 'Book with the number one travel agency in Sri Lanka. Expert local guides, bespoke tour packages, and 5-star luxury experiences for international tourists.',
     url: 'https://www.chkceylontours.com',
     siteName: 'CHK Ceylon Tours',
     images: [
@@ -72,8 +72,8 @@ export const metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'CHK Ceylon Tours | Best Sri Lanka Tour Packages',
-    description: 'Bespoke private travel packages and luxury experiences across the Pearl of the Indian Ocean. 15 years of expert guiding.',
+    title: 'CHK Ceylon Tours | Top Rated Sri Lanka Travel Agency',
+    description: 'Book with the number one travel agency in Sri Lanka. Expert local guides, bespoke tour packages, and 5-star luxury experiences for international tourists.',
     images: ['https://www.chkceylontours.com/logo.png'],
   },
 };
