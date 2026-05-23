@@ -15,20 +15,22 @@ export const metadata = {
     // Core service
     'Sri Lanka tours', 'Sri Lanka tour packages', 'Sri Lanka travel agency',
     'Sri Lanka tour operator', 'best tour guide Sri Lanka', 'private tours Sri Lanka',
-    // Destinations
-    'Sigiriya tours', 'Kandy tours', 'Ella train tour', 'Mirissa whale watching',
-    'Galle fort tour', 'Nuwara Eliya tea plantation tour', 'Yala safari tour',
-    'Anuradhapura tour', 'Polonnaruwa tour', 'Dambulla cave temple',
-    'Pinnawala elephant orphanage', 'Adams Peak Sri Pada tour',
-    // Types
-    'luxury tours Sri Lanka', 'budget tours Sri Lanka', 'honeymoon packages Sri Lanka',
-    'family tours Sri Lanka', 'cultural tours Sri Lanka', 'wildlife safari Sri Lanka',
-    'beach holidays Sri Lanka', 'adventure tours Sri Lanka',
-    // Travel terms
-    'Ceylon travel', 'visit Sri Lanka', 'Sri Lanka holiday packages',
-    'Sri Lanka itinerary', 'Sri Lanka vacation', 'Sri Lanka trip planner',
-    // Local
-    'tour guide Colombo', 'driver guide Sri Lanka', 'day tours Sri Lanka',
+    // Target Markets (High Priority)
+    'Sri Lanka tour packages from India', 'Sri Lanka holidays from India',
+    'Sri Lanka travel packages from Netherlands', 'Sri Lanka tours from Netherlands',
+    'Sri Lanka tours from France', 'voyage Sri Lanka', 'circuit Sri Lanka',
+    'Sri Lanka holidays for Spanish tourists', 'viajes a Sri Lanka',
+    'Sri Lanka vacation from Australia', 'Sri Lanka tour operator Australia',
+    'Sri Lanka holidays from Romania', 'vacante in Sri Lanka',
+    'Sri Lanka packages from Maldives', 'Sri Lanka tours from Maldives',
+    'Sri Lanka travel from China', 'Sri Lanka tours from Japan',
+    'Sri Lanka holidays from UAE', 'Sri Lanka tours from United Arab Emirates', 'Dubai to Sri Lanka packages',
+    'Sri Lanka vacations from Switzerland', 'Sri Lanka tour guide for Switzerland',
+    'Sri Lanka tour operator New Zealand', 'Sri Lanka packages from New Zealand',
+    'Sri Lanka travel from Iraq', 'Sri Lanka holidays from Iraq',
+    // Destinations & Types
+    'Sigiriya tours', 'Kandy tours', 'Ella train tour', 'Yala safari tour',
+    'luxury tours Sri Lanka', 'honeymoon packages Sri Lanka', 'cultural tours Sri Lanka'
   ].join(', '),
   authors: [{ name: 'CHK Ceylon Tours', url: 'https://www.chkceylontours.com' }],
   creator: 'CHK Ceylon Tours',
@@ -59,10 +61,10 @@ export const metadata = {
     siteName: 'CHK Ceylon Tours',
     images: [
       {
-        url: 'https://www.chkceylontours.com/home_hero_bg.png',
-        width: 1200,
-        height: 630,
-        alt: 'CHK Ceylon Tours - Sri Lanka Travel & Tour Packages',
+        url: 'https://www.chkceylontours.com/logo.png',
+        width: 800,
+        height: 800,
+        alt: 'CHK Ceylon Tours Logo',
       },
     ],
     locale: 'en_US',
@@ -72,7 +74,7 @@ export const metadata = {
     card: 'summary_large_image',
     title: 'CHK Ceylon Tours | Best Sri Lanka Tour Packages',
     description: 'Bespoke private travel packages and luxury experiences across the Pearl of the Indian Ocean. 15 years of expert guiding.',
-    images: ['https://www.chkceylontours.com/home_hero_bg.png'],
+    images: ['https://www.chkceylontours.com/logo.png'],
   },
 };
 

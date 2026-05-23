@@ -215,8 +215,8 @@ export default function TourPackages() {
 
             {/* Hero Section with Beautiful Glassmorphic Off-White Title Card */}
             <section className="hero" style={{
-                height: '55vh',
-                minHeight: '400px',
+                height: 'auto',
+                minHeight: '65vh',
                 backgroundImage: "url('/tour_bg_new.png')",
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
@@ -227,7 +227,7 @@ export default function TourPackages() {
                 position: 'relative'
             }}>
                 <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', background: 'linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.85) 100%)', zIndex: 1 }}></div>
-                <div className="hero-content" style={{ zIndex: 10, padding: '80px 20px 0 20px', textAlign: 'center', maxWidth: '100%', position: 'relative' }}>
+                <div className="hero-content" style={{ zIndex: 10, padding: '100px 20px 60px 20px', textAlign: 'center', maxWidth: '100%', position: 'relative' }}>
                     <h1 className="reveal active" style={{ 
                         fontSize: 'clamp(2.5rem, 8vw, 5rem)', 
                         textShadow: '1px 1px 12px rgba(0, 0, 0, 0.8)',
@@ -260,6 +260,30 @@ export default function TourPackages() {
                     }}>
                         Prices in these packages may change due to fluctuations in the dollar and fuel prices around the world. <span style={{ color: 'var(--neon-green)', fontWeight: '700', textShadow: '0 0 10px rgba(57,255,20,0.3)' }}>There are no hidden fees.</span>
                     </p>
+                    
+                    {/* Highlighted Before Booking Notice */}
+                    <div style={{
+                        marginTop: '25px',
+                        background: 'rgba(255, 204, 0, 0.1)',
+                        border: '1px solid var(--neon-yellow)',
+                        borderRadius: '12px',
+                        padding: '15px 25px',
+                        maxWidth: '850px',
+                        marginLeft: 'auto',
+                        marginRight: 'auto',
+                        textAlign: 'left',
+                        boxShadow: '0 0 20px rgba(255, 204, 0, 0.15)'
+                    }}>
+                        <p style={{ margin: 0, color: 'var(--neon-yellow)', fontWeight: '800', fontFamily: 'var(--font-accent)', marginBottom: '8px', fontSize: '1.05rem', textTransform: 'uppercase' }}>
+                            <i className="fa-solid fa-circle-info" style={{ marginRight: '8px' }}></i> Before Booking
+                        </p>
+                        <p style={{ margin: 0, color: '#fff', fontSize: '0.95rem', lineHeight: '1.7', fontFamily: 'var(--font-main)' }}>
+                            If you make a request:<br/>
+                            <span style={{ color: 'var(--neon-yellow)' }}>01.</span> You can customize your tour itinerary as you wish.<br/>
+                            <span style={{ color: 'var(--neon-yellow)' }}>02.</span> The itinerary can be changed according to this package.<br/>
+                            <span style={{ color: 'var(--neon-yellow)' }}>03.</span> Prices may also change during those changes.
+                        </p>
+                    </div>
                 </div>
             </section>
 
