@@ -8,27 +8,13 @@ import { supabase } from '../../lib/supabase';
 const cleanFeatures = (features) => {
     if (!features || !Array.isArray(features)) return [];
     
-    // Split features by comma if they were stored as a single comma-separated string
+    // If stored as a single string, split by newline. Do NOT split by comma to avoid breaking sentences.
     const flattenedFeatures = features.flatMap(f => {
         if (typeof f !== 'string') return [f];
-        return f.split(',').map(s => s.trim()).filter(s => s);
+        return f.split('\n').map(s => s.trim()).filter(s => s);
     });
 
-    return flattenedFeatures.filter(f => {
-        if (!f || typeof f !== 'string') return false;
-        const lower = f.toLowerCase();
-        return !(
-            lower.includes('validity') ||
-            lower.includes('before booking') ||
-            lower.includes('customize') ||
-            lower.includes('hidden charges') ||
-            lower.includes('hidden fees') ||
-            lower.includes('package price') ||
-            lower.includes('above cost includes') ||
-            lower.includes('the above cost includes') ||
-            lower.includes('inclusions & exclusions')
-        );
-    });
+    return flattenedFeatures.filter(f => f && typeof f === 'string');
 };
 
 const fallbackPackagesData = [
