@@ -120,6 +120,20 @@ export default function TourPackages() {
     const [packagesData, setPackagesData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [enlargedMapPkg, setEnlargedMapPkg] = useState(null);
+    const [showMapIntro, setShowMapIntro] = useState(false);
+
+    const openMapModal = (pkg) => {
+        setEnlargedMapPkg(pkg);
+        setShowMapIntro(true);
+        setTimeout(() => {
+            setShowMapIntro(false);
+        }, 3000); // 3 second intro with fade off
+    };
+
+    const closeMapModal = () => {
+        setEnlargedMapPkg(null);
+        setShowMapIntro(false);
+    };
 
     useEffect(() => {
         const fetchPackages = async () => {
@@ -511,7 +525,7 @@ export default function TourPackages() {
 
                                             <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                                                 {pkg.destinations && (
-                                                    <button onClick={() => setEnlargedMapPkg(pkg)} className="custom-pkg-btn" style={{ background: '#111', color: '#dc2626', border: '1px solid #dc2626', boxShadow: '0 4px 15px rgba(220, 38, 38, 0.15)' }}>
+                                                    <button onClick={() => openMapModal(pkg)} className="custom-pkg-btn" style={{ background: '#111', color: '#dc2626', border: '1px solid #dc2626', boxShadow: '0 4px 15px rgba(220, 38, 38, 0.15)' }}>
                                                         <i className="fa-solid fa-map-location-dot" style={{ fontSize: '1rem', marginRight: '6px' }}></i> View Route on Map
                                                     </button>
                                                 )}
@@ -742,7 +756,7 @@ export default function TourPackages() {
 
                                 <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                                     {pkg.destinations && (
-                                        <button onClick={() => setEnlargedMapPkg(pkg)} className="custom-pkg-btn" style={{ background: '#111', color: pkg.color, border: `1px solid ${pkg.color}`, boxShadow: `0 4px 15px ${pkg.color}33` }}>
+                                        <button onClick={() => openMapModal(pkg)} className="custom-pkg-btn" style={{ background: '#111', color: pkg.color, border: `1px solid ${pkg.color}`, boxShadow: `0 4px 15px ${pkg.color}33` }}>
                                             <i className="fa-solid fa-map-location-dot" style={{ fontSize: '1rem', marginRight: '6px' }}></i> View Route on Map
                                         </button>
                                     )}
@@ -768,35 +782,121 @@ export default function TourPackages() {
             {enlargedMapPkg && (
                 <div style={{
                     position: 'fixed', top: 0, left: 0, width: '100%', height: '100%',
-                    backgroundColor: 'rgba(0,0,0,0.9)', zIndex: 1000,
-                    display: 'flex', alignItems: 'center', justifyContent: 'center', backdropFilter: 'blur(10px)'
-                }} onClick={() => setEnlargedMapPkg(null)}>
+                    backgroundColor: 'rgba(0,0,0,0.95)', zIndex: 1000,
+                    display: 'flex', alignItems: 'center', justifyContent: 'center', backdropFilter: 'blur(15px)'
+                }} onClick={closeMapModal}>
                     <div style={{
-                        position: 'relative', width: '90%', maxWidth: '800px', maxHeight: '90vh',
-                        background: '#111', borderRadius: '24px', padding: '30px',
+                        position: 'relative', width: '95%', maxWidth: '1000px', maxHeight: '90vh',
+                        background: '#111', borderRadius: '24px', padding: showMapIntro ? '0' : '30px',
                         border: `1px solid ${enlargedMapPkg.color || 'var(--neon-yellow)'}`,
                         boxShadow: `0 10px 40px ${enlargedMapPkg.color || 'var(--neon-yellow)'}44`,
-                        overflowY: 'auto'
+                        overflow: 'hidden',
+                        display: 'flex', flexDirection: 'column'
                     }} onClick={(e) => e.stopPropagation()}>
-                        <button onClick={() => setEnlargedMapPkg(null)} style={{
-                            position: 'absolute', top: '15px', right: '15px',
-                            background: 'rgba(255,255,255,0.1)', border: 'none', color: '#fff',
-                            fontSize: '1.2rem', cursor: 'pointer', zIndex: 10,
-                            width: '40px', height: '40px', borderRadius: '50%',
-                            display: 'flex', alignItems: 'center', justifyContent: 'center',
-                            transition: 'background 0.3s ease'
-                        }}>
-                            <i className="fa-solid fa-times"></i>
-                        </button>
                         
-                        <h3 style={{ 
-                            color: '#fff', textAlign: 'center', marginBottom: '20px', 
-                            fontSize: '1.5rem', fontFamily: 'var(--font-accent)' 
-                        }}>
-                            {enlargedMapPkg.name} Route Map
-                        </h3>
+                        {!showMapIntro && (
+                            <button onClick={closeMapModal} style={{
+                                position: 'absolute', top: '15px', right: '15px',
+                                background: 'rgba(255,255,255,0.1)', border: 'none', color: '#fff',
+                                fontSize: '1.2rem', cursor: 'pointer', zIndex: 10,
+                                width: '40px', height: '40px', borderRadius: '50%',
+                                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                transition: 'background 0.3s ease'
+                            }}>
+                                <i className="fa-solid fa-times"></i>
+                            </button>
+                        )}
                         
-                        <RouteMap destinationsString={enlargedMapPkg.destinations} isLarge={true} />
+                        {showMapIntro ? (
+                            <div className="map-intro-screen" style={{
+                                display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+                                height: '500px', width: '100%',
+                                animation: 'introFadeOut 0.5s 2.5s forwards'
+                            }}>
+                                <img src="/logo.png" alt="CHK Ceylon Tours Logo" style={{ width: '130px', marginBottom: '20px', animation: 'zoomInFade 1s ease forwards' }} />
+                                
+                                <h1 style={{
+                                    background: 'linear-gradient(90deg, #ff0000 0%, #ffff00 100%)',
+                                    WebkitBackgroundClip: 'text',
+                                    WebkitTextFillColor: 'transparent',
+                                    fontSize: '3.2rem',
+                                    fontFamily: 'var(--font-accent)',
+                                    fontWeight: '900',
+                                    textTransform: 'uppercase',
+                                    letterSpacing: '3px',
+                                    margin: '0 0 10px 0',
+                                    animation: 'slideUpFade 1s 0.3s ease forwards',
+                                    opacity: 0,
+                                    filter: 'drop-shadow(0 0 15px rgba(255,0,0,0.3))'
+                                }}>
+                                    CHK Ceylon Tours
+                                </h1>
+                                
+                                <h2 style={{ 
+                                    color: 'var(--neon-yellow)', fontSize: '1.8rem', fontFamily: 'var(--font-primary)',
+                                    textTransform: 'uppercase', letterSpacing: '4px', textAlign: 'center',
+                                    animation: 'slideUpFade 1s 0.6s ease forwards', opacity: 0,
+                                    textShadow: '0 0 15px rgba(255,240,31,0.5)', fontWeight: '400'
+                                }}>
+                                    Welcome to Sri Lanka
+                                </h2>
+                                <p style={{ 
+                                    color: '#fff', fontSize: '1.2rem', marginTop: '15px',
+                                    animation: 'slideUpFade 1s 1s ease forwards', opacity: 0
+                                }}>
+                                    Mapping your perfect journey...
+                                </p>
+                                <div style={{ 
+                                    width: '200px', height: '4px', background: 'rgba(255,255,255,0.1)',
+                                    borderRadius: '10px', marginTop: '40px', overflow: 'hidden',
+                                    animation: 'fadeIn 1s 1.2s forwards', opacity: 0
+                                }}>
+                                    <div style={{ 
+                                        height: '100%', background: 'var(--neon-yellow)',
+                                        animation: 'loadingBar 2.5s ease-in-out forwards'
+                                    }}></div>
+                                </div>
+                            </div>
+                        ) : (
+                            <div className="map-modal-flex" style={{ display: 'flex', gap: '30px', flex: 1, overflowY: 'auto', animation: 'fadeIn 0.5s ease-out forwards' }}>
+                                <div className="map-modal-left" style={{ flex: 2 }}>
+                                    <h3 style={{ 
+                                        color: '#fff', textAlign: 'center', marginBottom: '20px', 
+                                        fontSize: '1.8rem', fontFamily: 'var(--font-accent)' 
+                                    }}>
+                                        {enlargedMapPkg.name} Route Map
+                                    </h3>
+                                    
+                                    <div style={{ background: 'rgba(0,0,0,0.5)', padding: '20px', borderRadius: '20px', border: '1px solid rgba(255,255,255,0.05)' }}>
+                                        <RouteMap destinationsString={enlargedMapPkg.destinations} isLarge={true} />
+                                    </div>
+                                </div>
+
+                                <div className="map-modal-right" style={{ flex: 1, padding: '20px', background: 'rgba(255,255,255,0.02)', borderRadius: '20px', border: '1px solid rgba(255,255,255,0.05)' }}>
+                                    <h4 style={{ color: enlargedMapPkg.color || 'var(--neon-yellow)', fontSize: '1.3rem', fontFamily: 'var(--font-accent)', marginBottom: '20px', textTransform: 'uppercase', letterSpacing: '1px', borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: '10px' }}>
+                                        <i className="fa-solid fa-route" style={{ marginRight: '10px' }}></i> Destinations
+                                    </h4>
+                                    
+                                    <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '15px' }}>
+                                        {enlargedMapPkg.destinations.split(',').map(d => d.trim()).filter(d => d).map((dest, i) => (
+                                            <li key={i} style={{ 
+                                                display: 'flex', alignItems: 'center', background: 'rgba(0,0,0,0.6)', 
+                                                padding: '12px 15px', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.05)',
+                                                animation: `slideLeftFade 0.6s ${0.8 + (i * 1.5)}s ease forwards`, opacity: 0
+                                            }}>
+                                                <span style={{ 
+                                                    background: enlargedMapPkg.color || 'var(--neon-yellow)', color: '#000', 
+                                                    width: '28px', height: '28px', borderRadius: '50%', display: 'flex', 
+                                                    alignItems: 'center', justifyContent: 'center', fontWeight: '800', 
+                                                    marginRight: '15px', fontSize: '0.9rem', flexShrink: 0
+                                                }}>{i + 1}</span>
+                                                <span style={{ color: '#fff', fontWeight: '600', fontSize: '1.05rem' }}>{dest}</span>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            </div>
+                        )}
                     </div>
                 </div>
             )}
@@ -950,6 +1050,45 @@ export default function TourPackages() {
                 .inline-map-hover:hover {
                     transform: scale(1.02);
                     box-shadow: 0 10px 25px rgba(0,0,0,0.2) !important;
+                }
+
+                @keyframes zoomInFade {
+                    from { transform: scale(0.5); opacity: 0; }
+                    to { transform: scale(1); opacity: 1; }
+                }
+
+                @keyframes slideUpFade {
+                    from { transform: translateY(20px); opacity: 0; }
+                    to { transform: translateY(0); opacity: 1; }
+                }
+
+                @keyframes slideLeftFade {
+                    from { transform: translateX(20px); opacity: 0; }
+                    to { transform: translateX(0); opacity: 1; }
+                }
+                
+                @keyframes loadingBar {
+                    0% { width: 0%; }
+                    100% { width: 100%; }
+                }
+                
+                @keyframes fadeIn {
+                    from { opacity: 0; }
+                    to { opacity: 1; }
+                }
+
+                @keyframes introFadeOut {
+                    from { opacity: 1; transform: scale(1); filter: blur(0px); }
+                    to { opacity: 0; transform: scale(0.95); filter: blur(5px); }
+                }
+
+                @media (max-width: 900px) {
+                    .map-modal-flex {
+                        flex-direction: column !important;
+                    }
+                    .map-modal-right {
+                        margin-top: 20px;
+                    }
                 }
 
                 @media (max-width: 768px) {

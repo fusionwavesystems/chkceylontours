@@ -6,14 +6,40 @@ import Footer from '../../components/Footer';
 import DistrictPlaces from '../../components/DistrictPlaces';
 import { provincesData } from '../../data/provincesData';
 import { supabase } from '../../lib/supabase';
+import RouteMap from '../../components/RouteMap';
 
 export default function Destinations() {
   const [selectedProvinceId, setSelectedProvinceId] = useState(null);
   const [selectedDistrictId, setSelectedDistrictId] = useState(null);
   const [dynamicPlaces, setDynamicPlaces] = useState([]);
 
+  const [provinceCounts, setProvinceCounts] = useState({});
+
   useEffect(() => {
     document.title = "Best Destinations in Sri Lanka | CHK Ceylon Tours";
+    
+    // Fetch count of famous destinations per province
+    const fetchCounts = async () => {
+      try {
+        const { data, error } = await supabase.from('famous_places').select('district_id');
+        if (error) throw error;
+        
+        const counts = {};
+        if (data) {
+          data.forEach(place => {
+            const province = provincesData.find(p => p.districts.some(d => d.id === place.district_id));
+            if (province) {
+              counts[province.id] = (counts[province.id] || 0) + 1;
+            }
+          });
+        }
+        setProvinceCounts(counts);
+      } catch (err) {
+        console.error('Error fetching famous places counts:', err);
+      }
+    };
+    
+    fetchCounts();
   }, []);
 
   // Fetch dynamic famous places when district changes
@@ -133,6 +159,30 @@ export default function Destinations() {
 
       <div style={{ padding: '10px 20px 80px 20px', position: 'relative', zIndex: 10 }} id="destinations-grid" className="container">
         
+        {/* All Destinations Map Display */}
+        {!selectedProvince && !selectedDistrictId && (
+            <div style={{ marginBottom: '60px', marginTop: '30px' }}>
+                <h2 style={{ textAlign: 'center', color: 'var(--neon-yellow)', fontSize: '2.2rem', marginBottom: '25px', fontFamily: 'var(--font-accent)', textTransform: 'uppercase', letterSpacing: '2px', textShadow: '0 0 15px rgba(255, 240, 31, 0.3)' }}>
+                    Sri Lanka Tourist Map
+                </h2>
+                <div style={{ display: 'flex', justifyContent: 'center' }}>
+                    <div style={{ background: '#111', padding: '0', borderRadius: '24px', border: '1px solid rgba(255,240,31,0.2)', boxShadow: '0 10px 40px rgba(0,0,0,0.8)', width: '100%', maxWidth: '850px', overflow: 'hidden' }}>
+                        <RouteMap 
+                            isProvincesMap={true} 
+                            isLarge={true} 
+                            provinces={dbProvinces} 
+                            provinceCounts={provinceCounts} 
+                            onProvinceClick={(id) => {
+                                setSelectedProvinceId(id);
+                                const grid = document.getElementById('destinations-grid');
+                                if (grid) grid.scrollIntoView({ behavior: 'smooth' });
+                            }}
+                        />
+                    </div>
+                </div>
+            </div>
+        )}
+
         {districtData ? (
           <DistrictPlaces 
             districtData={districtData} 

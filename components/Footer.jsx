@@ -28,7 +28,7 @@ const Footer = () => {
 
                 <div className="divider" style={{ width: '100%', height: '1px', background: 'rgba(255,255,255,0.1)', marginBottom: '30px' }}></div>
 
-                <div className="bottom-links" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '20px', opacity: 0.6, fontSize: '0.9rem' }}>
+                <div className="bottom-links" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', flexWrap: 'wrap', gap: '20px', opacity: 0.8, fontSize: '0.9rem' }}>
                     <div className="dev-credit-gradient-wrapper" style={{
                         padding: '1.5px',
                         background: 'linear-gradient(90deg, #00d4ff 0%, #0072ff 100%)',
