@@ -5,6 +5,9 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import Gallery from '@/components/Gallery';
 import WhatsAppButton from '@/components/WhatsAppButton';
+import FlagCircle from '@/components/FlagCircle';
+import TrustedMap from '@/components/TrustedMap';
+import StatsCounter from '@/components/StatsCounter';
 
 export default function GalleryPage() {
     useEffect(() => {
@@ -63,6 +66,15 @@ export default function GalleryPage() {
             </section>
             
             <div style={{ background: '#000000' }}>
+                <div className="reveal" style={{ paddingTop: '40px' }}>
+                    <FlagCircle />
+                </div>
+                <div className="reveal">
+                    <TrustedMap />
+                </div>
+                <div className="reveal">
+                    <StatsCounter />
+                </div>
                 <Gallery />
             </div>
 

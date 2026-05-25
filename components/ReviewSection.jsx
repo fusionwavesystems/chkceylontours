@@ -6,6 +6,7 @@ import ReviewCard from './ReviewCard';
 import Link from 'next/link';
 
 import GuestMemorySlider from './GuestMemorySlider';
+import CountryFlags from './CountryFlags';
 
 const ReviewSection = () => {
     const [reviews, setReviews] = useState([]);
@@ -63,6 +64,10 @@ const ReviewSection = () => {
                     <p className="description mx-auto max-w-2xl" style={{ fontSize: '1.2rem', lineHeight: '1.7', color: 'rgba(255,255,255,0.7)' }}>
                         Join hundreds of happy travelers who have experienced the magic of Sri Lanka with our expert team.
                     </p>
+                </div>
+
+                <div className="reveal" style={{ marginBottom: '60px' }}>
+                    <CountryFlags />
                 </div>
 
                 <div className="reveal" style={{ marginBottom: '100px' }}>

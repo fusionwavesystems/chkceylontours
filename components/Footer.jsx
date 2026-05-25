@@ -19,11 +19,11 @@ const Footer = () => {
                     />
                 </div>
 
-                <div className="social-links" style={{ display: 'flex', justifyContent: 'center', gap: '30px', marginBottom: '30px' }}>
-                    <a href="https://web.facebook.com/profile.php?id=61567698557599&sk=followers" target="_blank" rel="noopener noreferrer" style={{ color: 'white', fontSize: '1.2rem' }}><i className="fab fa-facebook-f"></i></a>
-                    <a href="https://www.instagram.com/chkceylon?igsh=MXNldXFpd3h4bGNzeA==&utm_source=ig_contact_invite" target="_blank" rel="noopener noreferrer" style={{ color: 'white', fontSize: '1.2rem' }}><i className="fab fa-instagram"></i></a>
-                    <a href="https://www.youtube.com/channel/UCFlor_kOoJYITY9bUN0EYpw" target="_blank" rel="noopener noreferrer" style={{ color: 'white', fontSize: '1.2rem' }}><i className="fab fa-youtube"></i></a>
-                    <a href="#" style={{ color: 'white', fontSize: '1.2rem' }}><i className="fab fa-tripadvisor"></i></a>
+                <div className="social-links" style={{ display: 'flex', justifyContent: 'center', gap: '40px', marginBottom: '35px' }}>
+                    <a href="https://web.facebook.com/profile.php?id=61567698557599&sk=followers" target="_blank" rel="noopener noreferrer" style={{ color: '#1877F2', fontSize: '2.2rem', transition: 'transform 0.3s ease' }} onMouseOver={e => e.currentTarget.style.transform = 'scale(1.2)'} onMouseOut={e => e.currentTarget.style.transform = 'scale(1)'}><i className="fab fa-facebook"></i></a>
+                    <a href="https://www.instagram.com/chkceylon?igsh=MXNldXFpd3h4bGNzeA==&utm_source=ig_contact_invite" target="_blank" rel="noopener noreferrer" style={{ background: 'linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', fontSize: '2.2rem', transition: 'transform 0.3s ease' }} onMouseOver={e => e.currentTarget.style.transform = 'scale(1.2)'} onMouseOut={e => e.currentTarget.style.transform = 'scale(1)'}><i className="fab fa-instagram"></i></a>
+                    <a href="https://www.youtube.com/channel/UCFlor_kOoJYITY9bUN0EYpw" target="_blank" rel="noopener noreferrer" style={{ color: '#FF0000', fontSize: '2.2rem', transition: 'transform 0.3s ease' }} onMouseOver={e => e.currentTarget.style.transform = 'scale(1.2)'} onMouseOut={e => e.currentTarget.style.transform = 'scale(1)'}><i className="fab fa-youtube"></i></a>
+                    <a href="#" style={{ color: '#34E0A1', fontSize: '2.2rem', transition: 'transform 0.3s ease' }} onMouseOver={e => e.currentTarget.style.transform = 'scale(1.2)'} onMouseOut={e => e.currentTarget.style.transform = 'scale(1)'}><i className="fab fa-tripadvisor"></i></a>
                 </div>
 
                 <div className="divider" style={{ width: '100%', height: '1px', background: 'rgba(255,255,255,0.1)', marginBottom: '30px' }}></div>

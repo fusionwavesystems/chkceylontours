@@ -18,11 +18,6 @@ const GuestMemorySlider = () => {
                                 decoding="async"
                                 alt={img.country}
                             />
-                            {/* Orange glow country label */}
-                            <div className="memory-label">
-                                <i className="fas fa-map-marker-alt"></i>
-                                {img.country}
-                            </div>
                         </div>
                     </div>
                 ))}
@@ -104,28 +99,6 @@ const GuestMemorySlider = () => {
                     display: block;
                 }
 
-                /* Country label as a Badge */
-                .memory-label {
-                    position: absolute;
-                    top: 15px;
-                    right: 15px;
-                    padding: 6px 14px;
-                    background: #ff6a00;
-                    color: #fff;
-                    font-size: 0.8rem;
-                    font-weight: 800;
-                    font-family: var(--font-accent);
-                    letter-spacing: 1px;
-                    text-transform: uppercase;
-                    border-radius: 12px;
-                    display: flex;
-                    align-items: center;
-                    gap: 6px;
-                    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
-                }
-                .memory-label i {
-                    font-size: 0.9rem;
-                }
 
                 /* ── Responsive ── */
                 @media (max-width: 768px) {

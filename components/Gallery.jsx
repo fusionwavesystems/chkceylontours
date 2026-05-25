@@ -121,12 +121,15 @@ const Gallery = () => {
                                     <h3 className="gallery-card-title-text" style={{ 
                                         fontSize: "1.15rem", 
                                         margin: 0, 
-                                        color: "#000000", 
-                                        fontWeight: "800", 
+                                        fontWeight: "900", 
                                         fontFamily: 'var(--font-accent)',
                                         textTransform: "none",
-                                        transition: "color 0.3s ease",
-                                        lineHeight: '1.3'
+                                        lineHeight: '1.3',
+                                        background: 'linear-gradient(135deg, #1a1a1a 0%, #666666 45%, #000000 100%)',
+                                        WebkitBackgroundClip: 'text',
+                                        WebkitTextFillColor: 'transparent',
+                                        filter: 'drop-shadow(0 2px 4px rgba(0, 0, 0, 0.4))',
+                                        transition: "all 0.3s ease"
                                     }}>{formatCardTitle(displayTitle)}</h3>
                                 </div>
 
@@ -306,7 +309,7 @@ const Gallery = () => {
                       opacity: 1;
                   }
                   .gallery-card:hover .gallery-card-title-text {
-                      color: #d97706;
+                      filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.6)) !important;
                   }
                   .preview-btn:hover {
                       background: #fff !important;

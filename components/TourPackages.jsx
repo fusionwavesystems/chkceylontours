@@ -107,7 +107,7 @@ const TourPackages = () => {
                         const originalPrice = hasDiscount ? (pkg.actual_price || pkg.price) : pkg.price;
                         const discountedPrice = pkg.price;
                         
-                        const cardColor = isSpecial ? '#ff3366' : pkg.color;
+                        const cardColor = isSpecial ? '#ff0000' : pkg.color;
                         
                         return (
                             <div key={i} className={`custom-package-card reveal ${isSpecial ? 'special-offer-card' : ''}`} style={{ 
@@ -121,14 +121,14 @@ const TourPackages = () => {
                                         position: 'absolute',
                                         top: '-14px',
                                         left: '20px',
-                                        background: '#ff3366',
+                                        background: '#ff0000',
                                         color: '#fff',
                                         padding: '4px 12px',
                                         borderRadius: '8px',
                                         fontSize: '0.78rem',
                                         fontWeight: '900',
                                         fontFamily: 'var(--font-accent)',
-                                        boxShadow: '0 0 12px rgba(255, 51, 102, 0.6)',
+                                        boxShadow: '0 0 12px rgba(255, 0, 0, 0.6)',
                                         zIndex: 10,
                                         letterSpacing: '0.5px',
                                         textTransform: 'uppercase'
@@ -141,14 +141,14 @@ const TourPackages = () => {
                                         position: 'absolute',
                                         top: '-14px',
                                         left: '20px',
-                                        background: '#ff3366',
+                                        background: '#ff0000',
                                         color: '#fff',
                                         padding: '4px 12px',
                                         borderRadius: '8px',
                                         fontSize: '0.78rem',
                                         fontWeight: '900',
                                         fontFamily: 'var(--font-accent)',
-                                        boxShadow: '0 0 12px rgba(255, 51, 102, 0.6)',
+                                        boxShadow: '0 0 12px rgba(255, 0, 0, 0.6)',
                                         zIndex: 10,
                                         letterSpacing: '0.5px',
                                         textTransform: 'uppercase'
@@ -232,7 +232,7 @@ const TourPackages = () => {
                                          )}
                                          {/* Highlighted Current Price */}
                                          <span className="price-val" style={{ 
-                                             color: isSpecial ? '#ff3366' : '#16a34a', 
+                                             color: isSpecial ? '#ff0000' : '#16a34a', 
                                              fontSize: '1.8rem', 
                                              fontWeight: '950', 
                                              fontFamily: 'var(--font-accent)'
@@ -256,11 +256,11 @@ const TourPackages = () => {
                                          className="custom-enquire-btn" 
                                          style={{ 
                                              background: isSpecial 
-                                                ? 'linear-gradient(135deg, #ff3366 0%, #ff0055 100%)' 
+                                                ? 'linear-gradient(135deg, #ff0000 0%, #cc0000 100%)' 
                                                 : `linear-gradient(135deg, ${pkg.color} 0%, ${pkg.color === 'var(--neon-green)' ? '#15b300' : '#ffb300'} 100%)`,
                                              color: isSpecial ? '#fff' : '#000',
                                              boxShadow: isSpecial 
-                                                ? '0 4px 15px rgba(255, 51, 102, 0.4)' 
+                                                ? '0 4px 15px rgba(255, 0, 0, 0.4)' 
                                                 : `0 4px 15px ${pkg.color}33`
                                          }}
                                      >
@@ -341,9 +341,9 @@ const TourPackages = () => {
                     animation: floatRed 3.5s ease-in-out infinite;
                 }
                 .custom-package-card.special-offer-card:hover {
-                    border-color: #ff3366 !important;
-                    box-shadow: 0 25px 50px rgba(255, 51, 102, 0.35),
-                                0 0 30px rgba(255, 51, 102, 0.2) !important;
+                    border-color: #ff0000 !important;
+                    box-shadow: 0 25px 50px rgba(255, 0, 0, 0.35),
+                                0 0 30px rgba(255, 0, 0, 0.2) !important;
                 }
                 @keyframes floatRed {
                     0% { transform: translateY(0px); }

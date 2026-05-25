@@ -111,7 +111,7 @@ const GallerySlider = ({
                 }}>
                     <span className="subtitle" style={{ 
                         color: 'var(--neon-green)', 
-                        textShadow: 'var(--neon-glow-green)',
+                        textShadow: '0 2px 4px rgba(0,0,0,0.8)',
                         letterSpacing: '4px',
                         fontWeight: '800',
                         textTransform: 'uppercase',
@@ -153,8 +153,8 @@ const GallerySlider = ({
                                       {/* 1st: White Text (Title) on Top */}
                                       <div style={{ 
                                           padding: '18px 20px 14px 20px', 
-                                          borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
-                                          background: 'rgba(255, 255, 255, 0.02)',
+                                          borderBottom: '2px solid var(--neon-yellow)',
+                                          background: 'linear-gradient(180deg, #1a1a1a 0%, #000000 100%)',
                                           zIndex: 4
                                       }}>
                                           <h3 className="gallery-card-title-text" style={{ 
@@ -382,7 +382,7 @@ const GallerySlider = ({
                     width: 100%;
                     height: 190px; /* Sized beautifully for title-at-top layout */
                     overflow: hidden;
-                    border-bottom: 5px solid rgba(255, 240, 31, 0.45); /* Thicker glowing divider */
+                    border-bottom: 2px solid var(--neon-yellow);
                     transition: all 0.5s ease;
                     position: relative;
                 }

@@ -12,6 +12,9 @@ import WhatsAppButton from '@/components/WhatsAppButton';
 import Banner from '@/components/Banner';
 import ReviewSection from '@/components/ReviewSection';
 import GallerySlider from '@/components/GallerySlider';
+import CountryFlags from '@/components/CountryFlags';
+import TrustedMap from '@/components/TrustedMap';
+import StatsCounter from '@/components/StatsCounter';
 
 export default function Home() {
     const [destinations, setDestinations] = useState([]);
@@ -71,7 +74,10 @@ export default function Home() {
         <div className="app-main">
             <Navbar config={config} />
             <Hero heroData={config.hero} />
+            <CountryFlags />
             <Banner />
+            <TrustedMap />
+            <StatsCounter />
             <Hotels />
             <FeaturedDestinations destinations={destinations} />
             <TourPackages />

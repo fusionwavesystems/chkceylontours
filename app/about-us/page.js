@@ -285,7 +285,7 @@ export default function AboutUs() {
                                     ></div>
                                 </div>
                                 <h3 style={{ fontSize: "2rem", marginBottom: "10px" }}>H.G.K Chamathka</h3>
-                                <p style={{ fontSize: "1.2rem", color: "var(--neon-yellow)", marginBottom: "20px" }}>Secretary</p>
+                                <p style={{ fontSize: "1.2rem", color: "var(--neon-yellow)", marginBottom: "20px" }}>Operations Manager</p>
                             </div>
 
                             <div style={{ textAlign: "center", flex: "1 1 250px", maxWidth: "300px" }}>
@@ -340,7 +340,7 @@ export default function AboutUs() {
                                     ></div>
                                 </div>
                                 <h3 style={{ fontSize: "2rem", marginBottom: "10px" }}>M.A Hiruni</h3>
-                                <p style={{ fontSize: "1.2rem", color: "var(--neon-yellow)", marginBottom: "20px" }}>Finance Manager</p>
+                                <p style={{ fontSize: "1.2rem", color: "var(--neon-yellow)", marginBottom: "20px" }}>Financial Manager</p>
                             </div>
 
                             <div style={{ textAlign: "center", flex: "1 1 250px", maxWidth: "300px" }}>
@@ -384,7 +384,7 @@ export default function AboutUs() {
                                     textAlign: "center"
                                 }}
                             >
-                                <i className="fas fa-map-marker-alt" style={{ fontSize: "3rem", color: "var(--neon-yellow)", marginBottom: "25px", textShadow: "var(--neon-glow)" }}></i>
+                                <i className="fas fa-map-marker-alt" style={{ fontSize: "3rem", color: "var(--neon-yellow)", marginBottom: "25px", textShadow: "0 0 8px rgba(255, 240, 31, 0.4)" }}></i>
                                 <h3 style={{ fontSize: "1.5rem", marginBottom: "15px" }}>Address</h3>
                                 <p style={{ color: "rgba(255,255,255,0.7)" }}>No, 4/6, Malwathuhiripitiya, Buthpitiya, Gampaha, Sri Lanka 11054</p>
                             </div>
@@ -399,7 +399,7 @@ export default function AboutUs() {
                                     textAlign: "center"
                                 }}
                             >
-                                <i className="fas fa-phone-alt" style={{ fontSize: "3rem", color: "var(--neon-yellow)", marginBottom: "25px", textShadow: "var(--neon-glow)" }}></i>
+                                <i className="fas fa-phone-alt" style={{ fontSize: "3rem", color: "var(--neon-yellow)", marginBottom: "25px", textShadow: "0 0 8px rgba(255, 240, 31, 0.4)" }}></i>
                                 <h3 style={{ fontSize: "1.5rem", marginBottom: "15px" }}>Contact Details</h3>
                                 <p style={{ color: "rgba(255,255,255,0.7)", marginBottom: "5px" }}><strong>Phone:</strong> 0094776981971</p>
                                 <p style={{ color: "rgba(255,255,255,0.7)", marginBottom: "5px" }}><strong>Office:</strong> 0332279267</p>
@@ -416,7 +416,7 @@ export default function AboutUs() {
                                     textAlign: "center"
                                 }}
                             >
-                                <i className="fas fa-clock" style={{ fontSize: "3rem", color: "var(--neon-yellow)", marginBottom: "25px", textShadow: "var(--neon-glow)" }}></i>
+                                <i className="fas fa-clock" style={{ fontSize: "3rem", color: "var(--neon-yellow)", marginBottom: "25px", textShadow: "0 0 8px rgba(255, 240, 31, 0.4)" }}></i>
                                 <h3 style={{ fontSize: "1.5rem", marginBottom: "15px" }}>Business Hours</h3>
                                 <p style={{ color: "rgba(255,255,255,0.7)", marginBottom: "5px" }}><strong>Mon - Fri:</strong> 8.30 am to 11.30 pm</p>
                                 <p style={{ color: "rgba(255,255,255,0.7)", marginBottom: "5px" }}><strong>Sat - Sun:</strong> 8.30 am to 5.30 pm</p>
@@ -439,7 +439,7 @@ export default function AboutUs() {
                                 }}
                             >
                                 <div>
-                                    <i className="fas fa-file-signature" style={{ fontSize: "3rem", color: "var(--neon-yellow)", marginBottom: "25px", textShadow: "var(--neon-glow)" }}></i>
+                                    <i className="fas fa-file-signature" style={{ fontSize: "3rem", color: "var(--neon-yellow)", marginBottom: "25px", textShadow: "0 0 8px rgba(255, 240, 31, 0.4)" }}></i>
                                     <h3 style={{ fontSize: "1.5rem", marginBottom: "15px" }}>Company BR</h3>
                                     <p style={{ color: "rgba(255,255,255,0.7)", fontSize: "0.85rem", marginBottom: "15px", lineHeight: "1.5" }}>
                                         CHK Ceylon Tours (PVT) LTD is a certified & officially registered travel agency in Sri Lanka.
