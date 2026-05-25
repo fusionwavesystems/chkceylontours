@@ -235,9 +235,10 @@ export default function AboutUs() {
 
                     <div className="reveal" style={{ marginTop: "120px" }}>
                         <h2 style={{ fontSize: "3rem", textAlign: "center", marginBottom: "60px", color: "var(--neon-yellow)" }}>Our Team</h2>
-                        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))", gap: "60px", alignItems: "start" }}>
+                        {/* First Row: 3 Profiles */}
+                        <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "60px", marginBottom: "60px" }}>
 
-                            <div style={{ textAlign: "center" }}>
+                            <div style={{ textAlign: "center", flex: "1 1 250px", maxWidth: "300px" }}>
                                 <div style={{ position: "relative", maxWidth: "250px", margin: "0 auto 30px" }}>
                                     <img
                                         src="/team/guide.jpeg"
@@ -258,11 +259,11 @@ export default function AboutUs() {
                                         style={{ top: "-30px", left: "-30px", width: "250px", height: "250px", opacity: 0.3 }}
                                     ></div>
                                 </div>
-                                <h3 style={{ fontSize: "2rem", marginBottom: "10px" }}>DilanLekamarachchi</h3>
-                                <p style={{ fontSize: "1.2rem", color: "var(--neon-yellow)", marginBottom: "20px" }}>CEO</p>
+                                <h3 style={{ fontSize: "2rem", marginBottom: "10px" }}>Dilan Lekamarachchi</h3>
+                                <p style={{ fontSize: "1.2rem", color: "var(--neon-yellow)", marginBottom: "20px" }}>CEO & Founder</p>
                             </div>
 
-                            <div style={{ textAlign: "center" }}>
+                            <div style={{ textAlign: "center", flex: "1 1 250px", maxWidth: "300px" }}>
                                 <div style={{ position: "relative", maxWidth: "250px", margin: "0 auto 30px" }}>
                                     <img
                                         src="/team/assistenmanger.jpeg"
@@ -284,14 +285,14 @@ export default function AboutUs() {
                                     ></div>
                                 </div>
                                 <h3 style={{ fontSize: "2rem", marginBottom: "10px" }}>H.G.K Chamathka</h3>
-                                <p style={{ fontSize: "1.2rem", color: "var(--neon-yellow)", marginBottom: "20px" }}>Finacial Manager</p>
+                                <p style={{ fontSize: "1.2rem", color: "var(--neon-yellow)", marginBottom: "20px" }}>Secretary</p>
                             </div>
 
-                            <div style={{ textAlign: "center" }}>
+                            <div style={{ textAlign: "center", flex: "1 1 250px", maxWidth: "300px" }}>
                                 <div style={{ position: "relative", maxWidth: "250px", margin: "0 auto 30px" }}>
                                     <img
                                         src="/team/NPPUmesha.jpeg"
-                                        alt="L.A.U.Amali"
+                                        alt="L.A.U Amali"
                                         style={{
                                             width: "100%",
                                             aspectRatio: "1/1",
@@ -308,10 +309,64 @@ export default function AboutUs() {
                                         style={{ top: "-30px", left: "50%", transform: "translateX(-50%)", width: "250px", height: "250px", opacity: 0.3 }}
                                     ></div>
                                 </div>
-                                <h3 style={{ fontSize: "2rem", marginBottom: "10px" }}>L.A.U.Amali</h3>
+                                <h3 style={{ fontSize: "2rem", marginBottom: "10px" }}>L.A.U Amali</h3>
                                 <p style={{ fontSize: "1.2rem", color: "var(--neon-yellow)", marginBottom: "20px" }}>Tour Operator</p>
                             </div>
 
+                        </div>
+
+                        {/* Second Row: 2 Profiles */}
+                        <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "60px" }}>
+
+                            <div style={{ textAlign: "center", flex: "1 1 250px", maxWidth: "300px" }}>
+                                <div style={{ position: "relative", maxWidth: "250px", margin: "0 auto 30px" }}>
+                                    <img
+                                        src="/team/hiruni.jpeg"
+                                        alt="M.A Hiruni"
+                                        style={{
+                                            width: "100%",
+                                            aspectRatio: "1/1",
+                                            objectFit: "cover",
+                                            objectPosition: "top center",
+                                            display: "block",
+                                            borderRadius: "50%",
+                                            border: "4px solid var(--neon-yellow)",
+                                            boxShadow: "var(--neon-glow)"
+                                        }}
+                                    />
+                                    <div
+                                        className="bg-blob"
+                                        style={{ top: "-30px", left: "50%", transform: "translateX(-50%)", width: "250px", height: "250px", opacity: 0.3 }}
+                                    ></div>
+                                </div>
+                                <h3 style={{ fontSize: "2rem", marginBottom: "10px" }}>M.A Hiruni</h3>
+                                <p style={{ fontSize: "1.2rem", color: "var(--neon-yellow)", marginBottom: "20px" }}>Finance Manager</p>
+                            </div>
+
+                            <div style={{ textAlign: "center", flex: "1 1 250px", maxWidth: "300px" }}>
+                                <div style={{ position: "relative", maxWidth: "250px", margin: "0 auto 30px" }}>
+                                    <img
+                                        src="/team/raja.jpeg"
+                                        alt="T.V Rajapaksha"
+                                        style={{
+                                            width: "100%",
+                                            aspectRatio: "1/1",
+                                            objectFit: "cover",
+                                            objectPosition: "top center",
+                                            display: "block",
+                                            borderRadius: "50%",
+                                            border: "4px solid var(--neon-yellow)",
+                                            boxShadow: "var(--neon-glow)"
+                                        }}
+                                    />
+                                    <div
+                                        className="bg-blob"
+                                        style={{ top: "-30px", right: "-30px", width: "250px", height: "250px", opacity: 0.3 }}
+                                    ></div>
+                                </div>
+                                <h3 style={{ fontSize: "2rem", marginBottom: "10px" }}>T.V Rajapaksha</h3>
+                                <p style={{ fontSize: "1.2rem", color: "var(--neon-yellow)", marginBottom: "20px" }}>HR Manager</p>
+                            </div>
 
                         </div>
                     </div>
