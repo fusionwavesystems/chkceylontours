@@ -34,11 +34,14 @@ const Banner = () => {
                 .announcement-banner p {
                     margin: 0;
                     text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+                    white-space: normal;
+                    line-height: 1.4;
+                    word-wrap: break-word;
                 }
                 @media (max-width: 768px) {
                     .announcement-banner {
-                        font-size: 0.78rem;
-                        padding: 10px 12px;
+                        font-size: 0.75rem;
+                        padding: 10px 15px;
                         letter-spacing: 0.5px;
                     }
                 }

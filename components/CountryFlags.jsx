@@ -25,16 +25,7 @@ const CountryFlags = () => {
     return (
         <section className="flags-section">
             <div className="flags-header reveal">
-                <h3 style={{ 
-                    color: 'rgba(255, 255, 255, 0.7)', 
-                    fontSize: '1rem', 
-                    textTransform: 'uppercase', 
-                    letterSpacing: '3px',
-                    textAlign: 'center',
-                    marginBottom: '30px',
-                    fontWeight: '800',
-                    fontFamily: 'var(--font-accent)'
-                }}>Welcoming Guests From Across the Globe</h3>
+                <h3 className="flags-header-text">Welcoming Guests From Across the Globe</h3>
             </div>
             
             <div className="flags-marquee-container">
@@ -61,6 +52,18 @@ const CountryFlags = () => {
                     border-top: 1px solid rgba(255, 255, 255, 0.1);
                     margin-top: -5px; /* Pulls it slightly tight against the hero edge */
                     z-index: 10;
+                }
+                .flags-header-text {
+                    color: rgba(255, 255, 255, 0.7);
+                    font-size: 1rem;
+                    text-transform: uppercase;
+                    letter-spacing: 3px;
+                    text-align: center;
+                    margin-bottom: 30px;
+                    font-weight: 800;
+                    font-family: var(--font-accent);
+                    padding: 0 15px;
+                    line-height: 1.4;
                 }
                 .flags-marquee-container {
                     width: 100%;
@@ -124,6 +127,12 @@ const CountryFlags = () => {
                 @media (max-width: 768px) {
                     .flag-img { width: 45px; }
                     .flag-item { width: 120px; }
+                    .flags-header-text {
+                        font-size: 0.8rem;
+                        letter-spacing: 1.5px;
+                        margin-bottom: 20px;
+                        padding: 0 25px;
+                    }
                     @keyframes scrollFlags {
                         0% { transform: translateX(0); }
                         100% { transform: translateX(calc(-120px * ${countries.length})); }
