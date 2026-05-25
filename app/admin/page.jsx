@@ -94,7 +94,7 @@ export default function AdminDashboard() {
   // Form States
   const [packageForm, setPackageForm] = useState({
     name: '', duration: '', price: '', image: '', tag: '', color: 'var(--neon-yellow)', features: '',
-    is_special_offer: false, days: '', nights: '', offer_percentage: '', actual_price: ''
+    is_special_offer: false, days: '', nights: '', offer_percentage: '', actual_price: '', destinations: ''
   });
 
   const [hotelForm, setHotelForm] = useState({
@@ -438,7 +438,8 @@ export default function AdminDashboard() {
         offer_percentage: offerPct,
         actual_price: actPrice,
         price: calculatedPrice,
-        duration: formattedDuration
+        duration: formattedDuration,
+        destinations: packageForm.destinations || ''
       };
       
       if (isEditing) {
@@ -453,7 +454,7 @@ export default function AdminDashboard() {
 
       setPackageForm({ 
         name: '', duration: '', price: '', tag: '', color: 'var(--neon-yellow)', features: '',
-        is_special_offer: false, days: '', nights: '', offer_percentage: '', actual_price: ''
+        is_special_offer: false, days: '', nights: '', offer_percentage: '', actual_price: '', destinations: ''
       });
       setPackageFile(null);
       setPackageReset(prev => prev + 1);
@@ -623,7 +624,8 @@ export default function AdminDashboard() {
         days: item.days !== null && item.days !== undefined ? item.days : '',
         nights: item.nights !== null && item.nights !== undefined ? item.nights : '',
         offer_percentage: item.offer_percentage !== null && item.offer_percentage !== undefined ? item.offer_percentage : '',
-        actual_price: item.actual_price !== null && item.actual_price !== undefined ? item.actual_price : ''
+        actual_price: item.actual_price !== null && item.actual_price !== undefined ? item.actual_price : '',
+        destinations: item.destinations || ''
       });
     }
     if (type === 'hotels') setHotelForm({ ...item, website_link: item.website_link || '' });
@@ -1013,6 +1015,11 @@ export default function AdminDashboard() {
                 <div style={{ marginBottom: '20px' }}>
                   <label style={{ display: 'block', marginBottom: '8px', color: 'rgba(255,255,255,0.7)', fontSize: '0.9rem' }}>Features (One point per line)</label>
                   <textarea style={{...inputStyle, height: '120px', resize: 'vertical'}} value={packageForm.features} onChange={e => setPackageForm({...packageForm, features: e.target.value})} required placeholder={"Luxury Transport\nEnglish Speaking Guide\nYala Safari"} />
+                </div>
+
+                <div style={{ marginBottom: '20px' }}>
+                  <label style={{ display: 'block', marginBottom: '8px', color: 'rgba(255,255,255,0.7)', fontSize: '0.9rem' }}>Destinations (Comma separated, e.g., Colombo, Kandy, Ella)</label>
+                  <input type="text" style={inputStyle} value={packageForm.destinations} onChange={e => setPackageForm({...packageForm, destinations: e.target.value})} placeholder="Colombo, Kandy, Nuwara Eliya" />
                 </div>
 
                 <div style={{ marginBottom: '30px', padding: '20px', borderRadius: '12px', border: '2px dashed rgba(255,255,255,0.1)', background: 'rgba(255,255,255,0.02)' }}>

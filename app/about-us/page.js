@@ -240,20 +240,28 @@ export default function AboutUs() {
 
                             <div style={{ textAlign: "center", flex: "1 1 250px", maxWidth: "300px" }}>
                                 <div style={{ position: "relative", maxWidth: "250px", margin: "0 auto 30px" }}>
-                                    <img
-                                        src="/team/guide.jpeg"
-                                        alt="Dilan Lekamarachchi"
-                                        style={{
-                                            width: "100%",
-                                            aspectRatio: "1/1",
-                                            objectFit: "cover",
-                                            objectPosition: "top center",
-                                            display: "block",
-                                            borderRadius: "50%",
-                                            border: "4px solid var(--neon-yellow)",
-                                            boxShadow: "var(--neon-glow)"
-                                        }}
-                                    />
+                                    <div style={{
+                                        width: "100%",
+                                        aspectRatio: "1/1",
+                                        borderRadius: "50%",
+                                        border: "4px solid var(--neon-yellow)",
+                                        boxShadow: "var(--neon-glow)",
+                                        overflow: "hidden",
+                                        position: "relative"
+                                    }}>
+                                        <img
+                                            src="/team/guide.jpeg"
+                                            alt="Dilan Lekamarachchi"
+                                            style={{
+                                                width: "100%",
+                                                height: "100%",
+                                                objectFit: "cover",
+                                                objectPosition: "top center",
+                                                display: "block",
+                                                transform: "scale(1)"
+                                            }}
+                                        />
+                                    </div>
                                     <div
                                         className="bg-blob"
                                         style={{ top: "-30px", left: "-30px", width: "250px", height: "250px", opacity: 0.3 }}
@@ -265,20 +273,28 @@ export default function AboutUs() {
 
                             <div style={{ textAlign: "center", flex: "1 1 250px", maxWidth: "300px" }}>
                                 <div style={{ position: "relative", maxWidth: "250px", margin: "0 auto 30px" }}>
-                                    <img
-                                        src="/team/assistenmanger.jpeg"
-                                        alt="H.G.K Chamathka"
-                                        style={{
-                                            width: "100%",
-                                            aspectRatio: "1/1",
-                                            objectFit: "cover",
-                                            objectPosition: "top center",
-                                            display: "block",
-                                            borderRadius: "50%",
-                                            border: "4px solid var(--neon-yellow)",
-                                            boxShadow: "var(--neon-glow)"
-                                        }}
-                                    />
+                                    <div style={{
+                                        width: "100%",
+                                        aspectRatio: "1/1",
+                                        borderRadius: "50%",
+                                        border: "4px solid var(--neon-yellow)",
+                                        boxShadow: "var(--neon-glow)",
+                                        overflow: "hidden",
+                                        position: "relative"
+                                    }}>
+                                        <img
+                                            src="/team/operations manager.png"
+                                            alt="H.G.K Chamathka"
+                                            style={{
+                                                width: "100%",
+                                                height: "100%",
+                                                objectFit: "cover",
+                                                objectPosition: "top center",
+                                                display: "block",
+                                                transform: "scale(1.35)"
+                                            }}
+                                        />
+                                    </div>
                                     <div
                                         className="bg-blob"
                                         style={{ top: "-30px", right: "-30px", width: "250px", height: "250px", opacity: 0.3 }}
@@ -290,20 +306,28 @@ export default function AboutUs() {
 
                             <div style={{ textAlign: "center", flex: "1 1 250px", maxWidth: "300px" }}>
                                 <div style={{ position: "relative", maxWidth: "250px", margin: "0 auto 30px" }}>
-                                    <img
-                                        src="/team/NPPUmesha.jpeg"
-                                        alt="L.A.U Amali"
-                                        style={{
-                                            width: "100%",
-                                            aspectRatio: "1/1",
-                                            objectFit: "cover",
-                                            objectPosition: "top center",
-                                            display: "block",
-                                            borderRadius: "50%",
-                                            border: "4px solid var(--neon-yellow)",
-                                            boxShadow: "var(--neon-glow)"
-                                        }}
-                                    />
+                                    <div style={{
+                                        width: "100%",
+                                        aspectRatio: "1/1",
+                                        borderRadius: "50%",
+                                        border: "4px solid var(--neon-yellow)",
+                                        boxShadow: "var(--neon-glow)",
+                                        overflow: "hidden",
+                                        position: "relative"
+                                    }}>
+                                        <img
+                                            src="/team/tour operator.png"
+                                            alt="L.A.U Amali"
+                                            style={{
+                                                width: "100%",
+                                                height: "100%",
+                                                objectFit: "cover",
+                                                objectPosition: "top center",
+                                                display: "block",
+                                                transform: "scale(1.45) translateY(-12px)"
+                                            }}
+                                        />
+                                    </div>
                                     <div
                                         className="bg-blob"
                                         style={{ top: "-30px", left: "50%", transform: "translateX(-50%)", width: "250px", height: "250px", opacity: 0.3 }}
@@ -320,20 +344,28 @@ export default function AboutUs() {
 
                             <div style={{ textAlign: "center", flex: "1 1 250px", maxWidth: "300px" }}>
                                 <div style={{ position: "relative", maxWidth: "250px", margin: "0 auto 30px" }}>
-                                    <img
-                                        src="/team/hiruni.jpeg"
-                                        alt="M.A Hiruni"
-                                        style={{
-                                            width: "100%",
-                                            aspectRatio: "1/1",
-                                            objectFit: "cover",
-                                            objectPosition: "top center",
-                                            display: "block",
-                                            borderRadius: "50%",
-                                            border: "4px solid var(--neon-yellow)",
-                                            boxShadow: "var(--neon-glow)"
-                                        }}
-                                    />
+                                    <div style={{
+                                        width: "100%",
+                                        aspectRatio: "1/1",
+                                        borderRadius: "50%",
+                                        border: "4px solid var(--neon-yellow)",
+                                        boxShadow: "var(--neon-glow)",
+                                        overflow: "hidden",
+                                        position: "relative"
+                                    }}>
+                                        <img
+                                            src="/team/finance.png"
+                                            alt="M.A Hiruni"
+                                            style={{
+                                                width: "100%",
+                                                height: "100%",
+                                                objectFit: "cover",
+                                                objectPosition: "top center",
+                                                display: "block",
+                                                transform: "scale(1.3) translateY(-20px)"
+                                            }}
+                                        />
+                                    </div>
                                     <div
                                         className="bg-blob"
                                         style={{ top: "-30px", left: "50%", transform: "translateX(-50%)", width: "250px", height: "250px", opacity: 0.3 }}
@@ -345,20 +377,28 @@ export default function AboutUs() {
 
                             <div style={{ textAlign: "center", flex: "1 1 250px", maxWidth: "300px" }}>
                                 <div style={{ position: "relative", maxWidth: "250px", margin: "0 auto 30px" }}>
-                                    <img
-                                        src="/team/raja.jpeg"
-                                        alt="T.V Rajapaksha"
-                                        style={{
-                                            width: "100%",
-                                            aspectRatio: "1/1",
-                                            objectFit: "cover",
-                                            objectPosition: "top center",
-                                            display: "block",
-                                            borderRadius: "50%",
-                                            border: "4px solid var(--neon-yellow)",
-                                            boxShadow: "var(--neon-glow)"
-                                        }}
-                                    />
+                                    <div style={{
+                                        width: "100%",
+                                        aspectRatio: "1/1",
+                                        borderRadius: "50%",
+                                        border: "4px solid var(--neon-yellow)",
+                                        boxShadow: "var(--neon-glow)",
+                                        overflow: "hidden",
+                                        position: "relative"
+                                    }}>
+                                        <img
+                                            src="/team/hr manager.png"
+                                            alt="T.V Rajapaksha"
+                                            style={{
+                                                width: "100%",
+                                                height: "100%",
+                                                objectFit: "cover",
+                                                objectPosition: "top center",
+                                                display: "block",
+                                                transform: "scale(1.15)"
+                                            }}
+                                        />
+                                    </div>
                                     <div
                                         className="bg-blob"
                                         style={{ top: "-30px", right: "-30px", width: "250px", height: "250px", opacity: 0.3 }}

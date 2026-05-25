@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
+import RouteMap from '../../components/RouteMap';
 import { supabase } from '../../lib/supabase';
 
 const cleanFeatures = (features) => {
@@ -118,6 +119,7 @@ const getFeatureIcon = (feature, color, isDark = false) => {
 export default function TourPackages() {
     const [packagesData, setPackagesData] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [enlargedMapPkg, setEnlargedMapPkg] = useState(null);
 
     useEffect(() => {
         const fetchPackages = async () => {
@@ -507,16 +509,23 @@ export default function TourPackages() {
                                                 ))}
                                             </ul>
 
-                                            <a href={`https://wa.me/94776981971?text=I'm interested in the ${pkg.name} package`}
-                                                className="custom-pkg-btn"
-                                                style={{
-                                                    background: `linear-gradient(135deg, #dc2626 0%, #991b1b 100%)`,
-                                                    color: '#fff',
-                                                    boxShadow: `0 4px 15px rgba(220, 38, 38, 0.3)`
-                                                }}>
-                                                Enquire Now
-                                                <i className="fa-solid fa-paper-plane" style={{ fontSize: '0.85rem', transition: 'transform 0.3s ease' }}></i>
-                                            </a>
+                                            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                                                {pkg.destinations && (
+                                                    <button onClick={() => setEnlargedMapPkg(pkg)} className="custom-pkg-btn" style={{ background: '#111', color: '#dc2626', border: '1px solid #dc2626', boxShadow: '0 4px 15px rgba(220, 38, 38, 0.15)' }}>
+                                                        <i className="fa-solid fa-map-location-dot" style={{ fontSize: '1rem', marginRight: '6px' }}></i> View Route on Map
+                                                    </button>
+                                                )}
+                                                <a href={`https://wa.me/94776981971?text=I'm interested in the ${pkg.name} package`}
+                                                    className="custom-pkg-btn"
+                                                    style={{
+                                                        background: `linear-gradient(135deg, #dc2626 0%, #991b1b 100%)`,
+                                                        color: '#fff',
+                                                        boxShadow: `0 4px 15px rgba(220, 38, 38, 0.3)`
+                                                    }}>
+                                                    Enquire Now
+                                                    <i className="fa-solid fa-paper-plane" style={{ fontSize: '0.85rem', transition: 'transform 0.3s ease' }}></i>
+                                                </a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -731,22 +740,66 @@ export default function TourPackages() {
                                     ))}
                                 </ul>
 
-                                <a href={`https://wa.me/94776981971?text=I'm interested in the ${pkg.name} package`}
-                                    className="custom-pkg-btn"
-                                    style={{
-                                        background: `linear-gradient(135deg, ${pkg.color} 0%, ${pkg.color === 'var(--neon-green)' ? '#15b300' : (pkg.color === '#dc2626' ? '#991b1b' : '#ffb300')} 100%)`,
-                                        color: pkg.color === '#dc2626' ? '#fff' : '#000',
-                                        boxShadow: `0 4px 15px ${pkg.color}33`
-                                    }}>
-                                    Enquire Now
-                                    <i className="fa-solid fa-paper-plane" style={{ fontSize: '0.85rem', transition: 'transform 0.3s ease' }}></i>
-                                </a>
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                                    {pkg.destinations && (
+                                        <button onClick={() => setEnlargedMapPkg(pkg)} className="custom-pkg-btn" style={{ background: '#111', color: pkg.color, border: `1px solid ${pkg.color}`, boxShadow: `0 4px 15px ${pkg.color}33` }}>
+                                            <i className="fa-solid fa-map-location-dot" style={{ fontSize: '1rem', marginRight: '6px' }}></i> View Route on Map
+                                        </button>
+                                    )}
+                                    <a href={`https://wa.me/94776981971?text=I'm interested in the ${pkg.name} package`}
+                                        className="custom-pkg-btn"
+                                        style={{
+                                            background: `linear-gradient(135deg, ${pkg.color} 0%, ${pkg.color === 'var(--neon-green)' ? '#15b300' : (pkg.color === '#dc2626' ? '#991b1b' : '#ffb300')} 100%)`,
+                                            color: pkg.color === '#dc2626' ? '#fff' : '#000',
+                                            boxShadow: `0 4px 15px ${pkg.color}33`
+                                        }}>
+                                        Enquire Now
+                                        <i className="fa-solid fa-paper-plane" style={{ fontSize: '0.85rem', transition: 'transform 0.3s ease' }}></i>
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     );
                 })}
                 </div>
             </div>
+
+            {/* Enlarged Route Map Modal */}
+            {enlargedMapPkg && (
+                <div style={{
+                    position: 'fixed', top: 0, left: 0, width: '100%', height: '100%',
+                    backgroundColor: 'rgba(0,0,0,0.9)', zIndex: 1000,
+                    display: 'flex', alignItems: 'center', justifyContent: 'center', backdropFilter: 'blur(10px)'
+                }} onClick={() => setEnlargedMapPkg(null)}>
+                    <div style={{
+                        position: 'relative', width: '90%', maxWidth: '800px', maxHeight: '90vh',
+                        background: '#111', borderRadius: '24px', padding: '30px',
+                        border: `1px solid ${enlargedMapPkg.color || 'var(--neon-yellow)'}`,
+                        boxShadow: `0 10px 40px ${enlargedMapPkg.color || 'var(--neon-yellow)'}44`,
+                        overflowY: 'auto'
+                    }} onClick={(e) => e.stopPropagation()}>
+                        <button onClick={() => setEnlargedMapPkg(null)} style={{
+                            position: 'absolute', top: '15px', right: '15px',
+                            background: 'rgba(255,255,255,0.1)', border: 'none', color: '#fff',
+                            fontSize: '1.2rem', cursor: 'pointer', zIndex: 10,
+                            width: '40px', height: '40px', borderRadius: '50%',
+                            display: 'flex', alignItems: 'center', justifyContent: 'center',
+                            transition: 'background 0.3s ease'
+                        }}>
+                            <i className="fa-solid fa-times"></i>
+                        </button>
+                        
+                        <h3 style={{ 
+                            color: '#fff', textAlign: 'center', marginBottom: '20px', 
+                            fontSize: '1.5rem', fontFamily: 'var(--font-accent)' 
+                        }}>
+                            {enlargedMapPkg.name} Route Map
+                        </h3>
+                        
+                        <RouteMap destinationsString={enlargedMapPkg.destinations} isLarge={true} />
+                    </div>
+                </div>
+            )}
 
             <Footer />
 
@@ -892,6 +945,11 @@ export default function TourPackages() {
 
                 .custom-pkg-btn:hover i {
                     transform: translateX(4px) translateY(-2px);
+                }
+
+                .inline-map-hover:hover {
+                    transform: scale(1.02);
+                    box-shadow: 0 10px 25px rgba(0,0,0,0.2) !important;
                 }
 
                 @media (max-width: 768px) {
