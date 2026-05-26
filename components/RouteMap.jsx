@@ -28,7 +28,23 @@ const LOCATIONS = {
     'bentota': { x: 85, y: 590 },
     'hikkaduwa': { x: 90, y: 620 },
     'pinnawala': { x: 140, y: 450 },
-    'kitulgala': { x: 145, y: 490 }
+    'kitulgala': { x: 145, y: 490 },
+    'unawatuna': { x: 115, y: 645 },
+    'weligama': { x: 130, y: 655 },
+    'sinharaja': { x: 160, y: 610 },
+    'kataragama': { x: 290, y: 620 },
+    'kalutara': { x: 80, y: 555 },
+    'beruwala': { x: 82, y: 575 },
+    'haputale': { x: 215, y: 515 },
+    'bandarawela': { x: 220, y: 505 },
+    'chilaw': { x: 70, y: 440 },
+    'ratnapura': { x: 140, y: 550 },
+    'kegalle': { x: 135, y: 450 },
+    'gampaha': { x: 90, y: 500 },
+    'nilaveli': { x: 275, y: 200 },
+    'pasikudah': { x: 310, y: 330 },
+    'adams peak': { x: 160, y: 520 },
+    'deniyaya': { x: 170, y: 620 }
 };
 
 const getCoordinates = (locName) => {
@@ -87,8 +103,14 @@ export default function RouteMap({ destinationsString, isLarge = false, isAllDes
 
     if (!isProvincesMap && !isAllDestinations && (!destinations || destinations.length === 0)) return null;
 
-    // Generate SVG path string for routes
-    const dPath = (!isAllDestinations && !isProvincesMap) ? points.map((p, i) => `${i === 0 ? 'M' : 'L'} ${p.x} ${p.y}`).join(' ') : '';
+    // Check if the loop is already closed manually by user listing start city at the end
+    const isClosedLoopAlready = points.length > 1 && points[points.length - 1].name.toLowerCase().trim() === points[0].name.toLowerCase().trim();
+
+    // Generate SVG path string for routes, auto-closing the loop if not already closed
+    const dPath = (!isAllDestinations && !isProvincesMap) 
+        ? points.map((p, i) => `${i === 0 ? 'M' : 'L'} ${p.x} ${p.y}`).join(' ') 
+          + ((points.length > 1 && !isClosedLoopAlready) ? ` L ${points[0].x} ${points[0].y}` : '')
+        : '';
 
     return (
         <div className={`route-map-container ${isProvincesMap ? 'provinces-layout' : ''}`}>
@@ -172,55 +194,79 @@ export default function RouteMap({ destinationsString, isLarge = false, isAllDes
                 )}
 
                 {/* Plotting Destination Dots */}
-                {points.map((pt, i) => (
-                    <g key={i}>
-                        <circle cx={pt.x} cy={pt.y} r={isProvincesMap ? "18" : "8"} fill={isProvincesMap ? `${pt.color}44` : "var(--neon-green)"} className="map-dot-pulse" style={isProvincesMap ? { cursor: 'pointer', animationDuration: '3s' } : {}} onClick={() => isProvincesMap && onProvinceClick && onProvinceClick(pt.id)} />
-                        <circle cx={pt.x} cy={pt.y} r={isProvincesMap ? "12" : "4"} fill={isProvincesMap ? pt.color : "#fff"} style={isProvincesMap ? { cursor: 'pointer' } : {}} onClick={() => isProvincesMap && onProvinceClick && onProvinceClick(pt.id)} />
-                        
-                        {!isProvincesMap && (
-                            <text 
-                                x={pt.x + (pt.x > 200 ? -15 : 15)} 
-                                y={pt.y + (pt.y > 350 ? -8 : 8)} 
-                                fill="#fff"
-                                fontSize="14"
-                                fontWeight="800"
-                                textAnchor={pt.x > 200 ? 'end' : 'start'}
-                                style={{ filter: 'drop-shadow(0px 2px 4px rgba(0,0,0,0.8))' }}
-                            >
-                                {pt.name}
-                            </text>
-                        )}
-                        
-                        {/* Provinces Number Inside Dot */}
-                        {isProvincesMap && (
-                            <text
-                                x={pt.x} 
-                                y={pt.y + 6} 
-                                fill="#000"
-                                fontSize="16"
-                                fontWeight="900"
-                                textAnchor="middle"
-                                style={{ pointerEvents: 'none', filter: 'drop-shadow(0px 1px 2px rgba(255,255,255,0.8))' }}
-                            >
-                                {i + 1}
-                            </text>
-                        )}
-                        
-                        {/* Order Number (Hidden if all destinations or provinces) */}
-                        {!isAllDestinations && !isProvincesMap && (
-                            <text
-                                x={pt.x}
-                                y={pt.y - 12}
-                                fill="var(--neon-yellow)"
-                                fontSize="12"
-                                fontWeight="bold"
-                                textAnchor="middle"
-                            >
-                                {i + 1}
-                            </text>
-                        )}
-                    </g>
-                ))}
+                {points.map((pt, i) => {
+                    const isStart = !isAllDestinations && !isProvincesMap && i === 0 && points.length > 1;
+                    const isEnd = !isAllDestinations && !isProvincesMap && i === points.length - 1 && points.length > 1 && points[points.length - 1].name.toLowerCase().trim() !== points[0].name.toLowerCase().trim();
+                    const dotColor = isStart ? "var(--neon-green)" : isEnd ? "#ff007f" : "var(--neon-yellow)";
+
+                    return (
+                        <g key={i}>
+                            <circle cx={pt.x} cy={pt.y} r={isProvincesMap ? "18" : "8"} fill={isProvincesMap ? `${pt.color}44` : `${dotColor}33`} className="map-dot-pulse" style={isProvincesMap ? { cursor: 'pointer', animationDuration: '3s' } : {}} onClick={() => isProvincesMap && onProvinceClick && onProvinceClick(pt.id)} />
+                            <circle cx={pt.x} cy={pt.y} r={isProvincesMap ? "12" : "5"} fill={isProvincesMap ? pt.color : dotColor} style={isProvincesMap ? { cursor: 'pointer' } : {}} onClick={() => isProvincesMap && onProvinceClick && onProvinceClick(pt.id)} />
+                            {!isProvincesMap && (
+                                <circle cx={pt.x} cy={pt.y} r="2" fill="#fff" style={{ pointerEvents: 'none' }} />
+                            )}
+                            
+                            {!isProvincesMap && (
+                                <g>
+                                    <text 
+                                        x={pt.x + (pt.x > 200 ? -15 : 15)} 
+                                        y={pt.y + (pt.y > 350 ? -8 : 8)} 
+                                        fill="#fff"
+                                        fontSize="14"
+                                        fontWeight="800"
+                                        textAnchor={pt.x > 200 ? 'end' : 'start'}
+                                        style={{ filter: 'drop-shadow(0px 2px 4px rgba(0,0,0,0.8))' }}
+                                    >
+                                        {pt.name}
+                                    </text>
+                                    {(isStart || isEnd) && (
+                                        <text
+                                            x={pt.x + (pt.x > 200 ? -15 : 15)}
+                                            y={pt.y + (pt.y > 350 ? 8 : 22)}
+                                            fill={isStart ? "var(--neon-green)" : "#ff007f"}
+                                            fontSize="9"
+                                            fontWeight="900"
+                                            textAnchor={pt.x > 200 ? 'end' : 'start'}
+                                            style={{ textTransform: 'uppercase', letterSpacing: '0.8px', filter: 'drop-shadow(0px 1px 2px rgba(0,0,0,0.8))' }}
+                                        >
+                                            {isStart ? "● Start Point" : "● End Point"}
+                                        </text>
+                                    )}
+                                </g>
+                            )}
+                            
+                            {/* Provinces Number Inside Dot */}
+                            {isProvincesMap && (
+                                <text
+                                    x={pt.x} 
+                                    y={pt.y + 6} 
+                                    fill="#000"
+                                    fontSize="16"
+                                    fontWeight="900"
+                                    textAnchor="middle"
+                                    style={{ pointerEvents: 'none', filter: 'drop-shadow(0px 1px 2px rgba(255,255,255,0.8))' }}
+                                >
+                                    {i + 1}
+                                </text>
+                            )}
+                            
+                            {/* Order Number (Hidden if all destinations or provinces) */}
+                            {!isAllDestinations && !isProvincesMap && (
+                                <text
+                                    x={pt.x}
+                                    y={pt.y - 12}
+                                    fill={dotColor}
+                                    fontSize="12"
+                                    fontWeight="bold"
+                                    textAnchor="middle"
+                                >
+                                    {i + 1}
+                                </text>
+                            )}
+                        </g>
+                    );
+                })}
             </svg>
             </div>
 

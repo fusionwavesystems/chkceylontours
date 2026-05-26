@@ -71,6 +71,16 @@ function GalleryCard({ img, onPreview, onEdit, onDelete, onLinkSave }) {
   );
 }
 
+const SRI_LANKA_CITIES = [
+  "Colombo", "Negombo", "Kandy", "Sigiriya", "Dambulla", "Anuradhapura", 
+  "Polonnaruwa", "Trincomalee", "Galle", "Mirissa", "Matara", "Tangalle", 
+  "Hambantota", "Yala", "Udawalawe", "Ella", "Nuwara Eliya", "Jaffna", 
+  "Arugam Bay", "Batticaloa", "Bentota", "Hikkaduwa", "Pinnawala", "Kitulgala",
+  "Unawatuna", "Weligama", "Sinharaja", "Kataragama", "Kalutara", "Beruwala", 
+  "Haputale", "Bandarawela", "Chilaw", "Ratnapura", "Kegalle", "Gampaha",
+  "Nilaveli", "Pasikudah", "Adams Peak", "Deniyaya"
+];
+
 export default function AdminDashboard() {
   const [activeTab, setActiveTab] = useState('packages');
   const [message, setMessage] = useState({ type: '', text: '' });
@@ -133,6 +143,12 @@ export default function AdminDashboard() {
   const [reviews, setReviews] = useState([]);
   const [isEditing, setIsEditing] = useState(null); // stores the ID of the item being edited
   const [selectedImage, setSelectedImage] = useState(null);
+
+  // Destinations Autocomplete States
+  const [destSuggestions, setDestSuggestions] = useState([]);
+  const [showDestSuggestions, setShowDestSuggestions] = useState(false);
+  const [activeDestSuggestion, setActiveDestSuggestion] = useState(0);
+
 
 
   // Form States (Cont.)
@@ -397,6 +413,66 @@ export default function AdminDashboard() {
     return null;
   };
 
+  const handleDestinationsChange = (e) => {
+    const value = e.target.value;
+    setPackageForm(prev => ({ ...prev, destinations: value }));
+
+    const parts = value.split(',');
+    const currentWord = parts[parts.length - 1].trim();
+
+    if (currentWord.length >= 1) {
+      const addedCities = parts.slice(0, -1).map(p => p.trim().toLowerCase());
+      const filtered = SRI_LANKA_CITIES.filter(city => {
+        const isMatch = city.toLowerCase().includes(currentWord.toLowerCase());
+        const isAlreadyAdded = addedCities.includes(city.toLowerCase());
+        return isMatch && !isAlreadyAdded;
+      });
+      setDestSuggestions(filtered);
+      setShowDestSuggestions(filtered.length > 0);
+      setActiveDestSuggestion(0);
+    } else {
+      setDestSuggestions([]);
+      setShowDestSuggestions(false);
+    }
+  };
+
+  const handleSelectCity = (city) => {
+    const parts = packageForm.destinations.split(',').map(p => p.trim());
+    if (parts.length > 0) {
+      parts[parts.length - 1] = city;
+    } else {
+      parts.push(city);
+    }
+    const cleanParts = parts.filter(Boolean);
+    const newValue = cleanParts.join(', ') + ', ';
+    setPackageForm(prev => ({ ...prev, destinations: newValue }));
+    setDestSuggestions([]);
+    setShowDestSuggestions(false);
+  };
+
+  const handleDestinationsKeyDown = (e) => {
+    if (!showDestSuggestions || destSuggestions.length === 0) return;
+
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      setActiveDestSuggestion(prev => (prev + 1) % destSuggestions.length);
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      setActiveDestSuggestion(prev => (prev - 1 + destSuggestions.length) % destSuggestions.length);
+    } else if (e.key === 'Enter') {
+      e.preventDefault();
+      handleSelectCity(destSuggestions[activeDestSuggestion]);
+    } else if (e.key === 'Escape') {
+      setShowDestSuggestions(false);
+    }
+  };
+
+  const handleDestinationsBlur = () => {
+    setTimeout(() => {
+      setShowDestSuggestions(false);
+    }, 200);
+  };
+
   const handlePackageSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -456,6 +532,8 @@ export default function AdminDashboard() {
         name: '', duration: '', price: '', tag: '', color: 'var(--neon-yellow)', features: '',
         is_special_offer: false, days: '', nights: '', offer_percentage: '', actual_price: '', destinations: ''
       });
+      setDestSuggestions([]);
+      setShowDestSuggestions(false);
       setPackageFile(null);
       setPackageReset(prev => prev + 1);
       setIsEditing(null);
@@ -627,6 +705,8 @@ export default function AdminDashboard() {
         actual_price: item.actual_price !== null && item.actual_price !== undefined ? item.actual_price : '',
         destinations: item.destinations || ''
       });
+      setDestSuggestions([]);
+      setShowDestSuggestions(false);
     }
     if (type === 'hotels') setHotelForm({ ...item, website_link: item.website_link || '' });
     if (type === 'activities') setActivityForm({ ...item, features: item.features.join('\n') });
@@ -1017,9 +1097,84 @@ export default function AdminDashboard() {
                   <textarea style={{...inputStyle, height: '120px', resize: 'vertical'}} value={packageForm.features} onChange={e => setPackageForm({...packageForm, features: e.target.value})} required placeholder={"Luxury Transport\nEnglish Speaking Guide\nYala Safari"} />
                 </div>
 
-                <div style={{ marginBottom: '20px' }}>
+                <div style={{ marginBottom: '20px', position: 'relative' }}>
                   <label style={{ display: 'block', marginBottom: '8px', color: 'rgba(255,255,255,0.7)', fontSize: '0.9rem' }}>Destinations (Comma separated, e.g., Colombo, Kandy, Ella)</label>
-                  <input type="text" style={inputStyle} value={packageForm.destinations} onChange={e => setPackageForm({...packageForm, destinations: e.target.value})} placeholder="Colombo, Kandy, Nuwara Eliya" />
+                  <input 
+                    type="text" 
+                    style={{ ...inputStyle, marginBottom: '0' }} 
+                    value={packageForm.destinations} 
+                    onChange={handleDestinationsChange} 
+                    onKeyDown={handleDestinationsKeyDown}
+                    onBlur={handleDestinationsBlur}
+                    placeholder="Colombo, Kandy, Nuwara Eliya" 
+                    autoComplete="off"
+                  />
+                  {showDestSuggestions && destSuggestions.length > 0 && (
+                    <div style={{
+                      position: 'absolute',
+                      top: 'calc(100% + 5px)',
+                      left: 0,
+                      right: 0,
+                      backgroundColor: '#0a0a0a',
+                      border: '1px solid var(--neon-yellow)',
+                      borderRadius: '8px',
+                      boxShadow: '0 8px 30px rgba(255, 240, 31, 0.25)',
+                      zIndex: 1000,
+                      maxHeight: '220px',
+                      overflowY: 'auto',
+                      scrollbarWidth: 'thin',
+                      scrollbarColor: 'var(--neon-yellow) #0a0a0a',
+                    }}>
+                      {destSuggestions.map((suggestion, index) => {
+                        const isActive = index === activeDestSuggestion;
+                        return (
+                          <div
+                            key={suggestion}
+                            onMouseDown={(e) => {
+                              e.preventDefault(); // Prevent blur
+                              handleSelectCity(suggestion);
+                            }}
+                            onMouseEnter={() => setActiveDestSuggestion(index)}
+                            style={{
+                              padding: '12px 15px',
+                              cursor: 'pointer',
+                              backgroundColor: isActive ? 'rgba(255, 240, 31, 0.15)' : 'transparent',
+                              color: isActive ? 'var(--neon-yellow)' : '#fff',
+                              display: 'flex',
+                              alignItems: 'center',
+                              gap: '12px',
+                              borderBottom: '1px solid rgba(255,255,255,0.03)',
+                              transition: 'all 0.2s ease',
+                              fontWeight: isActive ? 'bold' : 'normal',
+                            }}
+                          >
+                            <i 
+                              className="fas fa-map-marker-alt" 
+                              style={{ 
+                                color: isActive ? 'var(--neon-yellow)' : 'rgba(255,255,255,0.4)',
+                                fontSize: '0.9rem' 
+                              }}
+                            ></i>
+                            <span>{suggestion}</span>
+                            {isActive && (
+                              <span style={{ 
+                                marginLeft: 'auto', 
+                                fontSize: '0.75rem', 
+                                color: 'var(--neon-yellow)',
+                                background: 'rgba(255,240,31,0.1)',
+                                padding: '2px 8px',
+                                borderRadius: '4px',
+                                textTransform: 'uppercase',
+                                letterSpacing: '0.5px'
+                              }}>
+                                Press Enter
+                              </span>
+                            )}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
                 </div>
 
                 <div style={{ marginBottom: '30px', padding: '20px', borderRadius: '12px', border: '2px dashed rgba(255,255,255,0.1)', background: 'rgba(255,255,255,0.02)' }}>
@@ -1030,7 +1185,7 @@ export default function AdminDashboard() {
 
                 <div style={{ display: 'flex', gap: '15px' }}>
                   {isEditing && (
-                    <button type="button" onClick={() => { setIsEditing(null); setPackageForm({ name: '', duration: '', price: '', tag: '', color: 'var(--neon-green)', features: '', is_special_offer: false, days: '', nights: '', offer_percentage: '', actual_price: '' }); }} style={{ flex: 1, padding: '15px', borderRadius: '8px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', color: '#fff', cursor: 'pointer' }}>Cancel</button>
+                    <button type="button" onClick={() => { setIsEditing(null); setPackageForm({ name: '', duration: '', price: '', tag: '', color: 'var(--neon-green)', features: '', is_special_offer: false, days: '', nights: '', offer_percentage: '', actual_price: '', destinations: '' }); setDestSuggestions([]); setShowDestSuggestions(false); }} style={{ flex: 1, padding: '15px', borderRadius: '8px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', color: '#fff', cursor: 'pointer' }}>Cancel</button>
                   )}
                   <button type="submit" className="btn btn-primary" style={{ flex: 2, background: 'var(--neon-yellow)', color: '#000', fontWeight: '900', height: '55px', fontSize: '1.1rem' }}>{isEditing ? 'UPDATE PACKAGE' : 'CREATE PACKAGE'}</button>
                 </div>

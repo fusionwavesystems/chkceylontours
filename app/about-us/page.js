@@ -250,7 +250,7 @@ export default function AboutUs() {
                                         position: "relative"
                                     }}>
                                         <img
-                                            src="/team/guide.jpeg"
+                                            src="/team/ceo.png"
                                             alt="Dilan Lekamarachchi"
                                             style={{
                                                 width: "100%",
@@ -258,7 +258,7 @@ export default function AboutUs() {
                                                 objectFit: "cover",
                                                 objectPosition: "top center",
                                                 display: "block",
-                                                transform: "scale(1)"
+                                                transform: "scale(1.35)"
                                             }}
                                         />
                                     </div>
