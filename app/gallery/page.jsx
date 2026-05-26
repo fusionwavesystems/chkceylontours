@@ -46,22 +46,35 @@ export default function GalleryPage() {
 
             {/* Hero Section */}
             <section className="hero" style={{
-                height: '60vh',
-                minHeight: '400px',
-                backgroundImage: "url('/gallery_hero_bg.png')",
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-                backgroundRepeat: 'no-repeat',
+                height: '100vh',
+                minHeight: '600px',
                 justifyContent: 'center',
-                alignItems: 'center',
+                alignItems: 'flex-end',
                 padding: '0',
                 display: 'flex',
-                position: 'relative'
+                position: 'relative',
+                overflow: 'hidden'
             }}>
-                <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', background: 'linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.8) 100%)', zIndex: 1 }}></div>
-                <div className="hero-content" style={{ zIndex: 10, padding: '80px 20px 0 20px', textAlign: 'center', maxWidth: '100%', position: 'relative' }}>
+                <video
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    style={{
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover',
+                        zIndex: 0
+                    }}
+                >
+                    <source src="/hero3.mp4" type="video/mp4" />
+                </video>
+                <div className="hero-content" style={{ zIndex: 10, padding: '0 20px', paddingBottom: '4vh', textAlign: 'center', maxWidth: '100%', position: 'relative' }}>
                     <h1 className="reveal active" style={{ fontSize: 'clamp(2.5rem, 8vw, 5rem)', textShadow: '2px 2px 15px rgba(0, 0, 0, 0.9), var(--neon-glow)' }}>Visual Journey</h1>
-                    <p style={{ color: 'var(--neon-yellow)', fontSize: '1.2rem', marginTop: '10px', textTransform: 'uppercase', letterSpacing: '3px' }}>Capturing the Essence of Sri Lanka</p>
+                    <p style={{ color: 'var(--neon-yellow)', fontSize: '1.2rem', marginTop: '10px', textTransform: 'uppercase', letterSpacing: '3px', textShadow: '1px 1px 5px rgba(0,0,0,0.8)' }}>Capturing the Essence of Sri Lanka</p>
                 </div>
             </section>
             
