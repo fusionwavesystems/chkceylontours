@@ -283,7 +283,7 @@ export default function AboutUs() {
                                         position: "relative"
                                     }}>
                                         <img
-                                            src="/team/operations manager.png"
+                                            src="/team/operations_manager.png"
                                             alt="H.G.K Chamathka"
                                             style={{
                                                 width: "100%",
@@ -316,7 +316,7 @@ export default function AboutUs() {
                                         position: "relative"
                                     }}>
                                         <img
-                                            src="/team/tour operator.png"
+                                            src="/team/tour_operator.png"
                                             alt="L.A.U Amali"
                                             style={{
                                                 width: "100%",
@@ -387,7 +387,7 @@ export default function AboutUs() {
                                         position: "relative"
                                     }}>
                                         <img
-                                            src="/team/hr manager.png"
+                                            src="/team/hr_manager.png"
                                             alt="T.V Rajapaksha"
                                             style={{
                                                 width: "100%",

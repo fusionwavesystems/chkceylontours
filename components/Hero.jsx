@@ -18,7 +18,7 @@ const Hero = ({ heroData }) => {
     const s = slDate.getSeconds();
 
     return (
-        <section className="hero" style={{ display: 'flex', flexDirection: 'column', position: 'relative' }}>
+        <section className="hero" style={{ display: 'flex', flexDirection: 'column', position: 'relative', height: '100vh', minHeight: '600px' }}>
             <div className="hero-slides-wrapper">
                 {/* Background Video */}
                 <video
@@ -41,13 +41,13 @@ const Hero = ({ heroData }) => {
                 {/* Dark overlay */}
                 <div className="hero-overlay" style={{
                     position: 'absolute', inset: 0,
-                    background: 'linear-gradient(to bottom, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.65) 100%)',
+                    background: 'linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.7) 100%)',
                     zIndex: 1
                 }} />
             </div>
 
             {/* Ancient Clock - Middle Right */}
-            <div className="mobile-hide" style={{
+            <div className="hero-clock" style={{
                 position: 'absolute',
                 top: '50%',
                 right: '40px',
@@ -132,54 +132,41 @@ const Hero = ({ heroData }) => {
             </div>
 
             {/* Content */}
-            <div className="container" style={{ position: 'absolute', inset: 0, zIndex: 10, display: 'flex', alignItems: 'flex-end', justifyContent: 'flex-end', paddingBottom: '90px' }}>
-                <div className="hero-content" style={{ textAlign: 'right', maxWidth: '800px', width: '100%' }}>
-                    <h1 className="reveal active" style={{ textAlign: 'right', fontSize: '4.5rem', marginBottom: '0' }}>
+            <div className="container hero-container" style={{ position: 'absolute', inset: 0, zIndex: 10, display: 'flex', alignItems: 'flex-end', justifyContent: 'flex-end', paddingBottom: '90px' }}>
+                <div className="hero-content" style={{ textAlign: 'right', maxWidth: '800px', width: '100%', padding: '0 20px' }}>
+                    <h1 className="reveal active hero-title" style={{ textAlign: 'right', fontSize: '4.5rem', marginBottom: '15px' }}>
                         {(heroData?.title || 'Visit Sri Lanka').replace('Sri Lanka', 'Sri\u00A0Lanka')}
                     </h1>
-                </div>
-            </div>
-
-            {/* Top Right Action Buttons & Subtitle */}
-            <div className="hero-btns reveal active mobile-hide" style={{ 
-                position: 'absolute', 
-                top: '120px', 
-                right: '50px', 
-                zIndex: 20, 
-                transitionDelay: '0.6s', 
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'flex-end',
-                gap: '15px'
-            }}>
-                <div style={{ display: 'flex', gap: '20px' }}>
-                    <a href="#packages" className="btn" style={{ 
-                        backgroundColor: 'transparent', color: '#dcb81b', border: '2px solid #dcb81b', 
-                        padding: '10px 24px', borderRadius: '4px', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '1px'
-                    }}>View Packages</a>
-                    <a href="#destinations" className="btn" style={{ 
-                        backgroundColor: '#dcb81b', color: '#111', 
-                        padding: '10px 24px', borderRadius: '4px', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '1px'
-                    }}>Start Exploring</a>
-                </div>
-                
-                {/* Animated Subtitle */}
-                <div style={{ 
-                    display: 'inline-block', border: '1px solid rgba(220, 184, 27, 0.4)', padding: '6px 18px', 
-                    borderRadius: '4px', animation: 'slideLeftFade 1s 1s ease forwards', opacity: 0,
-                    background: 'rgba(0,0,0,0.3)', backdropFilter: 'blur(5px)'
-                }}>
-                    <span className="subtitle" style={{ 
-                        color: '#dcb81b', margin: 0, display: 'block', textAlign: 'right', 
-                        fontSize: '0.85rem', letterSpacing: '4px', textTransform: 'uppercase' 
+                    
+                    {/* Animated Subtitle (Moved inside content for better mobile flow) */}
+                    <div className="hero-subtitle-container" style={{ 
+                        display: 'inline-block', border: '1px solid rgba(220, 184, 27, 0.4)', padding: '8px 24px', 
+                        borderRadius: '30px', animation: 'slideLeftFade 1s 0.5s ease forwards', opacity: 0,
+                        background: 'rgba(0,0,0,0.4)', backdropFilter: 'blur(5px)', marginBottom: '25px'
                     }}>
-                        {heroData?.subtitle_tag || 'Premium Island Experiences'}
-                    </span>
+                        <span className="subtitle" style={{ 
+                            color: '#dcb81b', margin: 0, display: 'block', textAlign: 'right', 
+                            fontSize: '1rem', letterSpacing: '4px', textTransform: 'uppercase' 
+                        }}>
+                            {heroData?.subtitle_tag || 'Premium Island Experiences'}
+                        </span>
+                    </div>
+
+                    <div className="hero-btns-container" style={{ display: 'flex', gap: '20px', justifyContent: 'flex-end', animation: 'slideLeftFade 1s 0.8s ease forwards', opacity: 0 }}>
+                        <a href="#packages" className="btn" style={{ 
+                            backgroundColor: 'transparent', color: '#dcb81b', border: '2px solid #dcb81b', 
+                            padding: '12px 28px', borderRadius: '30px', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '1px', transition: '0.3s'
+                        }}>View Packages</a>
+                        <a href="#destinations" className="btn" style={{ 
+                            backgroundColor: '#dcb81b', color: '#111', border: '2px solid #dcb81b',
+                            padding: '12px 28px', borderRadius: '30px', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '1px', transition: '0.3s'
+                        }}>Start Exploring</a>
+                    </div>
                 </div>
             </div>
 
             {/* AI Watermark Cover - Sri Lankan Flag */}
-            <div style={{
+            <div className="flag-container" style={{
                 position: 'absolute',
                 bottom: '40px',
                 right: '40px',
@@ -188,7 +175,7 @@ const Hero = ({ heroData }) => {
                 zIndex: 20,
             }} title="Proudly Sri Lankan">
                 {/* Silver Flagpole */}
-                <div style={{ 
+                <div className="flag-pole" style={{ 
                     position: 'absolute', left: '-10px', top: '-35px', width: '10px', height: '190px', 
                     background: 'linear-gradient(to right, #666 0%, #eee 50%, #666 100%)', 
                     borderRadius: '5px', zIndex: 21, boxShadow: '4px 4px 10px rgba(0,0,0,0.6)' 
@@ -226,29 +213,73 @@ const Hero = ({ heroData }) => {
                     100% { transform: perspective(400px) rotateY(30deg) skewY(3deg); filter: brightness(1.15); }
                 }
 
+                @keyframes slideLeftFade {
+                    from { opacity: 0; transform: translateX(30px); }
+                    to { opacity: 1; transform: translateX(0); }
+                }
+
                 @media (max-width: 768px) {
                     .mobile-hide {
                         display: none !important;
                     }
-                    .hero-slides-wrapper {
-                        position: relative;
-                        width: 100%;
-                        margin-top: 20px;
-                        aspect-ratio: 4 / 3;
-                        height: auto;
-                        min-height: auto;
-                        border-radius: 0;
-                        overflow: hidden;
-                        order: 2;
-                        box-shadow: none;
+                    .hero {
+                        height: auto !important;
+                        min-height: auto !important;
                     }
-                    .container {
+                    .hero-slides-wrapper {
+                        position: relative !important;
+                        width: 100%;
+                        aspect-ratio: 4 / 3;
+                        height: auto !important;
                         order: 1;
                     }
-                    h1.reveal.active {
+                    .hero-clock {
+                        position: relative !important;
+                        order: 2;
+                        top: auto !important;
+                        right: auto !important;
+                        transform: none !important;
+                        margin: -65px auto 10px auto !important;
+                        z-index: 25 !important;
+                    }
+                    .hero-container {
+                        position: relative !important;
+                        order: 3;
+                        align-items: center !important;
+                        justify-content: center !important;
+                        padding: 30px 20px 60px 20px !important;
+                    }
+                    .hero-content {
+                        text-align: center !important;
+                    }
+                    .hero-title {
+                        text-align: center !important;
                         font-size: 2.8rem !important;
-                        margin-bottom: 0 !important;
-                        margin-top: 10px !important;
+                        line-height: 1.2;
+                    }
+                    .hero-subtitle-container span {
+                        text-align: center !important;
+                        font-size: 0.8rem !important;
+                        letter-spacing: 2px !important;
+                    }
+                    .hero-btns-container {
+                        justify-content: center !important;
+                        flex-direction: column;
+                        gap: 15px !important;
+                    }
+                    .flag-container {
+                        top: 20vw !important;
+                        right: 20px !important;
+                        bottom: auto !important;
+                        width: 100px !important;
+                        height: 55px !important;
+                        z-index: 30 !important;
+                    }
+                    .flag-pole {
+                        height: 80px !important;
+                        top: -10px !important;
+                        width: 5px !important;
+                        left: -5px !important;
                     }
                 }
             `}</style>
