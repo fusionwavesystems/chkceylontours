@@ -18,6 +18,13 @@ const cleanFeatures = (features) => {
     return flattenedFeatures.filter(f => f && typeof f === 'string');
 };
 
+const getHexColor = (color) => {
+    if (!color) return '#fff01f';
+    if (color === 'var(--neon-green)') return '#39ff14';
+    if (color === 'var(--neon-yellow)') return '#fff01f';
+    return color;
+};
+
 const fallbackPackagesData = [
     {
         id: 1,
@@ -110,8 +117,9 @@ const getFeatureIcon = (feature, color, isDark = false) => {
         iconClass = "fa-solid fa-star";
     }
 
-    const iconColor = isDark ? (color === 'var(--neon-green)' ? '#0f766e' : '#b45309') : color;
-    const shadowFilter = isDark ? 'none' : `drop-shadow(0 0 3px ${color}77)`;
+    const hexColor = getHexColor(color);
+    const iconColor = isDark ? (hexColor === '#39ff14' ? '#0f766e' : '#b45309') : hexColor;
+    const shadowFilter = isDark ? 'none' : `drop-shadow(0 0 3px ${hexColor}77)`;
 
     return <i className={iconClass} style={{ color: iconColor, marginRight: '12px', fontSize: '1.05rem', filter: shadowFilter }}></i>;
 };
@@ -645,7 +653,7 @@ export default function TourPackages() {
                                         fontWeight: '900',
                                         fontFamily: 'var(--font-accent)',
                                         whiteSpace: 'nowrap',
-                                        boxShadow: `0 4px 15px ${pkg.color}44`,
+                                        boxShadow: `0 4px 15px ${getHexColor(pkg.color)}44`,
                                         display: 'flex',
                                         alignItems: 'center',
                                         gap: '6px',
@@ -756,7 +764,7 @@ export default function TourPackages() {
 
                                 <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                                     {pkg.destinations && (
-                                        <button onClick={() => openMapModal(pkg)} className="custom-pkg-btn" style={{ background: '#111', color: pkg.color, border: `1px solid ${pkg.color}`, boxShadow: `0 4px 15px ${pkg.color}33` }}>
+                                        <button onClick={() => openMapModal(pkg)} className="custom-pkg-btn" style={{ background: '#111', color: pkg.color, border: `1px solid ${getHexColor(pkg.color)}`, boxShadow: `0 4px 15px ${getHexColor(pkg.color)}33` }}>
                                             <i className="fa-solid fa-map-location-dot" style={{ fontSize: '1rem', marginRight: '6px' }}></i> View Route on Map
                                         </button>
                                     )}
@@ -765,7 +773,7 @@ export default function TourPackages() {
                                         style={{
                                             background: `linear-gradient(135deg, ${pkg.color} 0%, ${pkg.color === 'var(--neon-green)' ? '#15b300' : (pkg.color === '#dc2626' ? '#991b1b' : '#ffb300')} 100%)`,
                                             color: pkg.color === '#dc2626' ? '#fff' : '#000',
-                                            boxShadow: `0 4px 15px ${pkg.color}33`
+                                            boxShadow: `0 4px 15px ${getHexColor(pkg.color)}33`
                                         }}>
                                         Enquire Now
                                         <i className="fa-solid fa-paper-plane" style={{ fontSize: '0.85rem', transition: 'transform 0.3s ease' }}></i>
@@ -788,8 +796,8 @@ export default function TourPackages() {
                     <div style={{
                         position: 'relative', width: '95%', maxWidth: '1000px', maxHeight: '90vh',
                         background: '#111', borderRadius: '24px', padding: showMapIntro ? '0' : '30px',
-                        border: `1px solid ${enlargedMapPkg.color || 'var(--neon-yellow)'}`,
-                        boxShadow: `0 10px 40px ${enlargedMapPkg.color || 'var(--neon-yellow)'}44`,
+                        border: `1px solid ${getHexColor(enlargedMapPkg.color)}`,
+                        boxShadow: `0 10px 40px ${getHexColor(enlargedMapPkg.color)}44`,
                         overflow: 'hidden',
                         display: 'flex', flexDirection: 'column'
                     }} onClick={(e) => e.stopPropagation()}>

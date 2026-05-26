@@ -5,6 +5,13 @@ import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import { supabase } from '../../lib/supabase';
 
+const getHexColor = (color) => {
+    if (!color) return '#fff01f';
+    if (color === 'var(--neon-green)') return '#39ff14';
+    if (color === 'var(--neon-yellow)') return '#fff01f';
+    return color;
+};
+
 const getFeatureIcon = (feature, color, isDark = false) => {
     if (!feature || typeof feature !== 'string') return null;
     const text = feature.toLowerCase();
@@ -34,8 +41,9 @@ const getFeatureIcon = (feature, color, isDark = false) => {
         iconClass = "fa-solid fa-star";
     }
 
-    const iconColor = isDark ? (color === 'var(--neon-green)' ? '#0f766e' : '#b45309') : color;
-    const shadowFilter = isDark ? 'none' : `drop-shadow(0 0 3px ${color}77)`;
+    const hexColor = getHexColor(color);
+    const iconColor = isDark ? (hexColor === '#39ff14' ? '#0f766e' : '#b45309') : hexColor;
+    const shadowFilter = isDark ? 'none' : `drop-shadow(0 0 3px ${hexColor}77)`;
 
     return <i className={iconClass} style={{ color: iconColor, marginRight: '10px', fontSize: '0.95rem', filter: shadowFilter }}></i>;
 };
@@ -373,8 +381,8 @@ export default function ActivitiesPage() {
                                         }}>{act.name}</h3>
                                         <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
                                             <span style={{
-                                                background: `${act.color}15`,
-                                                border: `1px solid ${act.color}44`,
+                                                background: `${getHexColor(act.color)}15`,
+                                                border: `1px solid ${getHexColor(act.color)}44`,
                                                 color: act.color,
                                                 padding: '2px 8px',
                                                 borderRadius: '4px',
@@ -487,7 +495,7 @@ export default function ActivitiesPage() {
                                          style={{
                                              background: `linear-gradient(135deg, ${act.color} 0%, ${act.color === 'var(--neon-green)' ? '#15b300' : '#ffb300'} 100%)`,
                                              color: '#000',
-                                             boxShadow: `0 4px 15px ${act.color}33`,
+                                             boxShadow: `0 4px 15px ${getHexColor(act.color)}33`,
                                              display: 'flex',
                                              justifyContent: 'center',
                                              alignItems: 'center',

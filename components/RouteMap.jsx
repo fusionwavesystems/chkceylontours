@@ -89,7 +89,7 @@ export default function RouteMap({ destinationsString, isLarge = false, isAllDes
         id: p.id,
         name: p.name,
         count: provinceCounts[p.id] || 0,
-        ...(PROVINCE_COORDS[p.id] || { x: 200, y: 350, color: 'var(--neon-yellow)' })
+        ...(PROVINCE_COORDS[p.id] || { x: 200, y: 350, color: '#fff01f' })
     })) : destinations.map(d => {
         const coords = getCoordinates(d);
         return { name: d, ...coords };
@@ -137,7 +137,7 @@ export default function RouteMap({ destinationsString, isLarge = false, isAllDes
             >
                 <defs>
                     <linearGradient id="neonGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                        <stop offset="0%" stopColor="var(--neon-yellow)" />
+                        <stop offset="0%" stopColor="#fff01f" />
                         <stop offset="100%" stopColor="#ff00ff" />
                     </linearGradient>
                 </defs>
@@ -174,8 +174,8 @@ export default function RouteMap({ destinationsString, isLarge = false, isAllDes
                                     {/* Back Window */}
                                     <path d="M-8 10 L8 10 L6 14 L-6 14 Z" fill="#66ccff" opacity="0.6" />
                                     {/* Headlights */}
-                                    <circle cx="-6" cy="-19" r="1.5" fill="#fff" filter="drop-shadow(0 -2px 4px var(--neon-yellow))" />
-                                    <circle cx="6" cy="-19" r="1.5" fill="#fff" filter="drop-shadow(0 -2px 4px var(--neon-yellow))" />
+                                    <circle cx="-6" cy="-19" r="1.5" fill="#fff" filter="drop-shadow(0 -2px 4px #fff01f)" />
+                                    <circle cx="6" cy="-19" r="1.5" fill="#fff" filter="drop-shadow(0 -2px 4px #fff01f)" />
                                     {/* Taillights */}
                                     <circle cx="-6" cy="19" r="1.5" fill="#ff0000" />
                                     <circle cx="6" cy="19" r="1.5" fill="#ff0000" />
@@ -197,7 +197,7 @@ export default function RouteMap({ destinationsString, isLarge = false, isAllDes
                 {points.map((pt, i) => {
                     const isStart = !isAllDestinations && !isProvincesMap && i === 0 && points.length > 1;
                     const isEnd = !isAllDestinations && !isProvincesMap && i === points.length - 1 && points.length > 1 && points[points.length - 1].name.toLowerCase().trim() !== points[0].name.toLowerCase().trim();
-                    const dotColor = isStart ? "var(--neon-green)" : isEnd ? "#ff007f" : "var(--neon-yellow)";
+                    const dotColor = isStart ? "#39ff14" : isEnd ? "#ff007f" : "#fff01f";
 
                     return (
                         <g key={i}>
@@ -224,7 +224,7 @@ export default function RouteMap({ destinationsString, isLarge = false, isAllDes
                                         <text
                                             x={pt.x + (pt.x > 200 ? -15 : 15)}
                                             y={pt.y + (pt.y > 350 ? 8 : 22)}
-                                            fill={isStart ? "var(--neon-green)" : "#ff007f"}
+                                            fill={isStart ? "#39ff14" : "#ff007f"}
                                             fontSize="9"
                                             fontWeight="900"
                                             textAnchor={pt.x > 200 ? 'end' : 'start'}

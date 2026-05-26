@@ -14,6 +14,13 @@ const cleanFeatures = (features) => {
     return flattenedFeatures.filter(f => f && typeof f === 'string');
 };
 
+const getHexColor = (color) => {
+    if (!color) return '#fff01f';
+    if (color === 'var(--neon-green)') return '#39ff14';
+    if (color === 'var(--neon-yellow)') return '#fff01f';
+    return color;
+};
+
 const fallbackPackages = [
     { name: 'Heritage Legend', price: '850', duration: '7 Days', features: ['Cultural Sites', 'Private Driver', 'Luxury Hotels'], color: 'var(--neon-yellow)' },
     { name: 'Wild Spirit', price: '1200', duration: '10 Days', features: ['Jungle Safari', 'Beach Villa', 'Guided Hikes'], color: 'var(--neon-green)' },
@@ -49,8 +56,9 @@ const getFeatureIcon = (feature, color, isDark = false) => {
         iconClass = "fa-solid fa-star";
     }
 
-    const iconColor = isDark ? (color === 'var(--neon-green)' ? '#0f766e' : '#b45309') : color;
-    const shadowFilter = isDark ? 'none' : `drop-shadow(0 0 3px ${color}77)`;
+    const hexColor = getHexColor(color);
+    const iconColor = isDark ? (hexColor === '#39ff14' ? '#0f766e' : '#b45309') : hexColor;
+    const shadowFilter = isDark ? 'none' : `drop-shadow(0 0 3px ${hexColor}77)`;
 
     return <i className={iconClass} style={{ color: iconColor, marginRight: '14px', fontSize: '1.1rem', filter: shadowFilter }}></i>;
 };
@@ -189,7 +197,7 @@ const TourPackages = () => {
                                         fontWeight: '900',
                                         fontFamily: 'var(--font-accent)',
                                         whiteSpace: 'nowrap',
-                                        boxShadow: `0 4px 15px ${cardColor}44`,
+                                        boxShadow: `0 4px 15px ${getHexColor(cardColor)}44`,
                                         display: 'flex',
                                         alignItems: 'center',
                                         gap: '6px',
@@ -261,7 +269,7 @@ const TourPackages = () => {
                                              color: isSpecial ? '#fff' : '#000',
                                              boxShadow: isSpecial 
                                                 ? '0 4px 15px rgba(255, 0, 0, 0.4)' 
-                                                : `0 4px 15px ${pkg.color}33`
+                                                : `0 4px 15px ${getHexColor(pkg.color)}33`
                                          }}
                                      >
                                          Enquire Now 
