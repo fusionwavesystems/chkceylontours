@@ -44,7 +44,18 @@ const LOCATIONS = {
     'nilaveli': { x: 275, y: 200 },
     'pasikudah': { x: 310, y: 330 },
     'adams peak': { x: 160, y: 520 },
-    'deniyaya': { x: 170, y: 620 }
+    'deniyaya': { x: 170, y: 620 },
+    'katunayake': { x: 77, y: 495 },
+    'colombo airport': { x: 77, y: 495 },
+    'colombo airport (bia)': { x: 77, y: 495 },
+    'bia': { x: 77, y: 495 },
+    'bandaranaike international airport': { x: 77, y: 495 },
+    'habarana': { x: 205, y: 335 },
+    'minneriya': { x: 215, y: 340 },
+    'wilpattu': { x: 105, y: 280 },
+    'mannar': { x: 90, y: 190 },
+    'vavuniya': { x: 170, y: 190 },
+    'pigeon island': { x: 285, y: 190 }
 };
 
 const getCoordinates = (locName) => {

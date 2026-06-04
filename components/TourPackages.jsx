@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
 import ImageLightbox from './ImageLightbox';
+import InquiryModal from './InquiryModal';
 
 const cleanFeatures = (features) => {
     if (!features || !Array.isArray(features)) return [];
@@ -18,6 +19,8 @@ const getHexColor = (color) => {
     if (!color) return '#fff01f';
     if (color === 'var(--neon-green)') return '#39ff14';
     if (color === 'var(--neon-yellow)') return '#fff01f';
+    if (color === 'var(--neon-blue)') return '#00d4ff';
+    if (color === 'var(--neon-purple)') return '#bd00ff';
     return color;
 };
 
@@ -57,7 +60,14 @@ const getFeatureIcon = (feature, color, isDark = false) => {
     }
 
     const hexColor = getHexColor(color);
-    const iconColor = isDark ? (hexColor === '#39ff14' ? '#0f766e' : '#b45309') : hexColor;
+    const iconColor = isDark 
+        ? (hexColor === '#39ff14' ? '#0f766e' 
+           : hexColor === '#00d4ff' ? '#0284c7' 
+           : hexColor === '#bd00ff' ? '#7e22ce'
+           : hexColor === '#3b82f6' ? '#1d4ed8'
+           : hexColor === '#a855f7' ? '#6b21a8'
+           : '#b45309') 
+        : hexColor;
     const shadowFilter = isDark ? 'none' : `drop-shadow(0 0 3px ${hexColor}77)`;
 
     return <i className={iconClass} style={{ color: iconColor, marginRight: '14px', fontSize: '1.1rem', filter: shadowFilter }}></i>;
@@ -66,6 +76,7 @@ const getFeatureIcon = (feature, color, isDark = false) => {
 const TourPackages = () => {
     const [packages, setPackages] = useState([]);
     const [selectedImage, setSelectedImage] = useState(null);
+    const [inquiryItem, setInquiryItem] = useState(null);
 
     useEffect(() => {
         const fetchPackages = async () => {
@@ -259,8 +270,8 @@ const TourPackages = () => {
                                          ))}
                                      </ul>
 
-                                     <a 
-                                         href={`https://wa.me/94771234567?text=I'm interested in the ${pkg.name} package`} 
+                                     <button 
+                                         onClick={() => setInquiryItem(pkg)}
                                          className="custom-enquire-btn" 
                                          style={{ 
                                              background: isSpecial 
@@ -269,12 +280,14 @@ const TourPackages = () => {
                                              color: isSpecial ? '#fff' : '#000',
                                              boxShadow: isSpecial 
                                                 ? '0 4px 15px rgba(255, 0, 0, 0.4)' 
-                                                : `0 4px 15px ${getHexColor(pkg.color)}33`
+                                                : `0 4px 15px ${getHexColor(pkg.color)}33`,
+                                             border: 'none',
+                                             cursor: 'pointer'
                                          }}
                                      >
                                          Enquire Now 
                                          <i className="fa-solid fa-paper-plane" style={{ fontSize: '0.85rem', transition: 'transform 0.3s ease' }}></i>
-                                     </a>
+                                     </button>
                                 </div>
                             </div>
                         );
@@ -294,6 +307,13 @@ const TourPackages = () => {
                 </div>
             </div>
             <ImageLightbox src={selectedImage} onClose={() => setSelectedImage(null)} />
+            <InquiryModal 
+                isOpen={!!inquiryItem}
+                onClose={() => setInquiryItem(null)}
+                itemName={inquiryItem?.name || ''}
+                itemType="package"
+                themeColor={inquiryItem?.color || 'var(--neon-yellow)'}
+            />
 
             <style jsx>{`
                 .packages-section {

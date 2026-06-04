@@ -5,6 +5,7 @@ import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import RouteMap from '../../components/RouteMap';
 import { supabase } from '../../lib/supabase';
+import InquiryModal from '../../components/InquiryModal';
 
 const cleanFeatures = (features) => {
     if (!features || !Array.isArray(features)) return [];
@@ -22,6 +23,8 @@ const getHexColor = (color) => {
     if (!color) return '#fff01f';
     if (color === 'var(--neon-green)') return '#39ff14';
     if (color === 'var(--neon-yellow)') return '#fff01f';
+    if (color === 'var(--neon-blue)') return '#00d4ff';
+    if (color === 'var(--neon-purple)') return '#bd00ff';
     return color;
 };
 
@@ -118,7 +121,14 @@ const getFeatureIcon = (feature, color, isDark = false) => {
     }
 
     const hexColor = getHexColor(color);
-    const iconColor = isDark ? (hexColor === '#39ff14' ? '#0f766e' : '#b45309') : hexColor;
+    const iconColor = isDark 
+        ? (hexColor === '#39ff14' ? '#0f766e' 
+           : hexColor === '#00d4ff' ? '#0284c7' 
+           : hexColor === '#bd00ff' ? '#7e22ce'
+           : hexColor === '#3b82f6' ? '#1d4ed8'
+           : hexColor === '#a855f7' ? '#6b21a8'
+           : '#b45309') 
+        : hexColor;
     const shadowFilter = isDark ? 'none' : `drop-shadow(0 0 3px ${hexColor}77)`;
 
     return <i className={iconClass} style={{ color: iconColor, marginRight: '12px', fontSize: '1.05rem', filter: shadowFilter }}></i>;
@@ -129,6 +139,7 @@ export default function TourPackages() {
     const [loading, setLoading] = useState(true);
     const [enlargedMapPkg, setEnlargedMapPkg] = useState(null);
     const [showMapIntro, setShowMapIntro] = useState(false);
+    const [inquiryItem, setInquiryItem] = useState(null);
 
     const openMapModal = (pkg) => {
         setEnlargedMapPkg(pkg);
@@ -537,16 +548,18 @@ export default function TourPackages() {
                                                         <i className="fa-solid fa-map-location-dot" style={{ fontSize: '1rem', marginRight: '6px' }}></i> View Route on Map
                                                     </button>
                                                 )}
-                                                <a href={`https://wa.me/94776981971?text=I'm interested in the ${pkg.name} package`}
+                                                <button onClick={() => setInquiryItem(pkg)}
                                                     className="custom-pkg-btn"
                                                     style={{
                                                         background: `linear-gradient(135deg, #dc2626 0%, #991b1b 100%)`,
                                                         color: '#fff',
-                                                        boxShadow: `0 4px 15px rgba(220, 38, 38, 0.3)`
+                                                        boxShadow: `0 4px 15px rgba(220, 38, 38, 0.3)`,
+                                                        border: 'none',
+                                                        cursor: 'pointer'
                                                     }}>
                                                     Enquire Now
                                                     <i className="fa-solid fa-paper-plane" style={{ fontSize: '0.85rem', transition: 'transform 0.3s ease' }}></i>
-                                                </a>
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
@@ -768,16 +781,18 @@ export default function TourPackages() {
                                             <i className="fa-solid fa-map-location-dot" style={{ fontSize: '1rem', marginRight: '6px' }}></i> View Route on Map
                                         </button>
                                     )}
-                                    <a href={`https://wa.me/94776981971?text=I'm interested in the ${pkg.name} package`}
+                                    <button onClick={() => setInquiryItem(pkg)}
                                         className="custom-pkg-btn"
                                         style={{
                                             background: `linear-gradient(135deg, ${pkg.color} 0%, ${pkg.color === 'var(--neon-green)' ? '#15b300' : (pkg.color === '#dc2626' ? '#991b1b' : '#ffb300')} 100%)`,
                                             color: pkg.color === '#dc2626' ? '#fff' : '#000',
-                                            boxShadow: `0 4px 15px ${getHexColor(pkg.color)}33`
+                                            boxShadow: `0 4px 15px ${getHexColor(pkg.color)}33`,
+                                            border: 'none',
+                                            cursor: 'pointer'
                                         }}>
                                         Enquire Now
                                         <i className="fa-solid fa-paper-plane" style={{ fontSize: '0.85rem', transition: 'transform 0.3s ease' }}></i>
-                                    </a>
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -908,6 +923,14 @@ export default function TourPackages() {
                     </div>
                 </div>
             )}
+
+            <InquiryModal 
+                isOpen={!!inquiryItem}
+                onClose={() => setInquiryItem(null)}
+                itemName={inquiryItem?.name || ''}
+                itemType="package"
+                themeColor={inquiryItem?.color || 'var(--neon-yellow)'}
+            />
 
             <Footer />
 

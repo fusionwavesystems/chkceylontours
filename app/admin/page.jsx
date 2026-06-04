@@ -78,7 +78,8 @@ const SRI_LANKA_CITIES = [
   "Arugam Bay", "Batticaloa", "Bentota", "Hikkaduwa", "Pinnawala", "Kitulgala",
   "Unawatuna", "Weligama", "Sinharaja", "Kataragama", "Kalutara", "Beruwala", 
   "Haputale", "Bandarawela", "Chilaw", "Ratnapura", "Kegalle", "Gampaha",
-  "Nilaveli", "Pasikudah", "Adams Peak", "Deniyaya"
+  "Nilaveli", "Pasikudah", "Adams Peak", "Deniyaya", "Katunayake", "Colombo Airport (BIA)",
+  "Habarana", "Minneriya", "Wilpattu", "Mannar", "Vavuniya", "Pigeon Island"
 ];
 
 export default function AdminDashboard() {
@@ -1322,6 +1323,10 @@ export default function AdminDashboard() {
                     <select style={inputStyle} value={activityForm.color} onChange={e => setActivityForm({...activityForm, color: e.target.value})} required>
                       <option value="var(--neon-green)">Neon Green</option>
                       <option value="var(--neon-yellow)">Neon Yellow</option>
+                      <option value="var(--neon-blue)">Neon Blue</option>
+                      <option value="var(--neon-purple)">Neon Purple</option>
+                      <option value="#3b82f6">Standard Blue</option>
+                      <option value="#a855f7">Standard Purple</option>
                     </select>
                   </div>
                   <div>

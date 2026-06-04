@@ -4,12 +4,32 @@ import React, { useState, useEffect } from 'react';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import { supabase } from '../../lib/supabase';
+import InquiryModal from '../../components/InquiryModal';
 
 const getHexColor = (color) => {
     if (!color) return '#fff01f';
     if (color === 'var(--neon-green)') return '#39ff14';
     if (color === 'var(--neon-yellow)') return '#fff01f';
+    if (color === 'var(--neon-blue)') return '#00d4ff';
+    if (color === 'var(--neon-purple)') return '#bd00ff';
     return color;
+};
+
+const getGradientEndColor = (color) => {
+    if (color === 'var(--neon-green)') return '#15b300';
+    if (color === 'var(--neon-yellow)') return '#ffb300';
+    if (color === 'var(--neon-blue)') return '#0082cc';
+    if (color === 'var(--neon-purple)') return '#7a00cc';
+    if (color === '#3b82f6') return '#1d4ed8';
+    if (color === '#a855f7') return '#7e22ce';
+    return '#ffb300'; // fallback
+};
+
+const getBtnTextColor = (color) => {
+    if (color === 'var(--neon-purple)' || color === '#a855f7' || color === '#3b82f6') {
+        return '#fff';
+    }
+    return '#000';
 };
 
 const getFeatureIcon = (feature, color, isDark = false) => {
@@ -42,7 +62,14 @@ const getFeatureIcon = (feature, color, isDark = false) => {
     }
 
     const hexColor = getHexColor(color);
-    const iconColor = isDark ? (hexColor === '#39ff14' ? '#0f766e' : '#b45309') : hexColor;
+    const iconColor = isDark 
+        ? (hexColor === '#39ff14' ? '#0f766e' 
+           : hexColor === '#00d4ff' ? '#0284c7' 
+           : hexColor === '#bd00ff' ? '#7e22ce'
+           : hexColor === '#3b82f6' ? '#1d4ed8'
+           : hexColor === '#a855f7' ? '#6b21a8'
+           : '#b45309') 
+        : hexColor;
     const shadowFilter = isDark ? 'none' : `drop-shadow(0 0 3px ${hexColor}77)`;
 
     return <i className={iconClass} style={{ color: iconColor, marginRight: '10px', fontSize: '0.95rem', filter: shadowFilter }}></i>;
@@ -198,6 +225,7 @@ export default function ActivitiesPage() {
     const [selectedCategory, setSelectedCategory] = useState('all');
     const [selectedImage, setSelectedImage] = useState(null);
     const [activities, setActivities] = useState([]);
+    const [inquiryItem, setInquiryItem] = useState(null);
 
     useEffect(() => {
         const fetchActivities = async () => {
@@ -336,7 +364,34 @@ export default function ActivitiesPage() {
                         return (
                             <div key={act.id} className="custom-act-card" style={{
                                 border: `2px solid ${act.color}`,
-                                position: 'relative'
+                                position: 'relative',
+                                '--card-hover-shadow': act.color === 'var(--neon-green)' 
+                                    ? 'rgba(57, 255, 20, 0.25)' 
+                                    : act.color === 'var(--neon-yellow)' 
+                                    ? 'rgba(255, 240, 31, 0.25)'
+                                    : act.color === 'var(--neon-blue)'
+                                    ? 'rgba(0, 212, 255, 0.25)'
+                                    : act.color === 'var(--neon-purple)'
+                                    ? 'rgba(189, 0, 255, 0.25)'
+                                    : act.color === '#3b82f6'
+                                    ? 'rgba(59, 130, 246, 0.25)'
+                                    : act.color === '#a855f7'
+                                    ? 'rgba(168, 85, 247, 0.25)'
+                                    : 'rgba(255, 240, 31, 0.25)',
+                                '--card-hover-glow': act.color === 'var(--neon-green)'
+                                    ? 'rgba(57, 255, 20, 0.12)'
+                                    : act.color === 'var(--neon-yellow)'
+                                    ? 'rgba(255, 240, 31, 0.12)'
+                                    : act.color === 'var(--neon-blue)'
+                                    ? 'rgba(0, 212, 255, 0.12)'
+                                    : act.color === 'var(--neon-purple)'
+                                    ? 'rgba(189, 0, 255, 0.12)'
+                                    : act.color === '#3b82f6'
+                                    ? 'rgba(59, 130, 246, 0.12)'
+                                    : act.color === '#a855f7'
+                                    ? 'rgba(168, 85, 247, 0.12)'
+                                    : 'rgba(255, 240, 31, 0.12)',
+                                '--card-hover-border': getHexColor(act.color)
                             }}>
                                 {/* Floating Category/Difficulty Badge */}
                                 <div style={{
@@ -487,33 +542,32 @@ export default function ActivitiesPage() {
                                          </div>
                                      </div>
 
-                                     {/* Action Booking Button */}
-                                     <a href={`https://wa.me/94771234567?text=I'm%20extremely%20interested%20in%20booking%20the%20${encodeURIComponent(act.name)}%20activity%20with%20CHK%20Ceylon%20Tours!`}
-                                         className="custom-act-btn"
-                                         target="_blank"
-                                         rel="noopener noreferrer"
-                                         style={{
-                                             background: `linear-gradient(135deg, ${act.color} 0%, ${act.color === 'var(--neon-green)' ? '#15b300' : '#ffb300'} 100%)`,
-                                             color: '#000',
-                                             boxShadow: `0 4px 15px ${getHexColor(act.color)}33`,
-                                             display: 'flex',
-                                             justifyContent: 'center',
-                                             alignItems: 'center',
-                                             padding: '14px',
-                                             borderRadius: '12px',
-                                             fontWeight: '800',
-                                             fontSize: '0.95rem',
-                                             fontFamily: 'var(--font-accent)',
-                                             textTransform: 'uppercase',
-                                             letterSpacing: '0.5px',
-                                             textDecoration: 'none',
-                                             gap: '10px',
-                                             transition: 'all 0.3s ease',
-                                             marginTop: 'auto'
-                                         }}>
-                                         Enquire This Activity
-                                         <i className="fa-solid fa-paper-plane" style={{ fontSize: '0.85rem' }}></i>
-                                     </a>
+                                      {/* Action Booking Button */}
+                                      <button onClick={() => setInquiryItem(act)}
+                                          className="custom-act-btn"
+                                          style={{
+                                              background: `linear-gradient(135deg, ${act.color} 0%, ${getGradientEndColor(act.color)} 100%)`,
+                                              color: getBtnTextColor(act.color),
+                                              boxShadow: `0 4px 15px ${getHexColor(act.color)}33`,
+                                              display: 'flex',
+                                              justifyContent: 'center',
+                                              alignItems: 'center',
+                                              padding: '14px',
+                                              borderRadius: '12px',
+                                              fontWeight: '800',
+                                              fontSize: '0.95rem',
+                                              fontFamily: 'var(--font-accent)',
+                                              textTransform: 'uppercase',
+                                              letterSpacing: '0.5px',
+                                              gap: '10px',
+                                              transition: 'all 0.3s ease',
+                                              marginTop: 'auto',
+                                              border: 'none',
+                                              cursor: 'pointer'
+                                          }}>
+                                          Enquire This Activity
+                                          <i className="fa-solid fa-paper-plane" style={{ fontSize: '0.85rem' }}></i>
+                                      </button>
                                 </div>
                             </div>
                         );
@@ -523,6 +577,13 @@ export default function ActivitiesPage() {
 
             <Footer />
             <ImageLightbox src={selectedImage} onClose={() => setSelectedImage(null)} />
+            <InquiryModal 
+                isOpen={!!inquiryItem}
+                onClose={() => setInquiryItem(null)}
+                itemName={inquiryItem?.name || ''}
+                itemType="activity"
+                themeColor={inquiryItem?.color || 'var(--neon-yellow)'}
+            />
 
             {/* Custom Interactive Stylesheet */}
             <style jsx>{`
@@ -554,16 +615,10 @@ export default function ActivitiesPage() {
                 }
 
                 /* Active border and glow effects on hover */
-                .custom-act-card[style*="var(--neon-yellow)"]:hover {
-                    border-color: var(--neon-yellow) !important;
-                    box-shadow: 0 25px 50px rgba(255, 240, 31, 0.25),
-                                0 0 30px rgba(255, 240, 31, 0.12) !important;
-                }
-
-                .custom-act-card[style*="var(--neon-green)"]:hover {
-                    border-color: var(--neon-green) !important;
-                    box-shadow: 0 25px 50px rgba(57, 255, 20, 0.25),
-                                0 0 30px rgba(57, 255, 20, 0.12) !important;
+                .custom-act-card:hover {
+                    border-color: var(--card-hover-border, var(--neon-yellow)) !important;
+                    box-shadow: 0 25px 50px var(--card-hover-shadow, rgba(255, 240, 31, 0.25)),
+                                0 0 30px var(--card-hover-glow, rgba(255, 240, 31, 0.12)) !important;
                 }
 
                 .custom-act-img {
